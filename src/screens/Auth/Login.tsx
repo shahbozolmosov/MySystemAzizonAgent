@@ -2,19 +2,27 @@ import {Button, Input, Text} from '@rneui/themed';
 import {Formik} from 'formik';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import Toast from 'react-native-toast-message';
 import * as Yup from 'yup'; // Yup for validation
+import {IAuthLogin, useLoginMutation} from '../../app/services/auth/auth';
 import Container from '../../components/common/Container/Container';
+import {handleError} from '../../utils/errorHandler';
+import Toast from 'react-native-toast-message';
 
 // Yup validation schema
 const validationSchema = Yup.object().shape({
   login: Yup.string().required('Login talab qilinadi'),
-  password: Yup.string()
-    .min(6, "6ta belgidan kam bo'lmasin")
-    .required('Parol talab qilinadi'),
+  password: Yup.string().required('Parol talab qilinadi'),
 });
 
+const initialValues: IAuthLogin = {
+  login: '',
+  password: '',
+};
+
 export default function Login(): JSX.Element {
+  // Api
+  const [login] = useLoginMutation();
+
   return (
     <Container>
       <ScrollView focusable={false}>
@@ -22,19 +30,30 @@ export default function Login(): JSX.Element {
           <Text style={styles.title}>Xush kelibsiz!</Text>
 
           <Formik
-            initialValues={{login: '', password: ''}}
+            initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={values => {
-              if (values.login !== 'admin') {
-                Toast.show({
-                  type: 'error',
-                  text1: 'Xatolik',
-                  text2: 'Login yoki parol xato',
-                });
-                return;
+            onSubmit={async values => {
+              try {
+                const res = await login(values).unwrap();
+
+                if (res.success) {
+                  Toast.show({
+                    type: 'success',
+                    text1: 'Muvaffaqiyatli',
+                    text2: res.message,
+                  });
+                } else {
+                  Toast.show({
+                    type: 'error',
+                    text1: 'Xato',
+                    text2: res.message,
+                  });
+                }
+
+                console.log('login res ->>>>', res);
+              } catch (err) {
+                handleError(err);
               }
-              // Login action with values.email and values.password
-              console.log(values);
             }}>
             {({
               handleChange,
@@ -43,6 +62,7 @@ export default function Login(): JSX.Element {
               values,
               errors,
               touched,
+              isSubmitting,
             }) => (
               <>
                 <Input
@@ -54,6 +74,7 @@ export default function Login(): JSX.Element {
                   errorMessage={
                     touched.login && errors.login ? errors.login : ''
                   }
+                  disabled={isSubmitting}
                 />
 
                 <Input
@@ -65,6 +86,7 @@ export default function Login(): JSX.Element {
                   errorMessage={
                     touched.password && errors.password ? errors.password : ''
                   }
+                  disabled={isSubmitting}
                 />
 
                 <Button
@@ -72,6 +94,7 @@ export default function Login(): JSX.Element {
                   title={'Login'}
                   buttonStyle={styles.button}
                   onPress={handleSubmit as (values: any) => void}
+                  loading={isSubmitting}
                 />
               </>
             )}
