@@ -3,20 +3,27 @@ import {ThemeProvider} from '@rneui/themed';
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
+import {StatusBar} from 'react-native';
+import Toast from 'react-native-toast-message';
 import Router from './routes/Router';
 import {theme} from './themes/theme';
-import Toast from 'react-native-toast-message';
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <SafeAreaProvider>
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
+        <StatusBar
+          backgroundColor={'#ffffff'}
+          animated
+          showHideTransition={'slide'}
+          barStyle={'dark-content'}
+        />
         <NavigationContainer>
           <Router />
         </NavigationContainer>
         <Toast />
-      </SafeAreaProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 };
 

@@ -13,5 +13,6 @@ export default function Container({children}: ContainerProps) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    backgroundColor: '#ffffff',
   },
 });

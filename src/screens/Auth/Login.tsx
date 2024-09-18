@@ -1,10 +1,10 @@
-import {Button, Input} from '@rneui/base';
 import {Formik} from 'formik';
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup'; // Yup for validation
 import Container from '../../components/common/Container/Container';
+import {Button, Input, Text} from '@rneui/themed';
 
 // Yup validation schema
 const validationSchema = Yup.object().shape({
@@ -17,9 +17,9 @@ const validationSchema = Yup.object().shape({
 export default function Login(): JSX.Element {
   return (
     <Container>
-      <ScrollView>
+      <ScrollView focusable={false}>
         <View style={styles.body}>
-          <Text style={styles.title}>Login</Text>
+          <Text style={styles.title}>Xush kelibsiz!</Text>
 
           <Formik
             initialValues={{login: '', password: ''}}
@@ -47,7 +47,6 @@ export default function Login(): JSX.Element {
               <>
                 <Input
                   autoFocus
-                  label="Login"
                   placeholder="Login"
                   onChangeText={handleChange('login')}
                   onBlur={handleBlur('login')}
@@ -58,7 +57,6 @@ export default function Login(): JSX.Element {
                 />
 
                 <Input
-                  label="Parol"
                   placeholder="Parol"
                   secureTextEntry
                   onChangeText={handleChange('password')}
@@ -70,6 +68,7 @@ export default function Login(): JSX.Element {
                 />
 
                 <Button
+                  size="lg"
                   title={'Login'}
                   buttonStyle={styles.button}
                   onPress={handleSubmit as (values: any) => void}
@@ -85,18 +84,21 @@ export default function Login(): JSX.Element {
 
 const styles = StyleSheet.create({
   body: {
-    marginVertical: 200,
+    marginTop: 200,
+    flexGrow: 1,
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+    lineHeight: 42,
+    marginBottom: 32,
     color: '#0d1017',
+    textAlign: 'center',
   },
   button: {
     // backgroundColor: '#007bff',
     marginTop: 20,
+    padding: 18,
     // borderRadius: 8,
   },
 });
