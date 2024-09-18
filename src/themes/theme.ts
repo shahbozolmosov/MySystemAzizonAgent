@@ -8,4 +8,12 @@ export const theme = createTheme({
     primary: '#000',
   },
   mode: 'light',
+  components: {
+    Button: {
+      raised: true,
+      style: {
+        borderRadius: 15,
+      },
+    },
+  },
 });

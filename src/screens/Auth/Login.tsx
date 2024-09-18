@@ -1,7 +1,8 @@
 import {Button, Input} from '@rneui/base';
-import React from 'react';
-import {StyleSheet, Text} from 'react-native';
 import {Formik} from 'formik';
+import React from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import Toast from 'react-native-toast-message';
 import * as Yup from 'yup'; // Yup for validation
 import Container from '../../components/common/Container/Container';
 
@@ -16,65 +17,86 @@ const validationSchema = Yup.object().shape({
 export default function Login(): JSX.Element {
   return (
     <Container>
-      <Text style={styles.title}>Login</Text>
+      <ScrollView>
+        <View style={styles.body}>
+          <Text style={styles.title}>Login</Text>
 
-      <Formik
-        initialValues={{login: '', password: ''}}
-        validationSchema={validationSchema}
-        onSubmit={values => {
-          // Login action with values.email and values.password
-          console.log(values);
-        }}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          touched,
-        }) => (
-          <>
-            <Input
-              autoFocus
-              placeholder="example.login"
-              onChangeText={handleChange('login')}
-              onBlur={handleBlur('login')}
-              value={values.login}
-              errorMessage={touched.login && errors.login ? errors.login : ''}
-            />
-
-            <Input
-              placeholder="Parol"
-              secureTextEntry
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-              errorMessage={
-                touched.password && errors.password ? errors.password : ''
+          <Formik
+            initialValues={{login: '', password: ''}}
+            validationSchema={validationSchema}
+            onSubmit={values => {
+              if (values.login !== 'admin') {
+                Toast.show({
+                  type: 'error',
+                  text1: 'Xatolik',
+                  text2: 'Login yoki parol xato',
+                });
+                return;
               }
-            />
+              // Login action with values.email and values.password
+              console.log(values);
+            }}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <>
+                <Input
+                  autoFocus
+                  label="Login"
+                  placeholder="Login"
+                  onChangeText={handleChange('login')}
+                  onBlur={handleBlur('login')}
+                  value={values.login}
+                  errorMessage={
+                    touched.login && errors.login ? errors.login : ''
+                  }
+                />
 
-            <Button
-              title={'Login'}
-              buttonStyle={styles.button}
-              onPress={handleSubmit as (values: any) => void}
-            />
-          </>
-        )}
-      </Formik>
+                <Input
+                  label="Parol"
+                  placeholder="Parol"
+                  secureTextEntry
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  errorMessage={
+                    touched.password && errors.password ? errors.password : ''
+                  }
+                />
+
+                <Button
+                  title={'Login'}
+                  buttonStyle={styles.button}
+                  onPress={handleSubmit as (values: any) => void}
+                />
+              </>
+            )}
+          </Formik>
+        </View>
+      </ScrollView>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
+  body: {
+    marginVertical: 200,
+  },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#0d1017',
   },
   button: {
-    backgroundColor: '#007bff',
+    // backgroundColor: '#007bff',
     marginTop: 20,
+    // borderRadius: 8,
   },
 });
