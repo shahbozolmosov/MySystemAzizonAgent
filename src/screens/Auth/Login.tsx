@@ -1,10 +1,10 @@
+import {Button, Input, Text} from '@rneui/themed';
 import {Formik} from 'formik';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup'; // Yup for validation
 import Container from '../../components/common/Container/Container';
-import {Button, Input, Text} from '@rneui/themed';
 
 // Yup validation schema
 const validationSchema = Yup.object().shape({
