@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {getUser, IUser} from '../user/user';
 import {login} from './auth';
 import {RootState} from '../../store';
+import {deleteToken, saveToken} from '../../../utils/tokenSaver';
 
 type TAuthState = {
   user: null | IUser;
@@ -14,7 +15,7 @@ const initialState: TAuthState = {
   user: null,
   token: null,
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
 };
 
 const slice = createSlice({
@@ -34,7 +35,9 @@ const slice = createSlice({
         state.isLoading = false;
 
         if (!action.payload.success) {
-          // TODO remove access token
+          // Delete the token
+          deleteToken();
+
           state.isAuthenticated = false;
           return;
         }
@@ -61,7 +64,8 @@ const slice = createSlice({
         state.isAuthenticated = true;
         state.isLoading = false;
 
-        // TODO Access token save to local storage
+        // Save token
+        saveToken(state.token);
       })
       .addMatcher(login.matchRejected, state => {
         state.isLoading = false;

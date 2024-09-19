@@ -28,8 +28,14 @@ export const userApi = api
   .injectEndpoints({
     endpoints: build => ({
       // Show
-      getUser: build.query<IUserRes, void>({
-        query: () => userUrls.show,
+      getUser: build.query<IUserRes, string | null>({
+        query: token => ({
+          url: userUrls.show,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
       }),
       // Update
       // Update password
