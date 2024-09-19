@@ -14,7 +14,7 @@ const initialState: TAuthState = {
   user: null,
   token: null,
   isAuthenticated: false,
-  isLoading: false,
+  isLoading: true,
 };
 
 const slice = createSlice({

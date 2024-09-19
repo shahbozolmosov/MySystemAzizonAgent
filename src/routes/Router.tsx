@@ -2,8 +2,12 @@ import React from 'react';
 
 // Routes
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {selectedIsAuthenticated} from '../app/services/auth/authSlice';
+import {
+  selectedIsAuthenticated,
+  selectedIsLoading,
+} from '../app/services/auth/authSlice';
 import {useTypesSelector} from '../app/store';
+import AppLoader from '../components/common/AppLoader/AppLoader';
 import AppStack from './AppStack';
 import AuthStack from './AuthStack';
 
@@ -11,6 +15,11 @@ const Stack = createNativeStackNavigator();
 
 const Router = () => {
   const isAuthenticated = useTypesSelector(selectedIsAuthenticated);
+  const isLoading = useTypesSelector(selectedIsLoading);
+
+  if (isLoading) {
+    return <AppLoader />;
+  }
 
   return (
     <Stack.Navigator
