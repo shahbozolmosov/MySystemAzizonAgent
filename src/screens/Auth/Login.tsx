@@ -11,7 +11,7 @@ import {handleError} from '../../utils/errorHandler';
 // Yup validation schema
 const validationSchema = Yup.object().shape({
   login: Yup.string().required('Login talab qilinadi'),
-  password: Yup.string().required('Parol talab qilinadi'),
+  parol: Yup.string().required('Parol talab qilinadi'),
 });
 
 const initialValues: IAuthLogin = {
