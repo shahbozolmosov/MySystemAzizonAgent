@@ -1,13 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 
-export default function Home() {
+const Analytics = () => {
   return (
     <Container>
-      <Text>Home</Text>
+      <Text>Analytics</Text>
     </Container>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+
+export default Analytics;

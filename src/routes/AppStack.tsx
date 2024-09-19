@@ -1,18 +1,40 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React from 'react';
+import Analytics from '../screens/main/Analytics';
 import Home from '../screens/main/Home';
 
 export type AppStackParamList = {
   Home: undefined;
+  Analytics: undefined;
 };
 
-const Stack = createNativeStackNavigator<AppStackParamList>();
+// const Stack = createNativeStackNavigator<AppStackParamList>();
+const Tab = createMaterialTopTabNavigator();
 
 const AppStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={Home} />
-    </Stack.Navigator>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarStyle: {
+          elevation: 0,
+        },
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'Asosiy',
+        }}
+      />
+      <Tab.Screen
+        name="Analytics"
+        component={Analytics}
+        options={{
+          tabBarLabel: 'Analitika',
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 

@@ -27,7 +27,13 @@ const Router = () => {
         headerShown: false,
       }}>
       {isAuthenticated ? (
-        <Stack.Screen name="AppStack" component={AppStack} />
+        <Stack.Screen
+          name="AppStack"
+          component={AppStack}
+          options={{
+            animationTypeForReplace: isAuthenticated ? 'pop' : 'push',
+          }}
+        />
       ) : (
         <Stack.Screen name="AuthStack" component={AuthStack} />
       )}
