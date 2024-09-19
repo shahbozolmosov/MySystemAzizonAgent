@@ -13,7 +13,8 @@ const AppStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+      initialRouteName="Login">
       <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
   );
