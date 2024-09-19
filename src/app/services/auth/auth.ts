@@ -4,7 +4,7 @@ import {api} from '../api';
 
 export interface IAuthLogin {
   login: string;
-  password: string;
+  parol: string;
 }
 
 interface IAuthLoginRes extends IApiRes {
@@ -38,3 +38,7 @@ const authApi = api.injectEndpoints({
 });
 
 export const {useLoginMutation} = authApi;
+
+export const {
+  endpoints: {login},
+} = authApi;

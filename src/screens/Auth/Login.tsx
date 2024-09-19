@@ -2,11 +2,11 @@ import {Button, Input, Text} from '@rneui/themed';
 import {Formik} from 'formik';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import Toast from 'react-native-toast-message';
 import * as Yup from 'yup'; // Yup for validation
 import {IAuthLogin, useLoginMutation} from '../../app/services/auth/auth';
 import Container from '../../components/common/Container/Container';
 import {handleError} from '../../utils/errorHandler';
-import Toast from 'react-native-toast-message';
 
 // Yup validation schema
 const validationSchema = Yup.object().shape({
@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
 
 const initialValues: IAuthLogin = {
   login: '',
-  password: '',
+  parol: '',
 };
 
 export default function Login(): JSX.Element {
@@ -80,11 +80,11 @@ export default function Login(): JSX.Element {
                 <Input
                   placeholder="Parol"
                   secureTextEntry
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
+                  onChangeText={handleChange('parol')}
+                  onBlur={handleBlur('parol')}
+                  value={values.parol}
                   errorMessage={
-                    touched.password && errors.password ? errors.password : ''
+                    touched.parol && errors.parol ? errors.parol : ''
                   }
                   disabled={isSubmitting}
                 />

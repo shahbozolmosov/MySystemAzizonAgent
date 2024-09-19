@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 // Routes
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {selectedIsAuthenticated} from '../app/services/auth/authSlice';
+import {useTypesSelector} from '../app/store';
 import AppStack from './AppStack';
 import AuthStack from './AuthStack';
 
 const Stack = createNativeStackNavigator();
 
 const Router = () => {
-  const [isAuthenticated] = useState(false);
+  const isAuthenticated = useTypesSelector(selectedIsAuthenticated);
 
   return (
     <Stack.Navigator
