@@ -38,4 +38,4 @@ const AppStack = () => {
   );
 };
 
-export default AppStack;
+export default React.memo(AppStack);

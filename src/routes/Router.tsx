@@ -32,4 +32,4 @@ const Router = () => {
   );
 };
 
-export default Router;
+export default React.memo(Router);
