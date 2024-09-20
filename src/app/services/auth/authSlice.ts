@@ -34,7 +34,7 @@ const slice = createSlice({
       .addMatcher(getUser.matchFulfilled, (state, action) => {
         state.isLoading = false;
 
-        if (!action.payload.success) {
+        if (!action.payload.success || action.payload.data.rol !== 'agent') {
           // Delete the token
           deleteToken();
 
@@ -51,7 +51,7 @@ const slice = createSlice({
       })
       // Login
       .addMatcher(login.matchFulfilled, (state, action) => {
-        if (!action.payload.success) {
+        if (!action.payload.success || action.payload.data.rol !== 'agent') {
           state.isLoading = false;
           state.isAuthenticated = false;
           return;
