@@ -37,11 +37,19 @@ export default function Login(): JSX.Element {
                 const res = await login(values).unwrap();
 
                 if (res.success) {
-                  Toast.show({
-                    type: 'success',
-                    text1: 'Muvaffaqiyatli',
-                    text2: res.message,
-                  });
+                  if (res.data.rol === 'agent') {
+                    Toast.show({
+                      type: 'success',
+                      text1: 'Muvaffaqiyatli',
+                      text2: res.message,
+                    });
+                  } else {
+                    Toast.show({
+                      type: 'error',
+                      text1: 'Xato',
+                      text2: 'Login yoki parol xato!',
+                    });
+                  }
                 } else {
                   Toast.show({
                     type: 'error',
