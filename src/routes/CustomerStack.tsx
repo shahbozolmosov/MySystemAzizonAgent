@@ -1,10 +1,11 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {useCallback} from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Feather';
 import CustomerHome from '../screens/customer/CustomerHome';
+import CustomerOrder from '../screens/customer/CustomerOrder';
+import CustomerVisit from '../screens/customer/CustomerVisit';
 import {ITabBarIconProps} from '../types/type';
-import {StyleSheet, View} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
+import CustomerReport from '../screens/customer/CustomerReport';
 
 export type CustomerStackParamList = {
   CustomerHome: undefined;
@@ -14,19 +15,6 @@ export type CustomerStackParamList = {
 };
 
 const Tab = createBottomTabNavigator<CustomerStackParamList>();
-
-const CustomTabBarBackground = () => {
-  return (
-    <View style={StyleSheet.absoluteFill}>
-      <BlurView
-        style={StyleSheet.absoluteFill}
-        blurType="light"
-        blurAmount={10}
-        reducedTransparencyFallbackColor="white"
-      />
-    </View>
-  );
-};
 
 const CustomerStack = () => {
   // Icons
@@ -41,11 +29,14 @@ const CustomerStack = () => {
     <Tab.Navigator
       initialRouteName="CustomerHome"
       screenOptions={{
-        tabBarActiveTintColor: '#1e232c',
-        tabBarBackground: () => <CustomTabBarBackground />, // Set custom blur background
+        tabBarInactiveTintColor: '#7e919a',
+        tabBarActiveTintColor: '#22282b',
+
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: 'transparent', // Make tab bar background transparent to allow blur effect
+          // backgroundColor: 'transparent',
+          minHeight: 64,
+          paddingBottom: 10,
         },
       }}>
       <Tab.Screen
@@ -54,7 +45,34 @@ const CustomerStack = () => {
         options={{
           headerTitleAlign: 'center',
           tabBarLabel: 'Asosiy',
-          tabBarIcon: props => icon({...props, name: 'home'}),
+          tabBarIcon: props => icon({...props, name: 'bar-chart-2'}),
+        }}
+      />
+      <Tab.Screen
+        name="CustomerOrder"
+        component={CustomerOrder}
+        options={{
+          headerTitleAlign: 'center',
+          tabBarLabel: 'Buyurtma',
+          tabBarIcon: props => icon({...props, name: 'shopping-bag'}),
+        }}
+      />
+      <Tab.Screen
+        name="CustomerVisit"
+        component={CustomerVisit}
+        options={{
+          headerTitleAlign: 'center',
+          tabBarLabel: 'Tashrif',
+          tabBarIcon: props => icon({...props, name: 'compass'}),
+        }}
+      />
+      <Tab.Screen
+        name="CustomerReport"
+        component={CustomerReport}
+        options={{
+          headerTitleAlign: 'center',
+          tabBarLabel: 'Hisobot',
+          tabBarIcon: props => icon({...props, name: 'file-text'}),
         }}
       />
     </Tab.Navigator>
