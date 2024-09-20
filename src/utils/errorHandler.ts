@@ -19,7 +19,7 @@ export const handleError = (err: unknown) => {
     console.log('render', err.message || 'An error occurred');
   } else {
     Toast.show({
-      type: 'warning',
+      type: 'error',
       text1: "Noma'lum xatolik!",
       text2: "Qaytadan urinib ko'ring yoki bizga xabar bering.",
     });
