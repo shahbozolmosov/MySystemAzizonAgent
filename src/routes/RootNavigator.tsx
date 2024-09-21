@@ -14,44 +14,32 @@ export type RootStackParamList = {
   AuthStack: undefined;
 };
 
-const Stack = createNativeStackNavigator();
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-const config = {
-  animation: 'spring',
-  config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: true,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-};
-
-const Router = () => {
+const RootNavigator = () => {
   const isAuthenticated = useTypesSelector(selectedIsAuthenticated);
 
   return (
-    <Stack.Navigator
+    <RootStack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
       {isAuthenticated ? (
         <>
-          <Stack.Screen
+          <RootStack.Screen
             name="AppStack"
             component={AppStack}
             options={{
               animationTypeForReplace: isAuthenticated ? 'pop' : 'push',
             }}
           />
-          <Stack.Screen name="CustomerStack" component={CustomerStack} />
+          <RootStack.Screen name="CustomerStack" component={CustomerStack} />
         </>
       ) : (
-        <Stack.Screen name="AuthStack" component={AuthStack} />
+        <RootStack.Screen name="AuthStack" component={AuthStack} />
       )}
-    </Stack.Navigator>
+    </RootStack.Navigator>
   );
 };
 
-export default React.memo(Router);
+export default React.memo(RootNavigator);

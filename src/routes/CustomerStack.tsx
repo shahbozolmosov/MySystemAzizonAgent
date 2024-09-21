@@ -1,17 +1,17 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import CustomerHome from '../screens/customer/CustomerHome';
-import CustomerOrder from '../screens/customer/CustomerOrder';
-import CustomerVisit from '../screens/customer/CustomerVisit';
+import CustomerHomeScreen from '../screens/customer/CustomerHomeScreen';
+import CustomerOrderScreen from '../screens/customer/CustomerOrderScreen';
+import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
 import {ITabBarIconProps} from '../types/type';
-import CustomerReport from '../screens/customer/CustomerReport';
+import CustomerReportScreen from '../screens/customer/CustomerReportScreen';
 
 export type CustomerStackParamList = {
-  CustomerHome: undefined;
-  CustomerOrder: undefined;
-  CustomerVisit: undefined;
-  CustomerReport: undefined;
+  CustomerHomeScreen: undefined;
+  CustomerOrderScreen: undefined;
+  CustomerVisitScreen: undefined;
+  CustomerReportScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator<CustomerStackParamList>();
@@ -27,7 +27,7 @@ const CustomerStack = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="CustomerHome"
+      initialRouteName="CustomerHomeScreen"
       screenOptions={{
         headerShown: false,
         tabBarInactiveTintColor: '#7e919a',
@@ -41,8 +41,8 @@ const CustomerStack = () => {
         },
       }}>
       <Tab.Screen
-        name="CustomerHome"
-        component={CustomerHome}
+        name="CustomerHomeScreen"
+        component={CustomerHomeScreen}
         options={{
           headerTitleAlign: 'center',
           tabBarLabel: 'Asosiy',
@@ -50,8 +50,8 @@ const CustomerStack = () => {
         }}
       />
       <Tab.Screen
-        name="CustomerOrder"
-        component={CustomerOrder}
+        name="CustomerOrderScreen"
+        component={CustomerOrderScreen}
         options={{
           headerTitleAlign: 'center',
           tabBarLabel: 'Buyurtma',
@@ -59,8 +59,8 @@ const CustomerStack = () => {
         }}
       />
       <Tab.Screen
-        name="CustomerVisit"
-        component={CustomerVisit}
+        name="CustomerVisitScreen"
+        component={CustomerVisitScreen}
         options={{
           headerTitleAlign: 'center',
           tabBarLabel: 'Tashrif',
@@ -68,8 +68,8 @@ const CustomerStack = () => {
         }}
       />
       <Tab.Screen
-        name="CustomerReport"
-        component={CustomerReport}
+        name="CustomerReportScreen"
+        component={CustomerReportScreen}
         options={{
           headerTitleAlign: 'center',
           tabBarLabel: 'Hisobot',

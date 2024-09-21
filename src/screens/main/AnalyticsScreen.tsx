@@ -2,14 +2,14 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 
-const Analytics = () => {
+const AnalyticsScreen = () => {
   return (
     <Container>
-      <Text>Analytics</Text>
+      <Text>AnalyticsScreen</Text>
     </Container>
   );
 };
 
 const styles = StyleSheet.create({});
 
-export default Analytics;
+export default AnalyticsScreen;

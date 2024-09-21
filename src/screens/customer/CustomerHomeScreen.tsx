@@ -3,7 +3,7 @@ import {StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CustomerHeader from '../../components/common/CustomerHeader/CustomerHeader';
 
-const CustomerHome = () => {
+const CustomerHomeScreen = () => {
   return (
     <SafeAreaView>
       <CustomerHeader title="Shahboz" />
@@ -15,4 +15,4 @@ const CustomerHome = () => {
 
 const styles = StyleSheet.create({});
 
-export default React.memo(CustomerHome);
+export default React.memo(CustomerHomeScreen);

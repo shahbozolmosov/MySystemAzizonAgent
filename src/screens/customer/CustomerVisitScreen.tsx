@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const CustomerOrder = () => {
+const CustomerVisitScreen = () => {
   return (
     <View>
-      <Text>CustomerOrder</Text>
+      <Text>CustomerVisitScreen</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({});
 
-export default React.memo(CustomerOrder);
+export default React.memo(CustomerVisitScreen);

@@ -16,7 +16,7 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({title}) => {
     <View style={styles.container}>
       {/* Back Button */}
       <TouchableOpacity onPress={() => {}}>
-        <Icon name="arrow-left" size={24} color="#22282b" />
+        <Icon name="menu" size={24} color="#22282b" />
       </TouchableOpacity>
 
       {/* Header Title */}
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   rightSideButtons: {
     flexDirection: 'row',
-    gap: 10
+    gap: 10,
   },
   btn: {
     marginRight: 15,

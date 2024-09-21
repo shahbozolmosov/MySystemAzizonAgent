@@ -7,9 +7,9 @@ import {StatusBar} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {Provider} from 'react-redux';
 import {store} from './app/store';
-import Router from './routes/Router';
-import {theme} from './themes/theme';
 import AuthProvider from './providers/AuthProvider';
+import RootNavigator from './routes/RootNavigator';
+import {theme} from './themes/theme';
 
 const App: React.FC = () => {
   return (
@@ -24,7 +24,7 @@ const App: React.FC = () => {
               barStyle={'dark-content'}
             />
             <NavigationContainer>
-              <Router />
+              <RootNavigator />
             </NavigationContainer>
             <Toast />
           </ThemeProvider>
