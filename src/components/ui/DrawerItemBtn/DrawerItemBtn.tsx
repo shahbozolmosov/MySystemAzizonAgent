@@ -1,30 +1,34 @@
+import {Button} from '@rneui/themed';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-export type DrawerItemBtnProps = {
-  color: string;
-  focused: boolean;
+type DrawerItemBtnProps = {
+  label: string;
+  icon: string;
 };
 
-const DrawerItemBtn = (props: DrawerItemBtnProps) => {
+const DrawerItemBtn = ({label, icon}: DrawerItemBtnProps) => {
   return (
-    <View style={styles.btn}>
-      <Icon name="user-plus" size={20} />
-      <Text style={styles.btn}>Yangi mijoz</Text>
-    </View>
+    <Button
+      type="clear"
+      icon={<Icon style={styles.icon} name={icon} size={22} />}
+      title={label}
+      buttonStyle={styles.btnContainer}
+      size="lg"
+      touchSoundDisabled={false}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  btn: {
-    flexDirection: 'row',
-    gap: 12,
+  btnContainer: {
+    justifyContent: 'flex-start',
+    paddingHorizontal: 18,
   },
-  btnText: {
-    fontFamily: 'Roboto-Black',
-    fontSize: 20,
-    fontWeight: 400,
+  icon: {
+    marginRight: 18,
+    color: '#7e919a',
   },
 });
 

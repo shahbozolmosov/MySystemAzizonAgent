@@ -1,17 +1,12 @@
 import {
   createDrawerNavigator,
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
   DrawerHeaderProps,
-  DrawerItemList,
 } from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useCallback} from 'react';
 import AppHeader from '../components/common/AppHeader/AppHeader';
 import DrawerProfile from '../components/common/DrawerProfile/DrawerProfile';
-import DrawerItemBtn, {
-  DrawerItemBtnProps,
-} from '../components/ui/DrawerItemBtn/DrawerItemBtn';
+import DrawerItemBtn from '../components/ui/DrawerItemBtn/DrawerItemBtn';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
 import HomeScreen from '../screens/main/HomeScreen';
 
@@ -44,7 +39,6 @@ const AppTabStack = () => {
           fontSize: 14,
           fontWeight: '700',
         },
-        tabBarAllowFontScaling: false,
         tabBarInactiveTintColor: '#7e919a',
         tabBarActiveTintColor: '#0d96fa',
         tabBarIndicatorStyle: {
@@ -71,13 +65,13 @@ const AppTabStack = () => {
   );
 };
 
-function CustomDrawerContent(props: DrawerContentComponentProps) {
+function CustomDrawerContent() {
   return (
     <>
       <DrawerProfile />
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-      </DrawerContentScrollView>
+      <DrawerItemBtn label="Yangi mijoz" icon="user-plus" />
+      <DrawerItemBtn label="Buyurtmalar tarixi" icon="clock" />
+      <DrawerItemBtn label="Mijozlar hisoboti" icon="file-text" />
     </>
   );
 }
@@ -87,14 +81,7 @@ const AppStack = () => {
     return <AppHeader drawerNavigation={navigation} />;
   }, []);
 
-  const drawerContent = useCallback(
-    (props: DrawerContentComponentProps) => <CustomDrawerContent {...props} />,
-    [],
-  );
-
-  const item = useCallback((props: DrawerItemBtnProps) => {
-    return <DrawerItemBtn {...props} />;
-  }, []);
+  const drawerContent = useCallback(() => <CustomDrawerContent />, []);
 
   return (
     <Drawer.Navigator
@@ -111,16 +98,7 @@ const AppStack = () => {
           },
         }}
       />
-      <Drawer.Screen
-        name="AllOrderHistory"
-        component={AppTabStack}
-        options={{
-          drawerLabel: props => item(props),
-          drawerItemStyle: {
-            marginHorizontal: 20,
-          },
-        }}
-      />
+      <Drawer.Screen name="AllOrderHistory" component={AppTabStack} />
     </Drawer.Navigator>
   );
 };

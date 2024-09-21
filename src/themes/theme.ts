@@ -16,9 +16,11 @@ export const theme = createTheme({
       },
     },
     Button: {
-      // raised: true,
       buttonStyle: {
         borderRadius: 8,
+      },
+      titleStyle: {
+        fontFamily: 'Roboto-Medium',
       },
     },
     Input: {
