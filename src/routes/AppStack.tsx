@@ -18,7 +18,20 @@ const AppStack = () => {
       screenOptions={{
         tabBarStyle: {
           elevation: 0,
+          paddingHorizontal: 10,
         },
+        tabBarLabelStyle: {
+          fontFamily: 'Roboto',
+          fontSize: 14,
+          fontWeight: '700',
+        },
+        tabBarAllowFontScaling: false,
+        tabBarInactiveTintColor: '#7e919a',
+        tabBarActiveTintColor: '#0d96fa',
+        tabBarIndicatorStyle: {
+          borderRadius: 16,
+        },
+        tabBarPressColor: 'transparent',
       }}>
       <Tab.Screen
         name="HomeScreen"
@@ -31,7 +44,7 @@ const AppStack = () => {
         name="AnalyticsScreen"
         component={AnalyticsScreen}
         options={{
-          tabBarLabel: 'Analitika',
+          tabBarLabel: 'Jami',
         }}
       />
     </Tab.Navigator>
