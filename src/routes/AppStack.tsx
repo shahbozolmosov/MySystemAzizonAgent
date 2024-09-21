@@ -1,20 +1,19 @@
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
-  DrawerContentScrollView,
   DrawerHeaderProps,
-  DrawerItem,
-  DrawerItemList,
 } from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useCallback} from 'react';
+import {StyleSheet} from 'react-native';
 import AppHeader from '../components/common/AppHeader/AppHeader';
+import DrawerProfile from '../components/common/DrawerProfile/DrawerProfile';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
 import HomeScreen from '../screens/main/HomeScreen';
 
 export type AppTabStackParamList = {
-  HomeScreen: undefined;
-  AnalyticsScreen: undefined;
+  Home: undefined;
+  Analytics: undefined;
 };
 
 type AppDrawerStackParamList = {
@@ -27,7 +26,7 @@ const Drawer = createDrawerNavigator<AppDrawerStackParamList>();
 const AppTabStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="Home"
       screenOptions={{
         tabBarStyle: {
           elevation: 0,
@@ -43,18 +42,19 @@ const AppTabStack = () => {
         tabBarActiveTintColor: '#0d96fa',
         tabBarIndicatorStyle: {
           borderRadius: 16,
+          backgroundColor: '#0d96fa',
         },
         tabBarPressColor: 'transparent',
       }}>
       <Tab.Screen
-        name="HomeScreen"
+        name="Home"
         component={HomeScreen}
         options={{
           tabBarLabel: 'Asosiy',
         }}
       />
       <Tab.Screen
-        name="AnalyticsScreen"
+        name="Analytics"
         component={AnalyticsScreen}
         options={{
           tabBarLabel: 'Jami',
@@ -65,19 +65,7 @@ const AppTabStack = () => {
 };
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="Close drawer"
-        onPress={() => props.navigation.closeDrawer()}
-      />
-      <DrawerItem
-        label="Toggle drawer"
-        onPress={() => props.navigation.toggleDrawer()}
-      />
-    </DrawerContentScrollView>
-  );
+  return <DrawerProfile />;
 }
 
 const AppStack = () => {
@@ -108,5 +96,27 @@ const AppStack = () => {
     </Drawer.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  profileContainer: {
+    padding: 20,
+    alignItems: 'center',
+    backgroundColor: '#f4f4f4', // Adjust the background color
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  profileName: {
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  profileEmail: {
+    fontSize: 14,
+    color: '#666',
+  },
+});
 
 export default React.memo(AppStack);
