@@ -4,3 +4,8 @@ export interface ITabBarIconProps {
   name: string;
   focused: boolean
 }
+
+export type TDate= {
+  start: string;
+  end: string;
+}
