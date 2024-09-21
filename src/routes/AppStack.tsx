@@ -1,11 +1,17 @@
 import {
   createDrawerNavigator,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
   DrawerHeaderProps,
+  DrawerItemList,
 } from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useCallback} from 'react';
 import AppHeader from '../components/common/AppHeader/AppHeader';
 import DrawerProfile from '../components/common/DrawerProfile/DrawerProfile';
+import DrawerItemBtn, {
+  DrawerItemBtnProps,
+} from '../components/ui/DrawerItemBtn/DrawerItemBtn';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
 import HomeScreen from '../screens/main/HomeScreen';
 
@@ -16,6 +22,9 @@ export type AppTabStackParamList = {
 
 type AppDrawerStackParamList = {
   TabStack: undefined;
+  CreateCustomer: undefined;
+  AllOrderHistory: undefined;
+  CustomerReport: undefined;
 };
 
 const Tab = createMaterialTopTabNavigator<AppTabStackParamList>();
@@ -62,8 +71,15 @@ const AppTabStack = () => {
   );
 };
 
-function CustomDrawerContent() {
-  return <DrawerProfile />;
+function CustomDrawerContent(props: DrawerContentComponentProps) {
+  return (
+    <>
+      <DrawerProfile />
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+    </>
+  );
 }
 
 const AppStack = () => {
@@ -71,7 +87,14 @@ const AppStack = () => {
     return <AppHeader drawerNavigation={navigation} />;
   }, []);
 
-  const drawerContent = useCallback(() => <CustomDrawerContent />, []);
+  const drawerContent = useCallback(
+    (props: DrawerContentComponentProps) => <CustomDrawerContent {...props} />,
+    [],
+  );
+
+  const item = useCallback((props: DrawerItemBtnProps) => {
+    return <DrawerItemBtn {...props} />;
+  }, []);
 
   return (
     <Drawer.Navigator
@@ -85,6 +108,16 @@ const AppStack = () => {
         options={{
           drawerItemStyle: {
             display: 'none',
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="AllOrderHistory"
+        component={AppTabStack}
+        options={{
+          drawerLabel: props => item(props),
+          drawerItemStyle: {
+            marginHorizontal: 20,
           },
         }}
       />
