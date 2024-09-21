@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useCallback} from 'react';
-import {StyleSheet} from 'react-native';
 import AppHeader from '../components/common/AppHeader/AppHeader';
 import DrawerProfile from '../components/common/DrawerProfile/DrawerProfile';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
@@ -96,27 +95,5 @@ const AppStack = () => {
     </Drawer.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  profileContainer: {
-    padding: 20,
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4', // Adjust the background color
-  },
-  profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-  },
-  profileName: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  profileEmail: {
-    fontSize: 14,
-    color: '#666',
-  },
-});
 
 export default React.memo(AppStack);
