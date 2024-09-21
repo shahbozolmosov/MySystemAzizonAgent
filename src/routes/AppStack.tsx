@@ -1,17 +1,30 @@
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerHeaderProps,
+  DrawerItem,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
+import React, {useCallback} from 'react';
+import AppHeader from '../components/common/AppHeader/AppHeader';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
 import HomeScreen from '../screens/main/HomeScreen';
 
-export type AppStackParamList = {
+export type AppTabStackParamList = {
   HomeScreen: undefined;
   AnalyticsScreen: undefined;
 };
 
-// const Stack = createNativeStackNavigator<AppStackParamList>();
-const Tab = createMaterialTopTabNavigator<AppStackParamList>();
+type AppDrawerStackParamList = {
+  TabStack: undefined;
+};
 
-const AppStack = () => {
+const Tab = createMaterialTopTabNavigator<AppTabStackParamList>();
+const Drawer = createDrawerNavigator<AppDrawerStackParamList>();
+
+const AppTabStack = () => {
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
@@ -48,6 +61,51 @@ const AppStack = () => {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+function CustomDrawerContent(props: DrawerContentComponentProps) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Close drawer"
+        onPress={() => props.navigation.closeDrawer()}
+      />
+      <DrawerItem
+        label="Toggle drawer"
+        onPress={() => props.navigation.toggleDrawer()}
+      />
+    </DrawerContentScrollView>
+  );
+}
+
+const AppStack = () => {
+  const myHeader = useCallback(({navigation}: DrawerHeaderProps) => {
+    return <AppHeader drawerNavigation={navigation} />;
+  }, []);
+
+  const drawerContent = useCallback(
+    (props: DrawerContentComponentProps) => <CustomDrawerContent {...props} />,
+    [],
+  );
+
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        header: myHeader,
+      }}
+      drawerContent={drawerContent}>
+      <Drawer.Screen
+        name="TabStack"
+        component={AppTabStack}
+        options={{
+          drawerItemStyle: {
+            display: 'none',
+          },
+        }}
+      />
+    </Drawer.Navigator>
   );
 };
 
