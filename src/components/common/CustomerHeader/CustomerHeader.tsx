@@ -1,27 +1,39 @@
-import React, {memo} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Feather';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
+import React, {memo, useCallback} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import {RootStackParamList} from '../../../routes/RootNavigator';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
 
-interface CustomerHeaderProps {
-  title: string;
-}
+type CustomerHeaderNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'CustomerStack'
+>;
 
-const CustomerHeader: React.FC<CustomerHeaderProps> = ({title}) => {
-  const navigation = useNavigation();
+type CustomerHeaderProps = {
+  drawerNavigation: DrawerNavigationProp<ParamListBase, string, undefined>;
+};
+
+const CustomerHeader: React.FC<CustomerHeaderProps> = ({drawerNavigation}) => {
+  const navigation = useNavigation<CustomerHeaderNavigationProp>();
+
+  const toggleDrawer = useCallback(() => {
+    drawerNavigation.toggleDrawer();
+  }, [drawerNavigation]);
 
   return (
     <View style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={toggleDrawer}>
         <Icon name="menu" size={24} color="#22282b" />
       </TouchableOpacity>
 
       {/* Header Title */}
       <Text h4 h4Style={styles.title}>
-        {title}
+        Eshmatov T.
       </Text>
 
       {/* Right Side Buttons */}
@@ -30,7 +42,7 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({title}) => {
         <PhoneBtn phoneNumber="+998997470473" />
 
         {/* Profile Button */}
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.popToTop()}>
           <Icon name="x" size={22} color="#22282b" />
         </TouchableOpacity>
       </View>

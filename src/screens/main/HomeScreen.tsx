@@ -22,7 +22,7 @@ function HomeScreen({navigation}: Props) {
       <Button
         type="clear"
         title={'Go to customer home'}
-        onPress={() => navigation.replace('CustomerStack')}
+        onPress={() => navigation.push('CustomerStack')}
       />
     </Container>
   );

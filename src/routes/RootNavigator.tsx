@@ -29,9 +29,9 @@ const RootNavigator = () => {
           <RootStack.Screen
             name="AppStack"
             component={AppStack}
-            options={{
-              animationTypeForReplace: isAuthenticated ? 'pop' : 'push',
-            }}
+            // options={{
+            //   animationTypeForReplace: isAuthenticated ? 'pop' : 'push',
+            // }}
           />
           <RootStack.Screen name="CustomerStack" component={CustomerStack} />
         </>

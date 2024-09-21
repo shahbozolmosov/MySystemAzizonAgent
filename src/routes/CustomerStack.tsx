@@ -1,11 +1,20 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerHeaderProps,
+  DrawerItem,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
+import CustomerHeader from '../components/common/CustomerHeader/CustomerHeader';
 import CustomerHomeScreen from '../screens/customer/CustomerHomeScreen';
 import CustomerOrderScreen from '../screens/customer/CustomerOrderScreen';
-import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
-import {ITabBarIconProps} from '../types/type';
 import CustomerReportScreen from '../screens/customer/CustomerReportScreen';
+import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
+import AnalyticsScreen from '../screens/main/AnalyticsScreen';
+import {ITabBarIconProps} from '../types/type';
 
 export type CustomerStackParamList = {
   CustomerHomeScreen: undefined;
@@ -16,7 +25,7 @@ export type CustomerStackParamList = {
 
 const Tab = createBottomTabNavigator<CustomerStackParamList>();
 
-const CustomerStack = () => {
+const TabNavigation = () => {
   // Icons
   const icon = useCallback(
     ({color, size, name}: ITabBarIconProps) => (
@@ -77,6 +86,50 @@ const CustomerStack = () => {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Close drawer"
+        onPress={() => props.navigation.closeDrawer()}
+      />
+      <DrawerItem
+        label="Toggle drawer"
+        onPress={() => props.navigation.toggleDrawer()}
+      />
+    </DrawerContentScrollView>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+const CustomerStack = () => {
+  const myHeader = useCallback(
+    ({navigation, route, options}: DrawerHeaderProps) => {
+      return <CustomerHeader drawerNavigation={navigation} />;
+    },
+    [],
+  );
+
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        // headerShown: false,
+        header: myHeader,
+        overlayColor: 'rgba(30, 35, 44, 0.17)',
+      }}>
+      <Drawer.Screen
+        name="Home"
+        component={TabNavigation}
+        options={{drawerLabel: 'Asosiy', drawerItemStyle: {display: 'none'}}}
+      />
+      <Drawer.Screen name="Other" component={AnalyticsScreen} />
+    </Drawer.Navigator>
   );
 };
 
