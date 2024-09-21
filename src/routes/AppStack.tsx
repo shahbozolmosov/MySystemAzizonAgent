@@ -1,6 +1,5 @@
 import {
   createDrawerNavigator,
-  DrawerContentComponentProps,
   DrawerHeaderProps,
 } from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -63,7 +62,7 @@ const AppTabStack = () => {
   );
 };
 
-function CustomDrawerContent(props: DrawerContentComponentProps) {
+function CustomDrawerContent() {
   return <DrawerProfile />;
 }
 
@@ -72,10 +71,7 @@ const AppStack = () => {
     return <AppHeader drawerNavigation={navigation} />;
   }, []);
 
-  const drawerContent = useCallback(
-    (props: DrawerContentComponentProps) => <CustomDrawerContent {...props} />,
-    [],
-  );
+  const drawerContent = useCallback(() => <CustomDrawerContent />, []);
 
   return (
     <Drawer.Navigator
