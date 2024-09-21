@@ -4,6 +4,7 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 import {RootStackParamList} from '../../routes/RootNavigator';
+import {useGetCustomerAllQuery} from '../../app/services/customer/customer';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -15,6 +16,10 @@ type Props = {
 };
 
 function HomeScreen({navigation}: Props) {
+  // API
+  const customerRes = useGetCustomerAllQuery();
+  console.log('🚀 ~ HomeScreen ~ customerRes:', customerRes.data);
+
   return (
     <Container>
       <Text>HomeScreen</Text>
