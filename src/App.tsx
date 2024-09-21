@@ -18,10 +18,10 @@ const App: React.FC = () => {
         <AuthProvider>
           <ThemeProvider theme={theme}>
             <StatusBar
-              backgroundColor={'#1e232c'}
+              backgroundColor={'#ffffff'}
               animated
               showHideTransition={'slide'}
-              barStyle={'light-content'}
+              barStyle={'dark-content'}
             />
             <NavigationContainer>
               <Router />

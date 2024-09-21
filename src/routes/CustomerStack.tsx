@@ -29,6 +29,7 @@ const CustomerStack = () => {
     <Tab.Navigator
       initialRouteName="CustomerHome"
       screenOptions={{
+        headerShown: false,
         tabBarInactiveTintColor: '#7e919a',
         tabBarActiveTintColor: '#22282b',
 

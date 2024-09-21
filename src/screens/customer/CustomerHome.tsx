@@ -1,12 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import Container from '../../components/common/Container/Container';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import CustomerHeader from '../../components/common/CustomerHeader/CustomerHeader';
 
 const CustomerHome = () => {
   return (
-    <Container>
+    <SafeAreaView>
+      <CustomerHeader title="Shahboz" />
+
       <Text>CustomerHome</Text>
-    </Container>
+    </SafeAreaView>
   );
 };
 
