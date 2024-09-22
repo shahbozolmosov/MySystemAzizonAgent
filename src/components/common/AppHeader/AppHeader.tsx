@@ -9,7 +9,7 @@ import {RootStackParamList} from '../../../routes/RootNavigator';
 
 type AppHeaderNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  'AppStack'
+  'AppRootStack'
 >;
 
 type AppHeaderProps = {

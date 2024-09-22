@@ -1,14 +1,14 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Button} from '@rneui/themed';
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
+import {useGetCustomerAllQuery} from '../../app/services/customer/customer';
 import Container from '../../components/common/Container/Container';
 import {RootStackParamList} from '../../routes/RootNavigator';
-import {useGetCustomerAllQuery} from '../../app/services/customer/customer';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  'AppStack'
+  'AppRootStack'
 >;
 
 type Props = {
@@ -33,6 +33,4 @@ function HomeScreen({navigation}: Props) {
   );
 }
 
-const styles = StyleSheet.create({});
-
-export default HomeScreen;
+export default React.memo(HomeScreen);

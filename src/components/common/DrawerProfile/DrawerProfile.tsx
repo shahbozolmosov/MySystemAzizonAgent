@@ -1,21 +1,35 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {useTypesSelector} from '../../../app/store';
-import {selectedUser} from '../../../app/services/auth/authSlice';
-import ProfileImage from '../../../../assets/profile.png';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Image} from '@rneui/themed';
+import React, {useCallback} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import ProfileImage from '../../../../assets/profile.png';
+import {selectedUser} from '../../../app/services/auth/authSlice';
+import {useTypesSelector} from '../../../app/store';
+import {AppNativeStackParamList} from '../../../routes/App/AppNativeStack';
+
+type DrawerProfileNavigationProp = NativeStackNavigationProp<
+  AppNativeStackParamList,
+  'Profile'
+>;
 
 const DrawerProfile = () => {
+  const navigation = useNavigation<DrawerProfileNavigationProp>();
+
   const user = useTypesSelector(selectedUser);
 
+  const handleNavigate = useCallback(() => {
+    navigation.navigate('Profile');
+  }, [navigation]);
+
   return (
-    <View style={styles.container}>
+    <Pressable onPress={handleNavigate} style={styles.container}>
       <Image source={ProfileImage} style={styles.profileImage} />
       <View>
         <Text style={styles.name}>{`${user?.ism} ${user?.familya}`}</Text>
         <Text style={styles.login}>{user?.login}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

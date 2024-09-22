@@ -9,4 +9,4 @@ const AllOrderHistoryScreen = () => {
   );
 };
 
-export default AllOrderHistoryScreen;
+export default React.memo(AllOrderHistoryScreen);
