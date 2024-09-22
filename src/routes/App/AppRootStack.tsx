@@ -53,6 +53,7 @@ const AppRootStack = () => {
           drawerItemStyle: {
             display: 'none',
           },
+          swipeEnabled: true,
         }}
       />
       <Drawer.Screen
