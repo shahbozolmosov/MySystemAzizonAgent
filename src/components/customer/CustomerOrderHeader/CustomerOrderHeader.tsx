@@ -1,8 +1,14 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Badge, Text} from '@rneui/themed';
-import React, {memo} from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Badge, SearchBar, Text} from '@rneui/themed';
+import React, {createRef, memo, useRef, useState} from 'react';
+import {
+  Alert,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import MenuBtn from '../MenuBtn/MenuBtn';
@@ -12,36 +18,61 @@ type RootStackNavigationProp = NativeStackNavigationProp<
   'CustomerStack'
 >;
 
-type CustomerOrderHeaderProps = {};
+type CustomerOrderHeaderProps = {
+  search: string;
+  setSearch: (value: string) => void;
+};
 
-const CustomerOrderHeader: React.FC<CustomerOrderHeaderProps> = ({}) => {
+const CustomerOrderHeader: React.FC<CustomerOrderHeaderProps> = ({
+  search,
+  setSearch,
+}) => {
   // Navigation
   const navigation = useNavigation<RootStackNavigationProp>();
 
+  // Ref
+  const searchRef = useRef<TextInput | null>(null);
+
   return (
-    <View style={styles.container}>
-      {/* Back Button */}
-      <MenuBtn />
+    <>
+      <View style={styles.container}>
+        {/* Back Button */}
+        <MenuBtn />
 
-      {/* Header Title */}
-      <Text h4 h4Style={styles.title}>
-        Yangi buyurtma
-      </Text>
+        {/* Header Title */}
+        <Text h4 h4Style={styles.title}>
+          Yangi buyurtma
+        </Text>
 
-      {/* Right Side Buttons */}
-      <View style={styles.rightSideButtons}>
-        <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Basket')}>
-          <View style={styles.badge}>
-            <Badge
-              badgeStyle={styles.badgeBody}
-              textStyle={styles.badgeText}
-              value="20"
-            />
-          </View>
-          <Icon name="shopping-bag" size={22} color="#22282b" />
-        </TouchableOpacity>
+        {/* Right Side Buttons */}
+        <View style={styles.rightSideButtons}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => Alert.alert('Basket')}>
+            <View style={styles.badge}>
+              <Badge
+                badgeStyle={styles.badgeBody}
+                textStyle={styles.badgeText}
+                value="20"
+              />
+            </View>
+            <Icon name="shopping-bag" size={22} color="#22282b" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+
+      <SearchBar
+        ref={searchRef}
+        placeholder="Qidirish"
+        onChangeText={value => setSearch(value)}
+        value={search}
+        platform="ios"
+        searchIcon={<Icon name="search" size={24} />}
+        clearIcon={<Icon name="x" size={16} />}
+        showCancel={false}
+        cancelButtonTitle={'Orqaga'}
+      />
+    </>
   );
 };
 
