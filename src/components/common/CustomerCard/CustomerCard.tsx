@@ -1,5 +1,12 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 const cardData = {
@@ -29,15 +36,22 @@ const CustomerCard = () => {
 
   return (
     <View style={styles.card}>
-      <View style={styles.avatar}>
-        <Text>
-          {avatarTitle[0][0]} {avatarTitle[1][0]}
-        </Text>
-      </View>
-      <View style={styles.body}>
-        <Text style={styles.title}>{cardData.fio}</Text>
-        <Text style={styles.caption}>{cardData.korxona}</Text>
-      </View>
+      <TouchableHighlight
+        underlayColor={'#ffffff'}
+        onPress={() => Alert.alert('render')}>
+        <View style={styles.touchable}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>
+              {avatarTitle[0][0]}
+              {avatarTitle[1][0]}
+            </Text>
+          </View>
+          <View style={styles.body}>
+            <Text style={styles.title}>{cardData.fio}</Text>
+            <Text style={styles.caption}>{cardData.korxona}</Text>
+          </View>
+        </View>
+      </TouchableHighlight>
       <View style={styles.operation}>
         <TouchableOpacity>
           <Icon name="more-horizontal" size={24} />
@@ -51,11 +65,48 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     gap: 14,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
   },
-  avatar: {},
-  body: {},
-  title: {},
-  caption: {},
+  touchable: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 14,
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+    backgroundColor: '#00aa55',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 44 / 2,
+  },
+  avatarText: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#ffffffff',
+  },
+  body: {
+    flexGrow: 1,
+  },
+  title: {
+    fontFamily: 'Roboto-Black',
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 18,
+    color: '#000000',
+    marginBottom: 4,
+  },
+  caption: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 14,
+    color: '#000000',
+  },
   operation: {},
 });
 

@@ -1,11 +1,9 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Button} from '@rneui/themed';
 import React from 'react';
-import {Text} from 'react-native';
 import {useGetCustomerAllQuery} from '../../app/services/customer/customer';
 import Container from '../../components/common/Container/Container';
-import {RootStackParamList} from '../../routes/RootNavigator';
 import CustomerCard from '../../components/common/CustomerCard/CustomerCard';
+import {RootStackParamList} from '../../routes/RootNavigator';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -21,18 +19,16 @@ function HomeScreen({navigation}: Props) {
   const customerRes = useGetCustomerAllQuery();
 
   return (
-    <Container>
-      <Text>HomeScreen</Text>
-
+    <Container paddingHorizontal={0}>
       <CustomerCard />
 
-      <Text>{JSON.stringify(customerRes.data, null, 2)}</Text>
+      {/* <Text>{JSON.stringify(customerRes.data, null, 2)}</Text> */}
 
-      <Button
+      {/* <Button
         type="clear"
         title={'Go to customer home'}
         onPress={() => navigation.push('CustomerStack')}
-      />
+      /> */}
     </Container>
   );
 }
