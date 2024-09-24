@@ -4,7 +4,7 @@ import {api} from '../api';
 
 const PRODUCT_TAG = 'PRODUCT_TAG';
 
-interface ICustomer {
+export interface ICustomer {
   id: string;
   fio: string;
   korxona: string;
