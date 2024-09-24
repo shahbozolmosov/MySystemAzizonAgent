@@ -18,14 +18,6 @@ function HomeScreen() {
   return (
     <Container paddingHorizontal={0}>
       <CustomerCardList list={customerData} />
-
-      {/* <Text>{JSON.stringify(customerRes.data, null, 2)}</Text> */}
-
-      {/* <Button
-        type="clear"
-        title={'Go to customer home'}
-        onPress={() => navigation.push('CustomerStack')}
-      /> */}
     </Container>
   );
 }
