@@ -1,9 +1,9 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   createDrawerNavigator,
-  DrawerHeaderProps
+  DrawerHeaderProps,
 } from '@react-navigation/drawer';
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import CustomerHeader from '../components/common/CustomerHeader/CustomerHeader';
 import CustomerHomeScreen from '../screens/customer/CustomerHomeScreen';
@@ -11,7 +11,7 @@ import CustomerOrderScreen from '../screens/customer/CustomerOrderScreen';
 import CustomerReportScreen from '../screens/customer/CustomerReportScreen';
 import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
-import { ITabBarIconProps } from '../types/type';
+import {ITabBarIconProps} from '../types/types';
 
 export type CustomerStackParamList = {
   CustomerHomeScreen: undefined;
