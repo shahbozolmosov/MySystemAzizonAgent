@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 const cardData = {
   id: '966',
@@ -36,9 +28,7 @@ const CustomerCard = () => {
 
   return (
     <View style={styles.card}>
-      <TouchableHighlight
-        underlayColor={'#ffffff'}
-        onPress={() => Alert.alert('render')}>
+      <TouchableOpacity onPress={() => Alert.alert('render')}>
         <View style={styles.touchable}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>
@@ -51,12 +41,7 @@ const CustomerCard = () => {
             <Text style={styles.caption}>{cardData.korxona}</Text>
           </View>
         </View>
-      </TouchableHighlight>
-      <View style={styles.operation}>
-        <TouchableOpacity>
-          <Icon name="more-horizontal" size={24} />
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -71,7 +56,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   touchable: {
-    flex: 1,
     flexDirection: 'row',
     gap: 14,
   },
@@ -107,7 +91,6 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     color: '#000000',
   },
-  operation: {},
 });
 
 export default CustomerCard;
