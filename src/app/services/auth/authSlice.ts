@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {getUser, IUser} from '../user/user';
 import {login} from './auth';
 import {RootState} from '../../store';
@@ -22,6 +22,9 @@ const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setToken: (state, action: PayloadAction<string | null>) => {
+      state.token = action.payload;
+    },
     logout: state => {
       Object.assign(state, initialState);
 
@@ -47,7 +50,10 @@ const slice = createSlice({
           return;
         }
 
-        state.user = action.payload.data;
+        const userData = action.payload.data;
+
+        state.user = userData;
+        state.token = userData.token;
         state.isAuthenticated = true;
       })
       .addMatcher(getUser.matchRejected, state => {
@@ -81,10 +87,12 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-export const {logout} = slice.actions;
+export const {setToken, logout} = slice.actions;
 
 export const selectedIsAuthenticated = (state: RootState): boolean =>
   state.auth.isAuthenticated;
 export const selectedUser = (state: RootState): IUser | null => state.auth.user;
+export const selectedToken = (state: RootState): IUser | null =>
+  state.auth.token;
 export const selectedIsLoading = (state: RootState): boolean =>
   state.auth.isLoading;
