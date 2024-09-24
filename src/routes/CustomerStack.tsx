@@ -3,6 +3,7 @@ import {
   createDrawerNavigator,
   DrawerHeaderProps,
 } from '@react-navigation/drawer';
+import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import CustomerHeader from '../components/common/CustomerHeader/CustomerHeader';
@@ -12,17 +13,28 @@ import CustomerReportScreen from '../screens/customer/CustomerReportScreen';
 import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
 import {ITabBarIconProps} from '../types/types';
+import {RootStackParamList} from './RootNavigator';
 
 export type CustomerStackParamList = {
-  CustomerHomeScreen: undefined;
-  CustomerOrderScreen: undefined;
-  CustomerVisitScreen: undefined;
-  CustomerReportScreen: undefined;
+  Home: {
+    customerId: string;
+  };
+};
+export type CustomerTabStackParamList = {
+  CustomerHomeScreen: {customerId: string};
+  CustomerOrderScreen: {customerId: string};
+  CustomerVisitScreen: {customerId: string};
+  CustomerReportScreen: {customerId: string};
 };
 
-const Tab = createBottomTabNavigator<CustomerStackParamList>();
+const Tab = createBottomTabNavigator<CustomerTabStackParamList>();
+
+type TabNavigationRouteProp = RouteProp<RootStackParamList, 'CustomerStack'>;
 
 const TabNavigation = () => {
+  const route = useRoute<TabNavigationRouteProp>();
+  const {customerId} = route.params;
+
   // Icons
   const icon = useCallback(
     ({color, size, name}: ITabBarIconProps) => (
@@ -54,6 +66,7 @@ const TabNavigation = () => {
           tabBarLabel: 'Asosiy',
           tabBarIcon: props => icon({...props, name: 'bar-chart-2'}),
         }}
+        initialParams={{customerId}}
       />
       <Tab.Screen
         name="CustomerOrderScreen"
@@ -89,6 +102,9 @@ const TabNavigation = () => {
 const Drawer = createDrawerNavigator();
 
 const CustomerStack = () => {
+  const route = useRoute<TabNavigationRouteProp>();
+  const {customerId} = route.params;
+
   const myHeader = useCallback(({navigation}: DrawerHeaderProps) => {
     return <CustomerHeader drawerNavigation={navigation} />;
   }, []);
@@ -104,6 +120,7 @@ const CustomerStack = () => {
         name="Home"
         component={TabNavigation}
         options={{drawerLabel: 'Asosiy', drawerItemStyle: {display: 'none'}}}
+        initialParams={{customerId}}
       />
       <Drawer.Screen name="Other" component={AnalyticsScreen} />
     </Drawer.Navigator>
