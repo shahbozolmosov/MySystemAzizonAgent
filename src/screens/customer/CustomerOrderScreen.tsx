@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
+import Container from '../../components/common/Container/Container';
 
 const CustomerOrderScreen = () => {
   return (
-    <View>
+    <Container>
       <Text>CustomerOrderScreen</Text>
-    </View>
+    </Container>
   );
 };
 

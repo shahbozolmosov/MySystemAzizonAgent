@@ -1,17 +1,13 @@
-import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {DrawerActions, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
-import React, {memo, useCallback} from 'react';
+import React, {memo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {ICustomer} from '../../../app/services/customer/customer';
-import {CustomerTabStackParamList} from '../../../routes/CustomerStack';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
-
-type CustomerHeaderDrawerNavigationProp =
-  DrawerNavigationProp<CustomerTabStackParamList>;
+import MenuBtn from '../MenuBtn/MenuBtn';
 
 type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -28,7 +24,6 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({
   isLoading,
 }) => {
   // Navigation
-  const drawerNavigation = useNavigation<CustomerHeaderDrawerNavigationProp>();
   const navigation = useNavigation<RootStackNavigationProp>();
 
   // Customer
@@ -46,16 +41,10 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({
     lastName = fullName.split(' ')[1].charAt(0);
   }
 
-  const toggleDrawer = useCallback(() => {
-    drawerNavigation.dispatch(DrawerActions.openDrawer());
-  }, [drawerNavigation]);
-
   return (
     <View style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity onPress={toggleDrawer}>
-        <Icon name="menu" size={24} color="#22282b" />
-      </TouchableOpacity>
+      <MenuBtn />
 
       {/* Header Title */}
       <Text h4 h4Style={styles.title}>
@@ -88,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 15,
+    paddingVertical: 15,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
