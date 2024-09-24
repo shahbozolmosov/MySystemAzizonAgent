@@ -1,7 +1,8 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import Container from '../../components/common/Container/Container';
+import CustomerHeader from '../../components/common/CustomerHeader/CustomerHeader';
 import {RootStackParamList} from '../../routes/RootNavigator';
 
 type CustomerHomeScreenRouteProp = RouteProp<
@@ -13,9 +14,12 @@ const CustomerHomeScreen = ({}) => {
   const route = useRoute<CustomerHomeScreenRouteProp>();
 
   return (
-    <SafeAreaView>
+    <Container>
+      <CustomerHeader />
+
+      {/* <Button title={'Toggle drawer'} onPress={toggleDrawer} /> */}
       <Text>CustomerHome {JSON.stringify(route.params)}</Text>
-    </SafeAreaView>
+    </Container>
   );
 };
 

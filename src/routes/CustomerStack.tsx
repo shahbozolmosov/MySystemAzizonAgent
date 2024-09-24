@@ -1,12 +1,8 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {
-  createDrawerNavigator,
-  DrawerHeaderProps,
-} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import CustomerHeader from '../components/common/CustomerHeader/CustomerHeader';
 import CustomerHomeScreen from '../screens/customer/CustomerHomeScreen';
 import CustomerOrderScreen from '../screens/customer/CustomerOrderScreen';
 import CustomerReportScreen from '../screens/customer/CustomerReportScreen';
@@ -105,15 +101,11 @@ const CustomerStack = () => {
   const route = useRoute<TabNavigationRouteProp>();
   const {customerId} = route.params;
 
-  const myHeader = useCallback(({navigation}: DrawerHeaderProps) => {
-    return <CustomerHeader drawerNavigation={navigation} />;
-  }, []);
-
   return (
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={{
-        header: myHeader,
+        headerShown: false,
         overlayColor: 'rgba(30, 35, 44, 0.17)',
       }}>
       <Drawer.Screen

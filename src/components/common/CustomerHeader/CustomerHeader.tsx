@@ -1,27 +1,30 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {Text} from '@rneui/themed';
 import React, {memo, useCallback} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import {RootStackParamList} from '../../../routes/RootNavigator';
+import {CustomerTabStackParamList} from '../../../routes/CustomerStack';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
+import {RootStackParamList} from '../../../routes/RootNavigator';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-type CustomerHeaderNavigationProp = NativeStackNavigationProp<
+type CustomerHeaderDrawerNavigationProp =
+  DrawerNavigationProp<CustomerTabStackParamList>;
+
+type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'CustomerStack'
 >;
 
-type CustomerHeaderProps = {
-  drawerNavigation: DrawerNavigationProp<ParamListBase, string, undefined>;
-};
+type CustomerHeaderProps = {};
 
-const CustomerHeader: React.FC<CustomerHeaderProps> = ({drawerNavigation}) => {
-  const navigation = useNavigation<CustomerHeaderNavigationProp>();
+const CustomerHeader: React.FC<CustomerHeaderProps> = () => {
+  const drawerNavigation = useNavigation<CustomerHeaderDrawerNavigationProp>();
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   const toggleDrawer = useCallback(() => {
-    drawerNavigation.toggleDrawer();
+    drawerNavigation.dispatch(DrawerActions.openDrawer());
   }, [drawerNavigation]);
 
   return (
