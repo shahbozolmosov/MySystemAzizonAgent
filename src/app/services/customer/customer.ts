@@ -2,8 +2,6 @@ import {allUrls} from '../../../constants/api';
 import {IApiRes} from '../../../types/api';
 import {api} from '../api';
 
-const PRODUCT_TAG = 'PRODUCT_TAG';
-
 export interface ICustomer {
   id: string;
   fio: string;
@@ -30,16 +28,27 @@ export interface ICustomer {
 interface ICustomerRes extends IApiRes {
   data: ICustomer[];
 }
+// show
+interface ICustomerByIdRes extends IApiRes {
+  data: ICustomer;
+}
+
+// TAG
+const CUSTOMER_TAG = 'CUSTOMER_TAG';
 
 export const customerApi = api
-  .enhanceEndpoints({addTagTypes: [PRODUCT_TAG]})
+  .enhanceEndpoints({addTagTypes: [CUSTOMER_TAG]})
   .injectEndpoints({
     endpoints: build => ({
-      // index
+      // Index
       getCustomerAll: build.query<ICustomerRes, void>({
         query: () => allUrls.customerGetAll,
+      }),
+      // Show
+      getCustomerById: build.query<ICustomerByIdRes, string>({
+        query: id => allUrls.customerGetById(id),
       }),
     }),
   });
 
-export const {useGetCustomerAllQuery} = customerApi;
+export const {useGetCustomerAllQuery, useGetCustomerByIdQuery} = customerApi;

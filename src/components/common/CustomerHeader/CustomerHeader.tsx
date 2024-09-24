@@ -1,13 +1,14 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
 import React, {memo, useCallback} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import {ICustomer} from '../../../app/services/customer/customer';
 import {CustomerTabStackParamList} from '../../../routes/CustomerStack';
-import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
 import {RootStackParamList} from '../../../routes/RootNavigator';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
 
 type CustomerHeaderDrawerNavigationProp =
   DrawerNavigationProp<CustomerTabStackParamList>;
@@ -17,11 +18,33 @@ type RootStackNavigationProp = NativeStackNavigationProp<
   'CustomerStack'
 >;
 
-type CustomerHeaderProps = {};
+type CustomerHeaderProps = {
+  customer: ICustomer | null;
+  isLoading: boolean;
+};
 
-const CustomerHeader: React.FC<CustomerHeaderProps> = () => {
+const CustomerHeader: React.FC<CustomerHeaderProps> = ({
+  customer,
+  isLoading,
+}) => {
+  // Navigation
   const drawerNavigation = useNavigation<CustomerHeaderDrawerNavigationProp>();
   const navigation = useNavigation<RootStackNavigationProp>();
+
+  // Customer
+  const fullName = customer?.fio || '';
+  const telefon = customer?.telefon || '';
+
+  let firstName = '';
+  let lastName = '';
+
+  if (fullName && fullName.split(' ').length > 0) {
+    firstName = fullName.split(' ')[0];
+  }
+
+  if (fullName && fullName.split(' ').length > 1) {
+    lastName = fullName.split(' ')[1].charAt(0);
+  }
 
   const toggleDrawer = useCallback(() => {
     drawerNavigation.dispatch(DrawerActions.openDrawer());
@@ -36,13 +59,20 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = () => {
 
       {/* Header Title */}
       <Text h4 h4Style={styles.title}>
-        Eshmatov T.
+        {isLoading ? (
+          'Yuklanmoqda...'
+        ) : (
+          <>
+            {firstName}&nbsp;
+            {lastName}.
+          </>
+        )}
       </Text>
 
       {/* Right Side Buttons */}
       <View style={styles.rightSideButtons}>
         {/* Call Button */}
-        <PhoneBtn phoneNumber="+998997470473" />
+        <PhoneBtn phoneNumber={telefon} />
 
         {/* Profile Button */}
         <TouchableOpacity onPress={() => navigation.popToTop()}>
