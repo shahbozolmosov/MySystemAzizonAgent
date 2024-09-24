@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
+import MainScrollView from '../../components/common/MainScrollView/MainScrollView';
 import CustomerOrderHeader from '../../components/customer/CustomerOrderHeader/CustomerOrderHeader';
 
 const CustomerOrderScreen = () => {
@@ -9,11 +10,11 @@ const CustomerOrderScreen = () => {
   return (
     <Container>
       <CustomerOrderHeader search={search} setSearch={setSearch} />
-      <Text>CustomerOrderScreen</Text>
+      <MainScrollView>
+        <Text>Lorem</Text>
+      </MainScrollView>
     </Container>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default React.memo(CustomerOrderScreen);
