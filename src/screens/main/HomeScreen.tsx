@@ -5,6 +5,7 @@ import {Text} from 'react-native';
 import {useGetCustomerAllQuery} from '../../app/services/customer/customer';
 import Container from '../../components/common/Container/Container';
 import {RootStackParamList} from '../../routes/RootNavigator';
+import CustomerCard from '../../components/common/CustomerCard/CustomerCard';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -18,11 +19,14 @@ type Props = {
 function HomeScreen({navigation}: Props) {
   // API
   const customerRes = useGetCustomerAllQuery();
-  console.log('🚀 ~ HomeScreen ~ customerRes:', customerRes.data);
 
   return (
     <Container>
       <Text>HomeScreen</Text>
+
+      <CustomerCard />
+
+      <Text>{JSON.stringify(customerRes.data, null, 2)}</Text>
 
       <Button
         type="clear"
