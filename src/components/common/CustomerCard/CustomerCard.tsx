@@ -1,10 +1,13 @@
-import React from 'react';
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ICustomer} from '../../../app/services/customer/customer';
 
-export interface CustomerCardProps extends ICustomer {}
+export interface ICustomerCard extends ICustomer {}
+interface ICustomerCardProps extends ICustomerCard {
+  onNavigate: (customerId: string) => void;
+}
 
-const CustomerCard = ({fio, korxona}: CustomerCardProps) => {
+const CustomerCard = ({id, fio, korxona, onNavigate}: ICustomerCardProps) => {
   const arrFio = fio?.split(' ');
   let firstName = '';
   let lastName = '';
@@ -13,10 +16,14 @@ const CustomerCard = ({fio, korxona}: CustomerCardProps) => {
     firstName = arrFio[0];
     lastName = arrFio[1];
   }
-  
+
+  const handleNavigate = useCallback(() => {
+    onNavigate(id);
+  }, [id, onNavigate]);
+
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={() => Alert.alert('render')}>
+      <TouchableOpacity onPress={handleNavigate}>
         <View style={styles.touchable}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>

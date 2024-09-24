@@ -1,16 +1,18 @@
 import React from 'react';
 
 // Routes
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { selectedIsAuthenticated } from '../app/services/auth/authSlice';
-import { useTypesSelector } from '../app/store';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {selectedIsAuthenticated} from '../app/services/auth/authSlice';
+import {useTypesSelector} from '../app/store';
 import AuthStack from './AuthStack';
 import CustomerStack from './CustomerStack';
 import AppRootStack from './App/AppRootStack';
 
 export type RootStackParamList = {
   AppRootStack: undefined;
-  CustomerStack: undefined;
+  CustomerStack: {
+    customerId: string;
+  };
   AuthStack: undefined;
 };
 

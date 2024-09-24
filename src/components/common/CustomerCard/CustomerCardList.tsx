@@ -1,18 +1,38 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useCallback} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import CustomerCard, {CustomerCardProps} from './CustomerCard';
+import {RootStackParamList} from '../../../routes/RootNavigator';
+import CustomerCard, {ICustomerCard} from './CustomerCard';
 
 type CustomerCardListProps = {
-  list: CustomerCardProps[];
+  list: ICustomerCard[];
 };
 
+type CustomerCardListNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'AppRootStack'
+>;
 const CustomerCardList = ({list}: CustomerCardListProps) => {
+  const navigation = useNavigation<CustomerCardListNavigationProp>();
+
+  const handleNavigate = useCallback(
+    (customerId: string) => {
+      navigation.push('CustomerStack', {customerId});
+    },
+    [navigation],
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mijozlar</Text>
       <View style={styles.list}>
         {list.map(customer => (
-          <CustomerCard {...customer} key={customer.id} />
+          <CustomerCard
+            onNavigate={handleNavigate}
+            {...customer}
+            key={customer.id}
+          />
         ))}
       </View>
     </View>

@@ -1,25 +1,13 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useMemo} from 'react';
 import {
   ICustomer,
   useGetCustomerAllQuery,
 } from '../../app/services/customer/customer';
 import Container from '../../components/common/Container/Container';
-import CustomerCard from '../../components/common/CustomerCard/CustomerCard';
-import {RootStackParamList} from '../../routes/RootNavigator';
 import CustomerCardList from '../../components/common/CustomerCard/CustomerCardList';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'AppRootStack'
->;
-
-type Props = {
-  navigation: HomeScreenNavigationProp;
-};
-
-function HomeScreen({navigation}: Props) {
+function HomeScreen() {
   // API
   const customerRes = useGetCustomerAllQuery();
 
