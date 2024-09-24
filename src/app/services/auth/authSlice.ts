@@ -22,7 +22,12 @@ const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // TODO logout with local token delete
+    logout: state => {
+      Object.assign(state, initialState);
+
+      // Delete the token
+      deleteToken();
+    },
   },
   extraReducers: builder => {
     builder
@@ -76,7 +81,7 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-export const {} = slice.actions;
+export const {logout} = slice.actions;
 
 export const selectedIsAuthenticated = (state: RootState): boolean =>
   state.auth.isAuthenticated;
