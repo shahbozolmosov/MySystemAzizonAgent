@@ -1,10 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
-import React, {memo, useCallback} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {RootStackParamList} from '../../../routes/RootNavigator';
+import IconButton from '../../ui/IconButton/IconButton';
+import SearchInput from '../../ui/SearchInput/SearchInput';
 
 type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -13,20 +15,45 @@ type RootStackNavigationProp = NativeStackNavigationProp<
 
 type CustomerHeaderOperationProps = {
   customElements?: React.ReactNode;
+  title: string;
+  showSearch?: boolean;
 };
 
 const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
   customElements,
+  title,
+  showSearch,
 }) => {
   // Navigation
   const navigation = useNavigation<RootStackNavigationProp>();
+
+  // Ref
+  const searchRef = useRef<TextInput>(null);
+
+  // State
+  const [showSearchInput, setShowSearchInput] = useState(false);
 
   // Handle back
   const handleBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
-  return (
+  // Handle show search input
+  const handleShowSearchInput = useCallback(() => {
+    setShowSearchInput(prev => !prev);
+  }, []);
+
+  useEffect(() => {
+    if (showSearchInput && searchRef.current) {
+      searchRef.current?.focus();
+    }
+  }, [showSearchInput]);
+
+  return showSearchInput ? (
+    <View style={styles.container}>
+      <SearchInput inputRef={searchRef} onCancel={handleShowSearchInput} />
+    </View>
+  ) : (
     <View style={styles.container}>
       {/* Back Button */}
       <TouchableOpacity onPress={handleBack}>
@@ -35,11 +62,16 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
 
       {/* Header Title */}
       <Text h4 h4Style={styles.title}>
-        Buyurtmalar
+        {title}
       </Text>
 
       {/* Right Side Buttons */}
-      <View style={styles.customElements}>{customElements}</View>
+      <View style={styles.customElements}>
+        {showSearch && (
+          <IconButton icon="search" onPress={handleShowSearchInput} />
+        )}
+        {customElements}
+      </View>
     </View>
   );
 };
@@ -49,7 +81,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 15,
+    gap: 10,
+    paddingVertical: 10,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
@@ -61,6 +94,9 @@ const styles = StyleSheet.create({
   customElements: {
     flexDirection: 'row',
     gap: 0,
+  },
+  searchContainer: {
+    flex: 1,
   },
 });
 

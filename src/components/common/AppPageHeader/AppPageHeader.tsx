@@ -27,7 +27,7 @@ const AppPageHeader = ({onBack, title}: AppPageHeaderProps) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 14,
-    padding: 10,
+    paddingVertical: 10,
     marginHorizontal: -10,
     flexDirection: 'row',
     alignItems: 'center',

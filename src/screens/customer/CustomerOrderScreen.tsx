@@ -24,6 +24,7 @@ const CustomerOrderScreen = ({navigation, route}: CustomerOrderProps) => {
   return (
     <Container>
       <CustomerHeaderOperation
+        title="Buyurtmalar"
         customElements={
           <Button
             title={'Yangi'}
