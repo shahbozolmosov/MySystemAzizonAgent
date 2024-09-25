@@ -1,10 +1,9 @@
 import React from 'react';
-import {Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 import MainScrollView from '../../components/common/MainScrollView/MainScrollView';
+import OrderProductCardList from '../../components/common/OrderProductCard/OrderProductCardList';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import IconButton from '../../components/ui/IconButton/IconButton';
-import OrderProductCardList from '../../components/common/OrderProductCard/OrderProductCardList';
 
 const CustomerOrderAddScreen = () => {
   return (
