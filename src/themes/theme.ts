@@ -3,6 +3,7 @@ import {createTheme} from '@rneui/themed';
 export const theme = createTheme({
   lightColors: {
     primary: '#1e232c',
+    secondary: '#007fff',
   },
   darkColors: {
     primary: '#ffffff',
@@ -18,6 +19,7 @@ export const theme = createTheme({
     Button: {
       buttonStyle: {
         borderRadius: 8,
+        paddingHorizontal: 10,
       },
       titleStyle: {
         fontFamily: 'Roboto-Medium',

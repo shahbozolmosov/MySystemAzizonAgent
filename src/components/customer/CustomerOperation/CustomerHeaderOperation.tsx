@@ -5,18 +5,19 @@ import React, {memo, useCallback} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {RootStackParamList} from '../../../routes/RootNavigator';
-import IconButton from '../../ui/IconButton/IconButton';
 
 type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'CustomerStack'
 >;
 
-type CustomerHeaderOperationProps = {};
+type CustomerHeaderOperationProps = {
+  customElements?: React.ReactNode;
+};
 
-const CustomerHeaderOperation: React.FC<
-  CustomerHeaderOperationProps
-> = ({}) => {
+const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
+  customElements,
+}) => {
   // Navigation
   const navigation = useNavigation<RootStackNavigationProp>();
 
@@ -38,12 +39,7 @@ const CustomerHeaderOperation: React.FC<
       </Text>
 
       {/* Right Side Buttons */}
-      <View style={styles.rightSideButtons}>
-        <IconButton icon="search" />
-        <IconButton icon="filter" />
-
-        {/* <TouchableOpacity onPress={() => {}}> */}
-      </View>
+      <View style={styles.customElements}>{customElements}</View>
     </View>
   );
 };
@@ -62,12 +58,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#22282b',
   },
-  rightSideButtons: {
+  customElements: {
     flexDirection: 'row',
     gap: 0,
-  },
-  btn: {
-    marginRight: 15,
   },
 });
 

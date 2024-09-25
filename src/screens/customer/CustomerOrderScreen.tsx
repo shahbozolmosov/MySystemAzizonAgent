@@ -1,24 +1,18 @@
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {Button} from '@rneui/themed';
 import React from 'react';
 import {Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 import MainScrollView from '../../components/common/MainScrollView/MainScrollView';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
-import {RootStackParamList} from '../../routes/RootNavigator';
-
-type CustomerOrderScreenRouteProp = RouteProp<
-  RootStackParamList,
-  'CustomerStack'
->;
 
 const CustomerOrderScreen = () => {
-  // Route
-  const route = useRoute<CustomerOrderScreenRouteProp>();
-  const {customerId} = route.params;
-
   return (
     <Container>
-      <CustomerHeaderOperation />
+      <CustomerHeaderOperation
+        customElements={
+          <Button title={'Yangi'} size="sm" color={'secondary'} />
+        }
+      />
       <MainScrollView>
         <Text>Lorem</Text>
       </MainScrollView>
