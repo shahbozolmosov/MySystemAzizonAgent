@@ -4,13 +4,13 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import CustomerHomeScreen from '../screens/customer/CustomerHomeScreen';
-import CustomerOrderScreen from '../screens/customer/CustomerOrderScreen';
+import CustomerOrderAddScreen from '../screens/customer/CustomerOrderAddScreen';
 import CustomerReportScreen from '../screens/customer/CustomerReportScreen';
 import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
 import {ITabBarIconProps} from '../types/types';
+import CustomerOrderStackScreen from './CustomerOrderStackScreen';
 import {RootStackParamList} from './RootNavigator';
-import CustomerOrderAddScreen from '../screens/customer/CustomerOrderAddScreen';
 
 export type CustomerStackParamList = {
   Home: {
@@ -19,6 +19,7 @@ export type CustomerStackParamList = {
 };
 export type CustomerTabStackParamList = {
   CustomerHomeScreen: {customerId: string};
+  CustomerOrderStackScreen: {customerId: string};
   CustomerOrderScreen: {customerId: string};
   CustomerOrderAddScreen: {customerId: string};
   CustomerVisitScreen: {customerId: string};
@@ -60,19 +61,18 @@ const TabNavigation = () => {
         name="CustomerHomeScreen"
         component={CustomerHomeScreen}
         options={{
-          headerTitleAlign: 'center',
           tabBarLabel: 'Asosiy',
           tabBarIcon: props => icon({...props, name: 'bar-chart-2'}),
         }}
         initialParams={{customerId}}
       />
       <Tab.Screen
-        name="CustomerOrderScreen"
-        component={CustomerOrderScreen}
+        name="CustomerOrderStackScreen"
+        component={CustomerOrderStackScreen}
         options={{
-          headerTitleAlign: 'center',
           tabBarLabel: 'Buyurtma',
           tabBarIcon: props => icon({...props, name: 'shopping-bag'}),
+          tabBarStyle: {display: 'none'},
         }}
         initialParams={{customerId}}
       />
@@ -80,9 +80,9 @@ const TabNavigation = () => {
         name="CustomerOrderAddScreen"
         component={CustomerOrderAddScreen}
         options={{
-          headerTitleAlign: 'center',
           tabBarLabel: 'Buyurtma',
           tabBarItemStyle: {display: 'none'},
+          tabBarShowLabel: false,
         }}
         initialParams={{customerId}}
       />
@@ -90,7 +90,6 @@ const TabNavigation = () => {
         name="CustomerVisitScreen"
         component={CustomerVisitScreen}
         options={{
-          headerTitleAlign: 'center',
           tabBarLabel: 'Tashrif',
           tabBarIcon: props => icon({...props, name: 'compass'}),
         }}
@@ -100,7 +99,6 @@ const TabNavigation = () => {
         name="CustomerReportScreen"
         component={CustomerReportScreen}
         options={{
-          headerTitleAlign: 'center',
           tabBarLabel: 'Hisobot',
           tabBarIcon: props => icon({...props, name: 'file-text'}),
         }}
