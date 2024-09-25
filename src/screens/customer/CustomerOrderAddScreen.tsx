@@ -4,10 +4,11 @@ import Container from '../../components/common/Container/Container';
 import MainScrollView from '../../components/common/MainScrollView/MainScrollView';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import IconButton from '../../components/ui/IconButton/IconButton';
+import OrderProductCardList from '../../components/common/OrderProductCard/OrderProductCardList';
 
 const CustomerOrderAddScreen = () => {
   return (
-    <Container>
+    <Container paddingHorizontal={0}>
       <CustomerHeaderOperation
         title="Umumiy"
         showSearch
@@ -18,7 +19,7 @@ const CustomerOrderAddScreen = () => {
         }
       />
       <MainScrollView>
-        <Text>Yangi buyurtma</Text>
+        <OrderProductCardList />
       </MainScrollView>
     </Container>
   );
