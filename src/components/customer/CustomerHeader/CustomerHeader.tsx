@@ -1,11 +1,15 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
-import React, {memo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import {ICustomer} from '../../../app/services/customer/customer';
+import {
+  ICustomer,
+  useGetCustomerByIdQuery,
+} from '../../../app/services/customer/customer';
 import {RootStackParamList} from '../../../routes/RootNavigator';
+import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
 import MenuBtn from '../MenuBtn/MenuBtn';
 
@@ -15,20 +19,29 @@ type RootStackNavigationProp = NativeStackNavigationProp<
 >;
 
 type CustomerHeaderProps = {
-  customer: ICustomer | null;
-  isLoading: boolean;
+  customerId: string;
 };
 
-const CustomerHeader: React.FC<CustomerHeaderProps> = ({
-  customer,
-  isLoading,
-}) => {
+const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
   // Navigation
   const navigation = useNavigation<RootStackNavigationProp>();
 
+  if (!customerId) {
+    throw new Error('customerId is required');
+  }
+
+  // API
+  const customerRes = useGetCustomerByIdQuery(customerId);
+
+  const customerData = useMemo(() => {
+    return handleApiResponseObj<ICustomer>(customerRes);
+  }, [customerRes]);
+
+  console.log('🚀 ~ customerData ~ customerData:', customerData?.fio);
+
   // Customer
-  const fullName = customer?.fio || '';
-  const telefon = customer?.telefon || '';
+  const fullName = customerData?.fio || '';
+  const telefon = customerData?.telefon || '';
 
   let firstName = '';
   let lastName = '';
@@ -48,7 +61,7 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({
 
       {/* Header Title */}
       <Text h4 h4Style={styles.title}>
-        {isLoading ? (
+        {customerRes.isLoading || customerRes.isFetching ? (
           'Yuklanmoqda...'
         ) : (
           <>

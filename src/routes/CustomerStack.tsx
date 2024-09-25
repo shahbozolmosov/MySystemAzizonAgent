@@ -10,6 +10,7 @@ import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
 import AnalyticsScreen from '../screens/main/AnalyticsScreen';
 import {ITabBarIconProps} from '../types/types';
 import {RootStackParamList} from './RootNavigator';
+import CustomerOrderAddScreen from '../screens/customer/CustomerOrderAddScreen';
 
 export type CustomerStackParamList = {
   Home: {
@@ -19,6 +20,7 @@ export type CustomerStackParamList = {
 export type CustomerTabStackParamList = {
   CustomerHomeScreen: {customerId: string};
   CustomerOrderScreen: {customerId: string};
+  CustomerOrderAddScreen: {customerId: string};
   CustomerVisitScreen: {customerId: string};
   CustomerReportScreen: {customerId: string};
 };
@@ -72,6 +74,17 @@ const TabNavigation = () => {
           tabBarLabel: 'Buyurtma',
           tabBarIcon: props => icon({...props, name: 'shopping-bag'}),
         }}
+        initialParams={{customerId}}
+      />
+      <Tab.Screen
+        name="CustomerOrderAddScreen"
+        component={CustomerOrderAddScreen}
+        options={{
+          headerTitleAlign: 'center',
+          tabBarLabel: 'Buyurtma',
+          tabBarItemStyle: {display: 'none'},
+        }}
+        initialParams={{customerId}}
       />
       <Tab.Screen
         name="CustomerVisitScreen"
@@ -81,6 +94,7 @@ const TabNavigation = () => {
           tabBarLabel: 'Tashrif',
           tabBarIcon: props => icon({...props, name: 'compass'}),
         }}
+        initialParams={{customerId}}
       />
       <Tab.Screen
         name="CustomerReportScreen"
@@ -90,6 +104,7 @@ const TabNavigation = () => {
           tabBarLabel: 'Hisobot',
           tabBarIcon: props => icon({...props, name: 'file-text'}),
         }}
+        initialParams={{customerId}}
       />
     </Tab.Navigator>
   );

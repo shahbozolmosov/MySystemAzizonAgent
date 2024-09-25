@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Badge, SearchBar, Text} from '@rneui/themed';
-import React, {createRef, memo, useRef, useState} from 'react';
+import React, {memo, useRef} from 'react';
 import {
   Alert,
   StyleSheet,

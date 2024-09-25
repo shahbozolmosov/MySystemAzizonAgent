@@ -1,15 +1,24 @@
-import React, {useState} from 'react';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import React from 'react';
 import {Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 import MainScrollView from '../../components/common/MainScrollView/MainScrollView';
-import CustomerOrderHeader from '../../components/customer/CustomerOrderHeader/CustomerOrderHeader';
+import CustomerHeader from '../../components/customer/CustomerHeader/CustomerHeader';
+import {RootStackParamList} from '../../routes/RootNavigator';
+
+type CustomerOrderScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'CustomerStack'
+>;
 
 const CustomerOrderScreen = () => {
-  const [search, setSearch] = useState('');
+  // Route
+  const route = useRoute<CustomerOrderScreenRouteProp>();
+  const {customerId} = route.params;
 
   return (
     <Container>
-      <CustomerOrderHeader search={search} setSearch={setSearch} />
+      <CustomerHeader customerId={customerId} />
       <MainScrollView>
         <Text>Lorem</Text>
       </MainScrollView>

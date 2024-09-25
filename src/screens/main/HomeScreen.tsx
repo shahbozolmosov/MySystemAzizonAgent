@@ -3,9 +3,9 @@ import {
   ICustomer,
   useGetCustomerAllQuery,
 } from '../../app/services/customer/customer';
-import Container from '../../components/common/Container/Container';
-import CustomerCardList from '../../components/common/CustomerCard/CustomerCardList';
+import Container from '../../components/common/Container/Container'; 
 import {handleApiResponse} from '../../utils/handleApiResponse';
+import CustomerCardList from '../../components/customer/CustomerCard/CustomerCardList';
 
 function HomeScreen() {
   // API
