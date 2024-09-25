@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
-import React, {memo, useMemo} from 'react';
+import React, {memo, useCallback, useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {
@@ -37,8 +37,6 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
     return handleApiResponseObj<ICustomer>(customerRes);
   }, [customerRes]);
 
-  console.log('🚀 ~ customerData ~ customerData:', customerData?.fio);
-
   // Customer
   const fullName = customerData?.fio || '';
   const telefon = customerData?.telefon || '';
@@ -53,6 +51,11 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
   if (fullName && fullName.split(' ').length > 1) {
     lastName = fullName.split(' ')[1].charAt(0);
   }
+
+  // Navigation
+  const handleNavigate = useCallback(() => {
+    navigation.popToTop();
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -77,7 +80,7 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
         <PhoneBtn phoneNumber={telefon} />
 
         {/* Profile Button */}
-        <TouchableOpacity onPress={() => navigation.popToTop()}>
+        <TouchableOpacity onPress={handleNavigate}>
           <Icon name="x" size={22} color="#22282b" />
         </TouchableOpacity>
       </View>

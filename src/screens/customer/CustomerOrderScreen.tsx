@@ -3,7 +3,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 import MainScrollView from '../../components/common/MainScrollView/MainScrollView';
-import CustomerHeader from '../../components/customer/CustomerHeader/CustomerHeader';
+import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import {RootStackParamList} from '../../routes/RootNavigator';
 
 type CustomerOrderScreenRouteProp = RouteProp<
@@ -18,7 +18,7 @@ const CustomerOrderScreen = () => {
 
   return (
     <Container>
-      <CustomerHeader customerId={customerId} />
+      <CustomerHeaderOperation />
       <MainScrollView>
         <Text>Lorem</Text>
       </MainScrollView>
