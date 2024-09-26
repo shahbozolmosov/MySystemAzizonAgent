@@ -9,7 +9,7 @@ type ContainerProps = {
 
 export default function Container({
   children,
-  paddingHorizontal = 10,
+  paddingHorizontal = 14,
 }: ContainerProps) {
   return (
     <SafeAreaView style={[styles.container, {paddingHorizontal}]}>

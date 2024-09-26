@@ -74,6 +74,7 @@ export default function Login(): JSX.Element {
             }) => (
               <>
                 <Input
+                  containerStyle={styles.inputContainer}
                   autoFocus
                   placeholder="Login"
                   onChangeText={handleChange('login')}
@@ -86,6 +87,7 @@ export default function Login(): JSX.Element {
                 />
 
                 <Input
+                  containerStyle={styles.inputContainer}
                   placeholder="Parol"
                   secureTextEntry
                   onChangeText={handleChange('parol')}
@@ -126,10 +128,13 @@ const styles = StyleSheet.create({
     color: '#0d1017',
     textAlign: 'center',
   },
+  inputContainer: {
+    paddingHorizontal: 0,
+  },
   button: {
     // backgroundColor: '#007bff',
     marginTop: 20,
-    padding: 18,
+    // padding: 18,
     // borderRadius: 8,
   },
 });
