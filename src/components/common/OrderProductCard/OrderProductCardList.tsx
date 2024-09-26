@@ -2,11 +2,11 @@ import React, {useCallback} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import OrderProductCard, {OrderProductCardProps} from './OrderProductCard';
 
-interface OrderProductCardListProp {
+interface OrderProductCardListProps {
   list: OrderProductCardProps[];
 }
 
-const OrderProductCardList = ({list}: OrderProductCardListProp) => {
+const OrderProductCardList = ({list}: OrderProductCardListProps) => {
   // Render function for each item
   const renderItem = useCallback(
     ({item}: {item: OrderProductCardProps}) => <OrderProductCard {...item} />,
