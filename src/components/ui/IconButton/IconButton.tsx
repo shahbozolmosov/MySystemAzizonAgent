@@ -68,8 +68,12 @@ const styles = StyleSheet.create({
   },
   badgeBody: {
     backgroundColor: '#0385FF',
+    padding: 1,
   },
   badgeText: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 12,
+    lineHeight: 16,
     color: '#ffffff',
   },
 });

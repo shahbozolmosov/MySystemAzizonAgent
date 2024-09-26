@@ -57,7 +57,7 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
     <View style={styles.container}>
       {/* Back Button */}
       <TouchableOpacity onPress={handleBack}>
-        <Icon name="chevron-left" size={24} />
+        <Icon name="chevron-left" size={24} color={"#22282b"} />
       </TouchableOpacity>
 
       {/* Header Title */}

@@ -30,11 +30,12 @@ const SearchInput = ({inputRef, onCancel}: SearchInputProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Icon style={styles.icon} name="search" size={22} />
+        <Icon style={styles.icon} name="search" size={22} color={'#72808D'} />
         <TextInput
           style={styles.input}
           ref={inputRef}
           cursorColor={'#000000'}
+          placeholderTextColor={'#5C6369'}
           placeholder="Mahsulot qidirish..."
         />
         <Pressable style={styles.clearBtn} onPress={handleClear}>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    top: 8,
+    top: 7,
     left: 10,
     zIndex: 1,
   },
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
 
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
+    color: '#1e232c',
   },
   clearBtn: {
     position: 'absolute',
