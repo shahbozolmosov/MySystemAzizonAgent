@@ -2,6 +2,7 @@ import {configureStore, ConfigureStoreOptions} from '@reduxjs/toolkit';
 import {api} from './services/api';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import authSlice from './services/auth/authSlice';
+import orderSlice from './services/order/orderSlice';
 
 export const createStore = (
   options?: ConfigureStoreOptions['preloadedState'] | undefined,
@@ -10,6 +11,7 @@ export const createStore = (
     reducer: {
       [api.reducerPath]: api.reducer,
       auth: authSlice,
+      productOrder: orderSlice,
     },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(api.middleware),
