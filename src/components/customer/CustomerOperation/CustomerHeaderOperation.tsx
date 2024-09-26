@@ -50,7 +50,7 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
   }, [showSearchInput]);
 
   return showSearchInput ? (
-    <View style={[styles.container, styles.pd]}>
+    <View style={styles.container}>
       <SearchInput inputRef={searchRef} onCancel={handleShowSearchInput} />
     </View>
   ) : (

@@ -1,14 +1,22 @@
 import {Button} from '@rneui/base';
+import {Badge} from '@rneui/themed';
 import React, {useCallback} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 type IconButtonProps = {
   icon: string;
   onPress?: () => void;
+  badgeShown?: boolean;
+  badgeAmount?: number;
 };
 
-const IconButton = ({icon, onPress}: IconButtonProps) => {
+const IconButton = ({
+  icon,
+  onPress,
+  badgeShown,
+  badgeAmount,
+}: IconButtonProps) => {
   // Handle press
   const handlePress = useCallback(() => {
     if (onPress) {
@@ -17,17 +25,33 @@ const IconButton = ({icon, onPress}: IconButtonProps) => {
   }, [onPress]);
 
   return (
-    <Button
-      onPress={handlePress}
-      title={<Icon name={icon} size={22} color="#22282b" />}
-      type="clear"
-      buttonStyle={styles.btn}
-      containerStyle={styles.btnContainer}
-    />
+    <View style={styles.content}>
+      {badgeShown && (
+        <View style={styles.badge}>
+          <Badge
+            badgeStyle={styles.badgeBody}
+            textStyle={styles.badgeText}
+            value={badgeAmount}
+          />
+        </View>
+      )}
+
+      <Button
+        onPress={handlePress}
+        title={<Icon name={icon} size={22} color="#22282b" />}
+        type="clear"
+        buttonStyle={styles.btn}
+        containerStyle={styles.btnContainer}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  content: {
+    position: 'relative',
+    zIndex: 0,
+  },
   btn: {
     width: 40,
     height: 40,
@@ -35,6 +59,18 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     borderRadius: 40,
+  },
+  badge: {
+    position: 'absolute',
+    top: -4,
+    right: -10,
+    zIndex: 1,
+  },
+  badgeBody: {
+    backgroundColor: '#0385FF',
+  },
+  badgeText: {
+    color: '#ffffff',
   },
 });
 

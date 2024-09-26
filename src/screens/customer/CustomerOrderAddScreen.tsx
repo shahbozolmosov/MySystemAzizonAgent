@@ -26,6 +26,7 @@ const CustomerOrderAddScreen = () => {
         customElements={
           <>
             <IconButton icon="filter" />
+            <IconButton icon="shopping-bag" badgeShown={true} badgeAmount={20} />
           </>
         }
       />
