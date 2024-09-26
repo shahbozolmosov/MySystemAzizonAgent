@@ -16,7 +16,7 @@ function HomeScreen() {
   }, [customerRes]);
 
   return (
-    <Container paddingHorizontal={0}>
+    <Container>
       <CustomerCardList list={customerData} />
     </Container>
   );

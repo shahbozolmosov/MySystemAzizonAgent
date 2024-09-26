@@ -41,7 +41,7 @@ const CustomerOrderAddScreen = ({
   }, [customerId, navigation]);
 
   return (
-    <Container paddingHorizontal={0}>
+    <Container>
       <CustomerHeaderOperation
         title="Umumiy"
         showSearch

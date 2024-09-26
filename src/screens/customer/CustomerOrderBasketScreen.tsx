@@ -10,7 +10,7 @@ const CustomerOrderBasketScreen = () => {
   const selectedProduct = useTypesSelector(selectedOrderProducts);
 
   return (
-    <Container paddingHorizontal={0}>
+    <Container>
       <CustomerHeaderOperation title="Mening savatim" showSearch />
       <Text>CustomerOrderBasketScreen</Text>
     </Container>
