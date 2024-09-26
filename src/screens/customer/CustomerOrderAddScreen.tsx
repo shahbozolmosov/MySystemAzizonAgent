@@ -1,5 +1,6 @@
-import React, {useCallback, useMemo} from 'react';
-import {ScrollView} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useCallback, useEffect, useMemo} from 'react';
+import {Alert, ScrollView} from 'react-native';
 import {selectedOrderProductsAmount} from '../../app/services/order/orderSlice';
 import {
   Product,
@@ -10,9 +11,8 @@ import Container from '../../components/common/Container/Container';
 import OrderProductCardList from '../../components/common/OrderProductCard/OrderProductCardList';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import IconButton from '../../components/ui/IconButton/IconButton';
-import {handleApiResponse} from '../../utils/handleApiResponse';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {CustomerTabStackParamList} from '../../routes/CustomerStack';
+import {handleApiResponse} from '../../utils/handleApiResponse';
 
 type CustomerOrderAddScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -39,6 +39,30 @@ const CustomerOrderAddScreen = ({
   const handleNavigateBasket = useCallback(() => {
     navigation.push('CustomerOrderBasketScreen', {customerId});
   }, [customerId, navigation]);
+
+  useEffect(() => {
+    const beforeRemoveListener = navigation.addListener('beforeRemove', e => {
+      e.preventDefault();
+
+      Alert.alert(
+        'Diqqat!',
+        "Agar orqaga qaytadigan bo'lsangiz ma'lumotlar saqlanmaydi?",
+        [
+          {text: 'Bekor qilish', style: 'cancel', onPress: () => {}},
+          {
+            text: 'Ha',
+            style: 'destructive',
+
+            onPress: () => navigation.dispatch(e.data.action),
+          },
+        ],
+        {cancelable: true},
+      );
+    });
+
+    return () =>
+      navigation.removeListener('beforeRemove', beforeRemoveListener);
+  }, [navigation]);
 
   return (
     <Container>
