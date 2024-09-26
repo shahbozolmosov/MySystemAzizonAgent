@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {ScrollView} from 'react-native';
 import {selectedOrderProductsAmount} from '../../app/services/order/orderSlice';
 import {
@@ -11,8 +11,21 @@ import OrderProductCardList from '../../components/common/OrderProductCard/Order
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import IconButton from '../../components/ui/IconButton/IconButton';
 import {handleApiResponse} from '../../utils/handleApiResponse';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {CustomerTabStackParamList} from '../../routes/CustomerStack';
 
-const CustomerOrderAddScreen = () => {
+type CustomerOrderAddScreenProps = NativeStackScreenProps<
+  CustomerTabStackParamList,
+  'CustomerOrderAddScreen'
+>;
+
+const CustomerOrderAddScreen = ({
+  navigation,
+  route,
+}: CustomerOrderAddScreenProps) => {
+  // Route
+  const {customerId} = route.params;
+
   // Store
   const selectedProductsAmount = useTypesSelector(selectedOrderProductsAmount);
 
@@ -22,6 +35,10 @@ const CustomerOrderAddScreen = () => {
   const productData = useMemo<Product[]>(() => {
     return handleApiResponse(productRes);
   }, [productRes]);
+
+  const handleNavigateBasket = useCallback(() => {
+    navigation.push('CustomerOrderBasketScreen', {customerId});
+  }, [customerId, navigation]);
 
   return (
     <Container paddingHorizontal={0}>
@@ -35,6 +52,7 @@ const CustomerOrderAddScreen = () => {
               icon="shopping-bag"
               badgeShown={true}
               badgeAmount={selectedProductsAmount}
+              onPress={handleNavigateBasket}
             />
           </>
         }
