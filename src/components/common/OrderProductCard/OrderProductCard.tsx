@@ -5,7 +5,10 @@ import ProductImage from '../../../../assets/product.jpg';
 import {Product} from '../../../app/services/product/product';
 import {formatComNum} from '../../../utils/formatComNum';
 import {useDispatch} from 'react-redux';
-import {setOrderProduct} from '../../../app/services/order/orderSlice';
+import {
+  removeOrderProduct,
+  setOrderProduct,
+} from '../../../app/services/order/orderSlice';
 
 export interface OrderProductCardProps extends Product {}
 
@@ -18,15 +21,20 @@ const OrderProductCard = (props: OrderProductCardProps) => {
   const handleChange = useCallback(
     (text: string) => {
       const numericValue = text.replace(/[^0-9.]/g, '');
+      console.log('🚀 ~ OrderProductCard ~ numericValue:', numericValue);
 
       const formatted = formatComNum(numericValue);
 
-      dispatch(
-        setOrderProduct({
-          ...props,
-          inputAmount: parseFloat(numericValue),
-        }),
-      );
+      if (numericValue) {
+        dispatch(
+          setOrderProduct({
+            ...props,
+            inputAmount: parseFloat(numericValue),
+          }),
+        );
+      } else {
+        dispatch(removeOrderProduct(props.id));
+      }
 
       setWeight(formatted);
     },

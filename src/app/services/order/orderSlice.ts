@@ -40,7 +40,7 @@ const slice = createSlice({
 
       if (index !== -1) {
         // Remove
-        state.products.slice(index, 1);
+        state.products.splice(index, 1);
       }
     },
     // Clear
