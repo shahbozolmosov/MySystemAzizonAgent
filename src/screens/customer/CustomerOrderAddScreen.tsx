@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScrollView} from 'react-native';
-import {selectedOrderProducts} from '../../app/services/order/orderSlice';
+import {selectedOrderProductsAmount} from '../../app/services/order/orderSlice';
 import {
   Product,
   useGetProductAllQuery,
@@ -14,7 +14,7 @@ import {handleApiResponse} from '../../utils/handleApiResponse';
 
 const CustomerOrderAddScreen = () => {
   // Store
-  const selectedProducts = useTypesSelector(selectedOrderProducts);
+  const selectedProductsAmount = useTypesSelector(selectedOrderProductsAmount);
 
   // API
   const productRes = useGetProductAllQuery();
@@ -34,7 +34,7 @@ const CustomerOrderAddScreen = () => {
             <IconButton
               icon="shopping-bag"
               badgeShown={true}
-              badgeAmount={selectedProducts.length}
+              badgeAmount={selectedProductsAmount}
             />
           </>
         }

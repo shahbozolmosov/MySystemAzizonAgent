@@ -58,3 +58,5 @@ export const {setOrderProduct, removeOrderProduct, clearOrderProduct} =
 
 export const selectedOrderProducts = (state: RootState): OrderProduct[] =>
   state.productOrder.products;
+export const selectedOrderProductsAmount = (state: RootState): number =>
+  state.productOrder.products.length;
