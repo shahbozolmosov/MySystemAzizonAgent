@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../product/product';
 import {RootState} from '../../store';
 
-interface OrderProduct extends Product {
+export interface OrderProduct extends Product {
   inputAmount: number;
 }
 

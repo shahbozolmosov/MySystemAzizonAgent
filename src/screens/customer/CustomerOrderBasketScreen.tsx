@@ -1,8 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-import Container from '../../components/common/Container/Container';
-import {useTypesSelector} from '../../app/store';
+import {StyleSheet} from 'react-native';
 import {selectedOrderProducts} from '../../app/services/order/orderSlice';
+import {useTypesSelector} from '../../app/store';
+import BasketProductCardList from '../../components/common/BasketProductCard/BasketProductCardList';
+import Container from '../../components/common/Container/Container';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 
 const CustomerOrderBasketScreen = () => {
@@ -12,7 +13,7 @@ const CustomerOrderBasketScreen = () => {
   return (
     <Container>
       <CustomerHeaderOperation title="Mening savatim" showSearch />
-      <Text>CustomerOrderBasketScreen</Text>
+      <BasketProductCardList list={selectedProduct} />
     </Container>
   );
 };
