@@ -72,7 +72,7 @@ const CustomerOrderAddScreen = ({
 
     return () =>
       navigation.removeListener('beforeRemove', beforeRemoveListener);
-  }, [navigation]);
+  }, [dispatch, navigation]);
 
   return (
     <Container>
