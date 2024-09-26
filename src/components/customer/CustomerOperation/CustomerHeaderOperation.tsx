@@ -50,7 +50,7 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
   }, [showSearchInput]);
 
   return showSearchInput ? (
-    <View style={styles.container}>
+    <View style={[styles.container, styles.pd]}>
       <SearchInput inputRef={searchRef} onCancel={handleShowSearchInput} />
     </View>
   ) : (
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+    paddingHorizontal: 8,
   },
   title: {
     textAlign: 'center',

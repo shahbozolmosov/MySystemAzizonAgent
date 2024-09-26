@@ -1,11 +1,27 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import OrderProductCard from './OrderProductCard';
+import React, {useCallback} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
+import OrderProductCard, {OrderProductCardProps} from './OrderProductCard';
 
-const OrderProductCardList = () => {
+interface OrderProductCardListProp {
+  list: OrderProductCardProps[];
+}
+
+const OrderProductCardList = ({list}: OrderProductCardListProp) => {
+  // Render function for each item
+  const renderItem = useCallback(
+    ({item}: {item: OrderProductCardProps}) => <OrderProductCard {...item} />,
+    [],
+  );
+
   return (
     <View style={styles.container}>
-      <OrderProductCard />
+      <FlatList
+        data={list}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+      />
     </View>
   );
 };

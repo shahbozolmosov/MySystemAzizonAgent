@@ -2,41 +2,45 @@ import {Image} from '@rneui/themed';
 import React, {useCallback, useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import ProductImage from '../../../../assets/product.jpg';
+import {Product} from '../../../app/services/product/product';
+import {formatComNum} from '../../../utils/formatComNum';
 
-const OrderProductCard = () => {
+export interface OrderProductCardProps extends Product {}
+
+const OrderProductCard = ({name, article, price}: OrderProductCardProps) => {
   const [weight, setWeight] = useState('');
 
   const handleChange = useCallback((text: string) => {
     const numericValue = text.replace(/[^0-9.]/g, '');
 
-    const formatted = numericValue
-      .split('.')
-      .map((part, index) =>
-        index === 0 ? part.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : part,
-      )
-      .join('.');
+    const formatted = formatComNum(numericValue);
 
     setWeight(formatted);
   }, []);
 
   return (
-    <View style={[styles.container, weight && styles.bg]}>
+    <View style={styles.container}>
       <Image style={styles.image} source={ProductImage} />
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
-          <Text style={styles.title}>Афзал[20020]</Text>
+          <Text style={styles.title}>
+            {name}[{article}]
+          </Text>
+          <Text style={styles.price}>
+            {formatComNum(price.toString())} so'm
+          </Text>
         </View>
-        <View style={styles.bodyFooter}>
-          <Text style={styles.price}>138 200 so'm</Text>
-          <TextInput
-            dataDetectorTypes={'flightNumber'}
-            keyboardType="number-pad"
-            style={styles.input}
-            placeholder="0.00kg"
-            value={weight}
-            onChangeText={handleChange}
-          />
-        </View>
+      </View>
+      <View style={styles.bodyFooter}>
+        <TextInput
+          dataDetectorTypes={'flightNumber'}
+          keyboardType="number-pad"
+          style={[styles.input, weight && styles.bg]}
+          placeholder="kg"
+          value={weight}
+          placeholderTextColor={'#D2D4DA'}
+          onChangeText={handleChange}
+        />
       </View>
     </View>
   );
@@ -62,7 +66,9 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  bodyHeader: {},
+  bodyHeader: {
+    marginBottom: 8,
+  },
   bodyFooter: {
     flexDirection: 'row',
     gap: 12,
