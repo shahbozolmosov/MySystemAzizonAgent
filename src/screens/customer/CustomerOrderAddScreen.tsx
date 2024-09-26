@@ -1,7 +1,10 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {Alert, ScrollView} from 'react-native';
-import {selectedOrderProductsAmount} from '../../app/services/order/orderSlice';
+import {
+  clearOrderProduct,
+  selectedOrderProductsAmount,
+} from '../../app/services/order/orderSlice';
 import {
   Product,
   useGetProductAllQuery,
@@ -13,6 +16,7 @@ import CustomerHeaderOperation from '../../components/customer/CustomerOperation
 import IconButton from '../../components/ui/IconButton/IconButton';
 import {CustomerTabStackParamList} from '../../routes/CustomerStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
+import {useDispatch} from 'react-redux';
 
 type CustomerOrderAddScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -28,6 +32,9 @@ const CustomerOrderAddScreen = ({
 
   // Store
   const selectedProductsAmount = useTypesSelector(selectedOrderProductsAmount);
+
+  // Dispatch
+  const dispatch = useDispatch();
 
   // API
   const productRes = useGetProductAllQuery();
@@ -53,7 +60,10 @@ const CustomerOrderAddScreen = ({
             text: 'Ha',
             style: 'destructive',
 
-            onPress: () => navigation.dispatch(e.data.action),
+            onPress: () => {
+              dispatch(clearOrderProduct());
+              navigation.dispatch(e.data.action);
+            },
           },
         ],
         {cancelable: true},
