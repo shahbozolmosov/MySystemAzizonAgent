@@ -2,9 +2,13 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../product/product';
 import {RootState} from '../../store';
 
-type InitialState = {
-  products: Product[];
-};
+interface OrderProduct extends Product {
+  inputAmount: number;
+}
+
+interface InitialState {
+  products: OrderProduct[];
+}
 
 const initialState: InitialState = {
   products: [],
@@ -15,7 +19,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     // Set
-    setOrderProduct: (state, action: PayloadAction<Product>) => {
+    setOrderProduct: (state, action: PayloadAction<OrderProduct>) => {
       const index = state.products.findIndex(
         product => product.id === action.payload.id,
       );
@@ -49,7 +53,8 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-export const {} = slice.actions;
+export const {setOrderProduct, removeOrderProduct, clearOrderProduct} =
+  slice.actions;
 
-export const selectedOrderProducts = (state: RootState): Product[] =>
+export const selectedOrderProducts = (state: RootState): OrderProduct[] =>
   state.productOrder.products;

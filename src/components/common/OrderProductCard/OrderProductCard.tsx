@@ -4,19 +4,34 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import ProductImage from '../../../../assets/product.jpg';
 import {Product} from '../../../app/services/product/product';
 import {formatComNum} from '../../../utils/formatComNum';
+import {useDispatch} from 'react-redux';
+import {setOrderProduct} from '../../../app/services/order/orderSlice';
 
 export interface OrderProductCardProps extends Product {}
 
-const OrderProductCard = ({name, article, price}: OrderProductCardProps) => {
+const OrderProductCard = (props: OrderProductCardProps) => {
+  const {name, article, price} = props;
+  const dispatch = useDispatch();
+
   const [weight, setWeight] = useState('');
 
-  const handleChange = useCallback((text: string) => {
-    const numericValue = text.replace(/[^0-9.]/g, '');
+  const handleChange = useCallback(
+    (text: string) => {
+      const numericValue = text.replace(/[^0-9.]/g, '');
 
-    const formatted = formatComNum(numericValue);
+      const formatted = formatComNum(numericValue);
 
-    setWeight(formatted);
-  }, []);
+      dispatch(
+        setOrderProduct({
+          ...props,
+          inputAmount: parseFloat(numericValue),
+        }),
+      );
+
+      setWeight(formatted);
+    },
+    [dispatch, props],
+  );
 
   return (
     <View style={styles.container}>
