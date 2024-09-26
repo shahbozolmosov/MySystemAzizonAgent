@@ -30,21 +30,21 @@ const ProfileScreen = ({navigation}: ProfileScreenProps) => {
       <View style={styles.btnList}>
         <TouchableOpacity style={styles.btn}>
           <View style={styles.btnBody}>
-            <Icon name="user" size={24} />
+            <Icon name="user" size={24} color={'#1e232c'} />
             <Text style={styles.btnText}>Profilm</Text>
           </View>
-          <Icon name="chevron-right" size={24} />
+          <Icon name="chevron-right" size={24} color={'#1e232c'} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn}>
           <View style={styles.btnBody}>
-            <Icon name="settings" size={24} />
+            <Icon name="settings" size={24} color={'#1e232c'} />
             <Text style={styles.btnText}>Sozlamalar</Text>
           </View>
-          <Icon name="chevron-right" size={24} />
+          <Icon name="chevron-right" size={24} color={'#1e232c'} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn} onPress={handleLogout}>
           <View style={styles.btnBody}>
-            <Icon name="log-out" size={24} />
+            <Icon name="log-out" size={24} color={'#1e232c'} />
             <Text style={styles.btnText}>Chiqish</Text>
           </View>
         </TouchableOpacity>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 14,
     lineHeight: 20,
+    color: '#1e232c',
   },
 });
 
