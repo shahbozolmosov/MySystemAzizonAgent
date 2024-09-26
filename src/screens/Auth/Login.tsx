@@ -117,7 +117,7 @@ export default function Login(): JSX.Element {
 
 const styles = StyleSheet.create({
   body: {
-    marginTop: 200,
+    marginTop: 150,
     flexGrow: 1,
   },
   title: {
