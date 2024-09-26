@@ -19,9 +19,12 @@ export type CustomerStackParamList = {
 };
 export type CustomerTabStackParamList = {
   CustomerHomeScreen: {customerId: string};
+  // order
   CustomerOrderStackScreen: {customerId: string};
   CustomerOrderScreen: {customerId: string};
   CustomerOrderAddScreen: {customerId: string};
+  CustomerOrderBasketScreen: {customerId: string};
+
   CustomerVisitScreen: {customerId: string};
   CustomerReportScreen: {customerId: string};
 };
