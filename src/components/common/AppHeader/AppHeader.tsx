@@ -32,7 +32,7 @@ const CustomerHeader: React.FC<AppHeaderProps> = ({drawerNavigation}) => {
 
       {/* Header Title */}
       <Text h4 h4Style={styles.title}>
-        Asosiy
+        Asosi
       </Text>
 
       {/* Right Side Buttons */}
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 10,
+    paddingHorizontal: 8,
     backgroundColor: '#fff',
     // borderBottomWidth: ,
   },

@@ -83,10 +83,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 10,
     paddingVertical: 10,
+    paddingHorizontal: 8,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
-    paddingHorizontal: 8,
   },
   title: {
     textAlign: 'center',

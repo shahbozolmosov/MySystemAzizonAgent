@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import CustomerCard, {ICustomerCard} from './CustomerCard';
 
@@ -23,17 +23,23 @@ const CustomerCardList = ({list}: CustomerCardListProps) => {
     [navigation],
   );
 
+  const renderItem = useCallback(
+    ({item}: {item: ICustomerCard}) => {
+      return <CustomerCard {...item} onNavigate={handleNavigate} />;
+    },
+    [handleNavigate],
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mijozlar</Text>
       <View style={styles.list}>
-        {list.map(customer => (
-          <CustomerCard
-            onNavigate={handleNavigate}
-            {...customer}
-            key={customer.id}
-          />
-        ))}
+        <FlatList
+          data={list}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
     </View>
   );
