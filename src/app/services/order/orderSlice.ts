@@ -3,7 +3,7 @@ import {Product} from '../product/product';
 import {RootState} from '../../store';
 
 export interface OrderProduct extends Product {
-  inputAmount: number;
+  inputAmount: number | '';
 }
 
 interface InitialState {
@@ -58,5 +58,10 @@ export const {setOrderProduct, removeOrderProduct, clearOrderProduct} =
 
 export const selectedOrderProducts = (state: RootState): OrderProduct[] =>
   state.productOrder.products;
+export const selectedOrderProductsById = (
+  state: RootState,
+  id: string,
+): OrderProduct =>
+  state.productOrder.products.find((item: OrderProduct) => item.id === id);
 export const selectedOrderProductsAmount = (state: RootState): number =>
   state.productOrder.products.length;

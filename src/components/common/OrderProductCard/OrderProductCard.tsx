@@ -1,27 +1,32 @@
 import {Image} from '@rneui/themed';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import ProductImage from '../../../../assets/product.jpg';
-import {Product} from '../../../app/services/product/product';
-import {formatComNum} from '../../../utils/formatComNum';
 import {useDispatch} from 'react-redux';
+import ProductImage from '../../../../assets/product.jpg';
 import {
   removeOrderProduct,
+  selectedOrderProductsById,
   setOrderProduct,
 } from '../../../app/services/order/orderSlice';
+import {Product} from '../../../app/services/product/product';
+import {useTypesSelector} from '../../../app/store';
+import {formatComNum} from '../../../utils/formatComNum';
 
 export interface OrderProductCardProps extends Product {}
 
 const OrderProductCard = (props: OrderProductCardProps) => {
-  const {name, article, price} = props;
+  const {id, name, article, price} = props;
   const dispatch = useDispatch();
+
+  const product = useTypesSelector(state =>
+    selectedOrderProductsById(state, id),
+  );
 
   const [weight, setWeight] = useState('');
 
   const handleChange = useCallback(
     (text: string) => {
       const numericValue = text.replace(/[^0-9.]/g, '');
-      console.log('🚀 ~ OrderProductCard ~ numericValue:', numericValue);
 
       const formatted = formatComNum(numericValue);
 
@@ -40,6 +45,14 @@ const OrderProductCard = (props: OrderProductCardProps) => {
     },
     [dispatch, props],
   );
+
+  const inputValue = useMemo<string>(() => {
+    if (product) {
+      const formatted = formatComNum(product.inputAmount.toString());
+      return formatted;
+    }
+    return '';
+  }, [product]);
 
   return (
     <View style={styles.container}>
@@ -60,7 +73,8 @@ const OrderProductCard = (props: OrderProductCardProps) => {
           keyboardType="number-pad"
           style={[styles.input, weight && styles.bg]}
           placeholder="kg"
-          value={weight}
+          value={inputValue}
+          defaultValue={inputValue}
           placeholderTextColor={'#D2D4DA'}
           onChangeText={handleChange}
         />
