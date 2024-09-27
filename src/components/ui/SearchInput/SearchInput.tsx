@@ -1,3 +1,4 @@
+import {debounce} from 'lodash';
 import React, {useCallback} from 'react';
 import {
   Pressable,
@@ -12,13 +13,15 @@ import Icon from 'react-native-vector-icons/Feather';
 type SearchInputProps = {
   inputRef: React.RefObject<TextInput>;
   onCancel: () => void;
+  setValue: (value: string) => void;
 };
 
-const SearchInput = ({inputRef, onCancel}: SearchInputProps) => {
+const SearchInput = ({inputRef, onCancel, setValue}: SearchInputProps) => {
   // Handle clear
   const handleClear = useCallback(() => {
+    setValue('');
     inputRef?.current?.clear();
-  }, [inputRef]);
+  }, [inputRef, setValue]);
 
   // Handle cancel
   const handleCancel = useCallback(() => {
@@ -26,6 +29,11 @@ const SearchInput = ({inputRef, onCancel}: SearchInputProps) => {
       onCancel();
     }
   }, [onCancel]);
+
+  // Handle change
+  const handleChange = debounce((text: string) => {
+    setValue(text);
+  }, 300);
 
   return (
     <View style={styles.container}>
@@ -37,6 +45,7 @@ const SearchInput = ({inputRef, onCancel}: SearchInputProps) => {
           cursorColor={'#000000'}
           placeholderTextColor={'#5C6369'}
           placeholder="Mahsulot qidirish..."
+          onChangeText={handleChange}
         />
         <Pressable style={styles.clearBtn} onPress={handleClear}>
           <Icon name="x" size={14} color={'#8f8f8f'} />

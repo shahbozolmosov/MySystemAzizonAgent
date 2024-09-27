@@ -17,12 +17,14 @@ type CustomerHeaderOperationProps = {
   customElements?: React.ReactNode;
   title: string;
   showSearch?: boolean;
+  setSearchVal?: (value: string) => void;
 };
 
 const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
   customElements,
   title,
   showSearch,
+  setSearchVal,
 }) => {
   // Navigation
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -49,15 +51,29 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
     }
   }, [showSearchInput]);
 
+  // Handle change
+  const handleChange = useCallback(
+    (val: string) => {
+      if (setSearchVal) {
+        setSearchVal(val);
+      }
+    },
+    [setSearchVal],
+  );
+
   return showSearchInput ? (
     <View style={styles.container}>
-      <SearchInput inputRef={searchRef} onCancel={handleShowSearchInput} />
+      <SearchInput
+        inputRef={searchRef}
+        setValue={handleChange}
+        onCancel={handleShowSearchInput}
+      />
     </View>
   ) : (
     <View style={styles.container}>
       {/* Back Button */}
       <TouchableOpacity onPress={handleBack}>
-        <Icon name="chevron-left" size={24} color={"#22282b"} />
+        <Icon name="chevron-left" size={24} color={'#22282b'} />
       </TouchableOpacity>
 
       {/* Header Title */}

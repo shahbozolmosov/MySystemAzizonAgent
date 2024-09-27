@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {
@@ -31,6 +31,9 @@ const CustomerOrderAddScreen = ({
 }: CustomerOrderAddScreenProps) => {
   // Route
   const {customerId} = route.params;
+
+  // State
+  const [searchValue, setSearchValue] = useState('');
 
   // Store
   const selectedProductsAmount = useTypesSelector(selectedOrderProductsAmount);
@@ -76,11 +79,22 @@ const CustomerOrderAddScreen = ({
       navigation.removeListener('beforeRemove', beforeRemoveListener);
   }, [dispatch, navigation]);
 
+  const filteredProducts = useMemo(() => {
+    return productData.filter(product =>
+      product.name.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+  }, [productData, searchValue]);
+
+  const handleChangeSearch = useCallback((text: string) => {
+    setSearchValue(text);
+  }, []);
+
   return (
     <Container>
       <CustomerHeaderOperation
         title="Umumiy"
         showSearch
+        setSearchVal={handleChangeSearch}
         customElements={
           <>
             <IconButton icon="filter" />
@@ -95,13 +109,13 @@ const CustomerOrderAddScreen = ({
       />
       {productRes.isLoading || productRes.isFetching ? (
         <Text>Loading...</Text>
-      ) : !productData.length ? (
+      ) : !filteredProducts.length ? (
         <NoResult
           title="Mahlumotlar topilmadi"
           desc="Hozircha sizda mahsulotlar mavjud emas!"
         />
       ) : (
-        <OrderProductCardList list={productData} />
+        <OrderProductCardList list={filteredProducts} />
       )}
     </Container>
   );

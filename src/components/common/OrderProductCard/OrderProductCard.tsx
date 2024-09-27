@@ -59,7 +59,7 @@ const OrderProductCard = (props: OrderProductCardProps) => {
       <Image style={styles.image} source={ProductImage} />
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
-          <Text style={styles.title}>
+          <Text style={styles.title} selectable={true}>
             {name}[{article}]
           </Text>
           <Text style={styles.price}>
