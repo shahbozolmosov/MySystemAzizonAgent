@@ -63,14 +63,14 @@ export interface OrderAdd {
 }
 interface OrderAddRes extends IApiRes {}
 
-const PRODUCT_TAG = 'PRODUCT_TAG';
+const PRODUCT_ORDER_TAG = 'PRODUCT_ORDER';
 
-export const productApi = api
-  .enhanceEndpoints({addTagTypes: [PRODUCT_TAG]})
+export const productOrderApi = api
+  .enhanceEndpoints({addTagTypes: [PRODUCT_ORDER_TAG]})
   .injectEndpoints({
     endpoints: build => ({
       // Index
-      getProductAll: build.query<OrderAllRes, void>({
+      getProductOrderAll: build.query<OrderAllRes, void>({
         query: () => allUrls.orderGetAll,
       }),
 
@@ -85,4 +85,9 @@ export const productApi = api
     }),
   });
 
-export const {useGetProductAllQuery, useAddProductOrderMutation} = productApi;
+export const {useGetProductOrderAllQuery, useAddProductOrderMutation} =
+  productOrderApi;
+
+export const {
+  endpoints: {addProductOrder},
+} = productOrderApi;

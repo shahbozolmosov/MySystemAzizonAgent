@@ -25,7 +25,7 @@ const BasketProductCardList = ({list}: BasketProductCardListProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 500,
+    minHeight: 200,
   },
 });
 

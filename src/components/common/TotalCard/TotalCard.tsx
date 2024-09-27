@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   list: {
-    gap: 10,
+    gap: 8,
   },
   listItem: {
     flexDirection: 'row',
@@ -77,13 +77,13 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
-    fontSize: 18,
+    fontSize: 16,
     color: '#808080',
   },
   value: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
-    fontSize: 18,
+    fontSize: 16,
     color: '#242424',
   },
   valueLg: {

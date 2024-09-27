@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../product/product';
 import {RootState} from '../../store';
+import {addProductOrder} from './order';
 
 export interface OrderProduct extends Product {
   inputAmount: number | '';
@@ -48,7 +49,15 @@ const slice = createSlice({
       state.products = [];
     },
   },
-  extraReducers: builder => {},
+  extraReducers: builder => {
+    builder
+      // Add order success
+      .addMatcher(addProductOrder.matchFulfilled, (state, action) => {
+        if (action.payload.success) {
+          Object.assign(state, initialState);
+        }
+      });
+  },
 });
 
 export default slice.reducer;

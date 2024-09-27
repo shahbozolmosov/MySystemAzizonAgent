@@ -1,7 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Button} from '@rneui/themed';
+import {Button, Input} from '@rneui/themed';
 import React, {useCallback, useMemo, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Switch, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import {
@@ -42,6 +42,9 @@ const CustomerOrderBasketScreen = ({
 
   // State
   const [isLoading, setIsLoading] = useState(false);
+  const [desc, setDesc] = useState('');
+  const [descSupplier, setDescSupplier] = useState('');
+  const [isEnabled, setIsEnabled] = useState(false);
 
   // Store
   const selectedProducts = useTypesSelector(selectedOrderProducts);
@@ -84,6 +87,10 @@ const CustomerOrderBasketScreen = ({
     navigation.goBack();
   }, [navigation]);
 
+  const toggleSwitch = useCallback(() => {
+    setIsEnabled(previousState => !previousState);
+  }, []);
+
   // Handle submit
   const handleSubmit = useCallback(async () => {
     setIsLoading(true);
@@ -121,14 +128,13 @@ const CustomerOrderBasketScreen = ({
           price: item.price,
           price_chegirma: item.real_price,
         })),
-        izoh: '',
-        izoh_dostavka: '',
-        alohida: false,
+        izoh: desc,
+        izoh_dostavka: descSupplier,
+        alohida: isEnabled,
         lat: location.latitude,
         lon: location.longitude,
       };
-      console.log('🚀 ~ handleSubmit ~ data:', data);
-      return;
+
       const res = await addData(data).unwrap();
 
       if (res.success) {
@@ -136,6 +142,8 @@ const CustomerOrderBasketScreen = ({
           type: 'success',
           text1: res.message,
         });
+
+        navigation.goBack();
       } else {
         Toast.show({
           type: 'error',
@@ -147,7 +155,15 @@ const CustomerOrderBasketScreen = ({
     } finally {
       setIsLoading(false);
     }
-  }, [addData, customerId, selectedProducts]);
+  }, [
+    addData,
+    customerId,
+    desc,
+    descSupplier,
+    isEnabled,
+    navigation,
+    selectedProducts,
+  ]);
 
   return (
     <Container>
@@ -172,6 +188,24 @@ const CustomerOrderBasketScreen = ({
 
             <TotalCard {...totalData} />
             <BasketProductCardList list={selectedProducts} />
+
+            <View style={styles.descInputBox}>
+              <Text style={styles.descInputBoxTitle}>Izohlarni kiriting</Text>
+              <Input placeholder="Izoh" value={desc} onChangeText={setDesc} />
+              <Input
+                placeholder="Dostavka uchun"
+                value={descSupplier}
+                onChangeText={setDescSupplier}
+              />
+              <View style={styles.switchBox}>
+                <Switch
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
+                <Text style={styles.descInputBoxTitle}>Yangi buyurtma</Text>
+              </View>
+            </View>
           </ScrollView>
           <View style={styles.btnWrapper}>
             <Button
@@ -203,6 +237,25 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: '#F4F4F4',
     backgroundColor: '#ffffff',
+  },
+  descInputBoxTitle: {
+    marginVertical: 20,
+    paddingHorizontal: 20,
+    fontFamily: 'Roboto-Bold',
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#1e232c',
+  },
+  descInputBox: {
+    padding: 4,
+    marginVertical: 40,
+    borderRadius: 10,
+
+    borderTopWidth: 1,
+    borderColor: '#F4F4F4',
+  },
+  switchBox: {
+    flexDirection: 'row',
   },
 });
 

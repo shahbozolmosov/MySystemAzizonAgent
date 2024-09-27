@@ -71,19 +71,19 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
-    fontSize: 18,
+    fontSize: 16,
     color: '#808080',
   },
   value: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
-    fontSize: 18,
+    fontSize: 16,
     color: '#242424',
   },
   valueLg: {
     fontFamily: 'Roboto-Bold',
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 16,
     color: '#242424',
   },
   valuePrefix: {
