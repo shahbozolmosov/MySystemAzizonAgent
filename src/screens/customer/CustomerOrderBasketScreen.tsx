@@ -23,7 +23,7 @@ import TotalCard, {
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import EmptyBasket from '../../components/errors/EmptyBasket/EmptyBasket';
 import IconButton from '../../components/ui/IconButton/IconButton';
-import {CustomerTabStackParamList} from '../../routes/CustomerStack';
+import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack';
 import {handleError} from '../../utils/errorHandler';
 import {getLocation} from '../../utils/getLocation';
 import {handleApiResponseObj} from '../../utils/handleApiResponseObj';

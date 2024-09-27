@@ -5,7 +5,7 @@ import {Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
 import MainScrollView from '../../components/common/MainScrollView/MainScrollView';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
-import {CustomerTabStackParamList} from '../../routes/CustomerStack';
+import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack';
 
 type CustomerOrderProps = NativeStackScreenProps<
   CustomerTabStackParamList,

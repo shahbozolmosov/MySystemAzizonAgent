@@ -3,10 +3,10 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import React from 'react';
-import CustomerOrderAddScreen from '../screens/customer/CustomerOrderAddScreen';
-import CustomerOrderScreen from '../screens/customer/CustomerOrderScreen';
+import CustomerOrderAddScreen from '../../screens/customer/CustomerOrderAddScreen';
+import CustomerOrderScreen from '../../screens/customer/CustomerOrderScreen';
 import {CustomerTabStackParamList} from './CustomerStack';
-import CustomerOrderBasketScreen from '../screens/customer/CustomerOrderBasketScreen';
+import CustomerOrderBasketScreen from '../../screens/customer/CustomerOrderBasketScreen';
 
 const CustomerOrderStack =
   createNativeStackNavigator<CustomerTabStackParamList>();

@@ -17,7 +17,7 @@ import OrderProductCardList from '../../components/common/OrderProductCard/Order
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import NoResult from '../../components/errors/NoResult/NoResult';
 import IconButton from '../../components/ui/IconButton/IconButton';
-import {CustomerTabStackParamList} from '../../routes/CustomerStack';
+import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 
 type CustomerOrderAddScreenProps = NativeStackScreenProps<

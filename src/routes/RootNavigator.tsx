@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {selectedIsAuthenticated} from '../app/services/auth/authSlice';
 import {useTypesSelector} from '../app/store';
 import AuthStack from './AuthStack';
-import CustomerStack from './CustomerStack';
+import CustomerStack from './customer/CustomerStack';
 import AppRootStack from './App/AppRootStack';
 
 export type RootStackParamList = {

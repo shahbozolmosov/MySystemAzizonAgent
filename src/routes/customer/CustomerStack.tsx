@@ -3,14 +3,14 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import CustomerHomeScreen from '../screens/customer/CustomerHomeScreen';
-import CustomerOrderAddScreen from '../screens/customer/CustomerOrderAddScreen';
-import CustomerReportScreen from '../screens/customer/CustomerReportScreen';
-import CustomerVisitScreen from '../screens/customer/CustomerVisitScreen';
-import AnalyticsScreen from '../screens/main/AnalyticsScreen';
-import {ITabBarIconProps} from '../types/types';
+import CustomerHomeScreen from '../../screens/customer/CustomerHomeScreen';
+import CustomerOrderAddScreen from '../../screens/customer/CustomerOrderAddScreen';
+import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
+import CustomerVisitScreen from '../../screens/customer/CustomerVisitScreen';
+import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
+import {ITabBarIconProps} from '../../types/types';
 import CustomerOrderStackScreen from './CustomerOrderStackScreen';
-import {RootStackParamList} from './RootNavigator';
+import {RootStackParamList} from '../RootNavigator';
 
 export type CustomerStackParamList = {
   Home: {

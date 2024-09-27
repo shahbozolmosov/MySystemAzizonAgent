@@ -3,7 +3,7 @@ import {DrawerActions, useNavigation} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import {CustomerTabStackParamList} from '../../../routes/CustomerStack';
+import {CustomerTabStackParamList} from '../../../routes/customer/CustomerStack';
 
 type CustomerHeaderDrawerNavigationProp =
   DrawerNavigationProp<CustomerTabStackParamList>;
