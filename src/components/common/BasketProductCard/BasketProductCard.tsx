@@ -116,10 +116,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 4,
   },
-  bg: {
-    // backgroundColor: 'rgba(3, 133, 255, 0.2)',
-    backgroundColor: 'rgba(11, 197, 116, 0.27)',
-  },
   image: {
     width: 50,
     height: 50,
@@ -165,7 +161,7 @@ const styles = StyleSheet.create({
   },
   removeBtn: {
     position: 'absolute',
-    top: 4,
+    top: 0,
     right: 14,
   },
 });
