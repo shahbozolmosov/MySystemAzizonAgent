@@ -1,14 +1,13 @@
-import React, {useCallback} from 'react';
-import {StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {selectedOrderProducts} from '../../app/services/order/orderSlice';
-import {useTypesSelector} from '../../app/store';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useCallback } from 'react';
+import { StyleSheet } from 'react-native';
+import { selectedOrderProducts } from '../../app/services/order/orderSlice';
+import { useTypesSelector } from '../../app/store';
 import BasketProductCardList from '../../components/common/BasketProductCard/BasketProductCardList';
 import Container from '../../components/common/Container/Container';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import EmptyBasket from '../../components/errors/EmptyBasket/EmptyBasket';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {CustomerTabStackParamList} from '../../routes/CustomerStack';
+import { CustomerTabStackParamList } from '../../routes/CustomerStack';
 
 type CustomerOrderBasketScreenProps =
   NativeStackScreenProps<CustomerTabStackParamList>;
@@ -30,9 +29,7 @@ const CustomerOrderBasketScreen = ({
       {!selectedProduct.length ? (
         <EmptyBasket onGoBack={handleBack} />
       ) : (
-        <ScrollView>
-          <BasketProductCardList list={selectedProduct} />
-        </ScrollView>
+        <BasketProductCardList list={selectedProduct} />
       )}
     </Container>
   );

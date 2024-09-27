@@ -5,7 +5,6 @@ import {useDispatch} from 'react-redux';
 import ProductImage from '../../../../assets/product.jpg';
 import {
   OrderProduct,
-  removeOrderProduct,
   setOrderProduct,
 } from '../../../app/services/order/orderSlice';
 import {formatComNum} from '../../../utils/formatComNum';
@@ -20,8 +19,7 @@ const BasketProductCard = (props: BasketProductCardProps) => {
 
   const handleChange = useCallback(
     (text: string) => {
-      const numericValue = text.replace(/[^0-9.]/g, '');
-      console.log('🚀 ~ OrderProductCard ~ numericValue:', numericValue);
+      let numericValue = text.replace(/[^0-9.]/g, '');
 
       const formatted = formatComNum(numericValue);
 
@@ -33,7 +31,12 @@ const BasketProductCard = (props: BasketProductCardProps) => {
           }),
         );
       } else {
-        dispatch(removeOrderProduct(props.id));
+        dispatch(
+          setOrderProduct({
+            ...props,
+            inputAmount: '',
+          }),
+        );
       }
 
       setWeight(formatted);
