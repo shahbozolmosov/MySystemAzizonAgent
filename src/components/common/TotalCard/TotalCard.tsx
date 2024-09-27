@@ -35,24 +35,15 @@ const TotalCard = ({
         </View>
         <View style={styles.listItem}>
           <Text style={styles.label}>Summa</Text>
-          <Text style={styles.value}>
-            {price.toLocaleString()}&nbsp;
-            <Text style={styles.valuePrefix}>so'm</Text>
-          </Text>
+          <Text style={styles.value}>{price.toLocaleString()}&nbsp;</Text>
         </View>
         <View style={styles.listItem}>
           <Text style={styles.label}>Chegirma</Text>
-          <Text style={styles.value}>
-            {discount.toLocaleString()}&nbsp;
-            <Text style={styles.valuePrefix}>so'm</Text>
-          </Text>
+          <Text style={styles.value}>{discount.toLocaleString()}&nbsp;</Text>
         </View>
         <View style={styles.listItem}>
-          <Text style={styles.label}>So'lov</Text>
-          <Text style={styles.valueLg}>
-            {payment.toLocaleString()}&nbsp;
-            <Text style={styles.valuePrefix}>so'm</Text>
-          </Text>
+          <Text style={styles.label}>To'lov</Text>
+          <Text style={styles.valueLg}>{payment.toLocaleString()}&nbsp;</Text>
         </View>
       </View>
     </View>
@@ -64,7 +55,7 @@ const styles = StyleSheet.create({
     margin: 14,
     borderRadius: 10,
     elevation: 40,
-    shadowColor: 'rgba(0, 0, 0, 0.6)',
+    shadowColor: 'rgba(153, 161, 169, 1)',
     shadowOffset: {
       width: 400,
       height: 100,
