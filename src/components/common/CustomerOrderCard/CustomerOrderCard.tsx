@@ -1,30 +1,26 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
+import {ICustomer} from '../../../app/services/customer/customer';
 
-type TotalCardProps = {};
+interface TotalCardProps extends ICustomer {}
 
-const data = {
-  balans: 0,
-  payment: 0,
-};
-
-const CustomerOrderCard = ({}: TotalCardProps) => {
+const CustomerOrderCard = ({telefon, fio, balans}: TotalCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Olmosov Shahboz</Text>
-        <PhoneBtn phoneNumber="+998(99)-747-04-73" />
+        <Text style={styles.title}>{fio}</Text>
+        <PhoneBtn phoneNumber={telefon} />
       </View>
       <View style={styles.divider} />
       <View style={styles.list}>
         <View style={styles.listItem}>
           <Text style={styles.label}>Balans</Text>
-          <Text style={styles.value}>{data.balans.toLocaleString()}&nbsp;</Text>
+          <Text style={styles.value}>{balans.toLocaleString()}&nbsp;</Text>
         </View>
         <View style={styles.listItem}>
           <Text style={styles.label}>Telefon</Text>
-          <Text style={styles.value}>+998(99)-747-04-73</Text>
+          <Text style={styles.value}>{telefon}</Text>
         </View>
       </View>
     </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-type TotalCardProps = {
+export type TotalCardProps = {
   amount: number;
   massa: number;
   price: number;
