@@ -12,6 +12,7 @@ import IconButton from '../../components/ui/IconButton/IconButton';
 import TotalCard from '../../components/common/TotalCard/TotalCard';
 import {Button} from '@rneui/themed';
 import {ScrollView} from 'react-native-gesture-handler';
+import CustomerOrderCard from '../../components/common/CustomerOrderCard/CustomerOrderCard';
 
 type CustomerOrderBasketScreenProps =
   NativeStackScreenProps<CustomerTabStackParamList>;
@@ -45,6 +46,7 @@ const CustomerOrderBasketScreen = ({
       ) : (
         <>
           <ScrollView style={styles.body}>
+            <CustomerOrderCard />
             <TotalCard
               amount={40}
               massa={503}
@@ -57,10 +59,10 @@ const CustomerOrderBasketScreen = ({
           <View style={styles.btnWrapper}>
             <Button
               color={'error'}
-              title={'Buyurtmani yuborish'}
+              title={'Qoralamaga saqlash'}
               type="outline"
             />
-            <Button color={'secondary'} title={'Qoralamaga saqlash'} />
+            <Button color={'secondary'} title={'Buyurtmani yuborish'} />
           </View>
         </>
       )}
