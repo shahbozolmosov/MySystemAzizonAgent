@@ -95,7 +95,7 @@ const CustomerOrderAddScreen = ({
       />
       {productRes.isLoading || productRes.isFetching ? (
         <Text>Loading...</Text>
-      ) : productData.length ? (
+      ) : !productData.length ? (
         <NoResult title="Mahlumotlar topilmadi" desc="Hozircha sizda mahsulotlar mavjud emas!" />
       ) : (
         <ScrollView>
