@@ -32,7 +32,7 @@ const CustomerHeader: React.FC<AppHeaderProps> = ({drawerNavigation}) => {
 
       {/* Header Title */}
       <Text h4 h4Style={styles.title}>
-        Asosi
+        Asosiy
       </Text>
 
       {/* Right Side Buttons */}

@@ -23,7 +23,7 @@ const ProfileScreen = ({navigation}: ProfileScreenProps) => {
 
   return (
     <Container>
-      <AppPageHeader onBack={handleBack} title="Profile" />
+      <AppPageHeader onBack={handleBack} title="Profilm" />
 
       {/* <View style={styles.profileCard}></View> */}
 
