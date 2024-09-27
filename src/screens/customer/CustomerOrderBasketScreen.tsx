@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 14,
     borderTopWidth: 1,
-    borderColor: '#F4F4F4', 
+    borderColor: '#F4F4F4',
     backgroundColor: '#ffffff',
   },
 });
