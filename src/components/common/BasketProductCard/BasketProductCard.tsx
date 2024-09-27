@@ -1,10 +1,18 @@
 import {Image} from '@rneui/themed';
 import React, {useCallback, useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
 import ProductImage from '../../../../assets/product.jpg';
 import {
   OrderProduct,
+  removeOrderProduct,
   setOrderProduct,
 } from '../../../app/services/order/orderSlice';
 import {formatComNum} from '../../../utils/formatComNum';
@@ -12,7 +20,7 @@ import {formatComNum} from '../../../utils/formatComNum';
 export interface BasketProductCardProps extends OrderProduct {}
 
 const BasketProductCard = (props: BasketProductCardProps) => {
-  const {name, article, price} = props;
+  const {id, name, article, price} = props;
   const dispatch = useDispatch();
 
   const [weight, setWeight] = useState(props.inputAmount.toString());
@@ -44,6 +52,10 @@ const BasketProductCard = (props: BasketProductCardProps) => {
     [dispatch, props],
   );
 
+  const handleRemove = useCallback(() => {
+    dispatch(removeOrderProduct(id));
+  }, [dispatch, id]);
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={ProductImage} />
@@ -68,12 +80,16 @@ const BasketProductCard = (props: BasketProductCardProps) => {
           onChangeText={handleChange}
         />
       </View>
+      <TouchableOpacity style={styles.removeBtn} onPress={handleRemove}>
+        <Icon name="x" size={24} color={'#ff5d5d'} />
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     flex: 1,
     flexDirection: 'row',
     gap: 12,
@@ -125,6 +141,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16,
     color: '#22272B',
+  },
+  removeBtn: {
+    position: 'absolute',
+    top: 4,
+    right: 14,
   },
 });
 
