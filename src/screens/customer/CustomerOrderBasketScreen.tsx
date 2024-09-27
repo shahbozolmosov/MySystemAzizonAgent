@@ -88,10 +88,22 @@ const CustomerOrderBasketScreen = ({
   const handleSubmit = useCallback(async () => {
     setIsLoading(true);
 
+    if (
+      selectedProducts.find(item => !item.inputAmount || item.inputAmount < 0)
+    ) {
+      Toast.show({
+        type: 'error',
+        text1: 'Buyurtma bajarilmadi',
+        text2: "Mahsulot miqdori to'g'ri kiritilmagan",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     const location = await getLocation();
     if (!location) {
       Toast.show({
-        type: 'info',
+        type: 'error',
         text1: 'Buyurtma bajarilmadi',
         text2: 'Buyurtma bajarilishi uchun sizning manzilingiz olinishi kerak.',
       });
@@ -102,7 +114,13 @@ const CustomerOrderBasketScreen = ({
     try {
       const data: OrderAdd = {
         client_id: customerId,
-        product_list: [],
+        product_list: selectedProducts.map(item => ({
+          product_id: item.id,
+          aritcle: item.article,
+          massa: item.inputAmount || 0,
+          price: item.price,
+          price_chegirma: item.real_price,
+        })),
         izoh: '',
         izoh_dostavka: '',
         alohida: false,
@@ -129,7 +147,7 @@ const CustomerOrderBasketScreen = ({
     } finally {
       setIsLoading(false);
     }
-  }, [addData, customerId]);
+  }, [addData, customerId, selectedProducts]);
 
   return (
     <Container>
