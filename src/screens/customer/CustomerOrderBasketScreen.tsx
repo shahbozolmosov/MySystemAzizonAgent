@@ -72,12 +72,7 @@ const CustomerOrderBasketScreen = ({
 
 const styles = StyleSheet.create({
   body: {
-    // flex: 1,
-  },
-  productsList: {
-    // flex: 1,
-    // minHeight: 400,
-    flexGrow: 1,
+    flex: 1,
   },
   btnWrapper: {
     gap: 20,
