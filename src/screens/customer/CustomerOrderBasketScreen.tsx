@@ -11,6 +11,7 @@ import {CustomerTabStackParamList} from '../../routes/CustomerStack';
 import IconButton from '../../components/ui/IconButton/IconButton';
 import TotalCard from '../../components/common/TotalCard/TotalCard';
 import {Button} from '@rneui/themed';
+import {ScrollView} from 'react-native-gesture-handler';
 
 type CustomerOrderBasketScreenProps =
   NativeStackScreenProps<CustomerTabStackParamList>;
@@ -43,16 +44,22 @@ const CustomerOrderBasketScreen = ({
         <EmptyBasket onGoBack={handleBack} />
       ) : (
         <>
-          <TotalCard
-            amount={40}
-            massa={503}
-            price={2300000}
-            discount={-3042}
-            payment={2000000}
-          />
-          <BasketProductCardList list={selectedProducts} />
+          <ScrollView style={styles.body}>
+            <TotalCard
+              amount={40}
+              massa={503}
+              price={2300000}
+              discount={-3042}
+              payment={2000000}
+            />
+            <BasketProductCardList list={selectedProducts} />
+          </ScrollView>
           <View style={styles.btnWrapper}>
-            <Button color={'error'} title={'Buyurtmani yuborish'} />
+            <Button
+              color={'error'}
+              title={'Buyurtmani yuborish'}
+              type="outline"
+            />
             <Button color={'secondary'} title={'Qoralamaga saqlash'} />
           </View>
         </>
@@ -62,12 +69,21 @@ const CustomerOrderBasketScreen = ({
 };
 
 const styles = StyleSheet.create({
+  body: {
+    // flex: 1,
+  },
+  productsList: {
+    // flex: 1,
+    // minHeight: 400,
+    flexGrow: 1,
+  },
   btnWrapper: {
-    gap: 10,
+    gap: 20,
     paddingHorizontal: 14,
     paddingVertical: 14,
     borderTopWidth: 1,
-    borderColor: '#dcdcdc',
+    borderColor: '#F4F4F4', 
+    backgroundColor: '#ffffff',
   },
 });
 

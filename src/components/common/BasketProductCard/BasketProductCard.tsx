@@ -99,7 +99,7 @@ const BasketProductCard = (props: BasketProductCardProps) => {
         />
       </View>
       <TouchableOpacity style={styles.removeBtn} onPress={handleOpenDialog}>
-        <Icon name="x" size={24} color={'#ff5d5d'} />
+        <Icon name="trash" size={16} color={'#1e232c'} />
       </TouchableOpacity>
     </View>
   );
@@ -113,14 +113,16 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingHorizontal: 14,
     paddingVertical: 8,
+    alignItems: 'center',
+    marginBottom: 4
   },
   bg: {
     // backgroundColor: 'rgba(3, 133, 255, 0.2)',
     backgroundColor: 'rgba(11, 197, 116, 0.27)',
   },
   image: {
-    width: 64,
-    height: 64,
+    width: 50,
+    height: 50,
     borderRadius: 64 / 2,
   },
   body: {
@@ -134,11 +136,12 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'flex-end',
     justifyContent: 'space-between',
+    paddingTop: 20,
   },
   title: {
     fontFamily: 'Roboto-Medium',
     fontWeight: '500',
-    fontSize: 18,
+    fontSize: 16,
     color: '#22272B',
   },
   price: {

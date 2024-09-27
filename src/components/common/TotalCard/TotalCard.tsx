@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffff',
     paddingHorizontal: 20,
     paddingVertical: 16,
+    marginBottom: 40
   },
   list: {
     gap: 10,

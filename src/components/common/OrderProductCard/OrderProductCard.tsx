@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingHorizontal: 14,
     paddingVertical: 8,
+    alignItems: 'center',
   },
   bg: {
     backgroundColor: 'rgba(3, 133, 255, 0.2)',
@@ -97,8 +98,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'rgba(11, 197, 116, 0.27)',
   },
   image: {
-    width: 64,
-    height: 64,
+    width: 50,
+    height: 50,
     borderRadius: 64 / 2,
   },
   body: {
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Roboto-Medium',
     fontWeight: '500',
-    fontSize: 18,
+    fontSize: 16,
     color: '#22272B',
   },
   price: {
