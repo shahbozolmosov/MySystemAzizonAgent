@@ -178,7 +178,6 @@ const CustomerOrderBasketScreen = ({
     <Container>
       <CustomerHeaderOperation
         title="Mening savatim"
-        showSearch
         customElements={
           <IconButton
             icon="shopping-bag"
