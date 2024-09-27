@@ -16,7 +16,7 @@ const EmptyBasket = ({onGoBack}: EmptyBasketProps) => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={EmptyBasketImage} />
-      <Text style={styles.title}>Mahsulot mavjud emas</Text>
+      <Text style={styles.title}>Savatcha bo'sh</Text>
       <Text style={styles.desc}>
         Buyurtma yaratish sahifasidan mahsulotlarni toping
       </Text>
