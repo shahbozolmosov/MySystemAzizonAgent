@@ -52,8 +52,8 @@ interface OrderAddProduct {
   price_chegirma: number;
 }
 
-interface OrderAdd {
-  client_id: number;
+export interface OrderAdd {
+  client_id: string;
   product_list: OrderAddProduct[];
   izoh: string;
   izoh_dostavka: string;
@@ -75,7 +75,7 @@ export const productApi = api
       }),
 
       // Post
-      addProductOrder: build.query<OrderAddRes, OrderAdd>({
+      addProductOrder: build.mutation<OrderAddRes, OrderAdd>({
         query: body => ({
           url: allUrls.orderAdd,
           method: 'POST',
@@ -85,4 +85,4 @@ export const productApi = api
     }),
   });
 
-export const {useGetProductAllQuery} = productApi;
+export const {useGetProductAllQuery, useAddProductOrderMutation} = productApi;

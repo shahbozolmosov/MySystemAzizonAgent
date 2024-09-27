@@ -1,27 +1,31 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {
-  OrderProduct,
-  selectedOrderProducts,
-} from '../../app/services/order/orderSlice';
-import {useTypesSelector} from '../../app/store';
-import BasketProductCardList from '../../components/common/BasketProductCard/BasketProductCardList';
-import Container from '../../components/common/Container/Container';
-import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
-import EmptyBasket from '../../components/errors/EmptyBasket/EmptyBasket';
-import {CustomerTabStackParamList} from '../../routes/CustomerStack';
-import IconButton from '../../components/ui/IconButton/IconButton';
-import TotalCard, {
-  TotalCardProps,
-} from '../../components/common/TotalCard/TotalCard';
 import {Button} from '@rneui/themed';
+import React, {useCallback, useMemo, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import CustomerOrderCard from '../../components/common/CustomerOrderCard/CustomerOrderCard';
+import Toast from 'react-native-toast-message';
 import {
   ICustomer,
   useGetCustomerByIdQuery,
 } from '../../app/services/customer/customer';
+import {
+  OrderAdd,
+  useAddProductOrderMutation,
+} from '../../app/services/order/order';
+import {selectedOrderProducts} from '../../app/services/order/orderSlice';
+import {useTypesSelector} from '../../app/store';
+import BasketProductCardList from '../../components/common/BasketProductCard/BasketProductCardList';
+import Container from '../../components/common/Container/Container';
+import CustomerOrderCard from '../../components/common/CustomerOrderCard/CustomerOrderCard';
+import TotalCard, {
+  TotalCardProps,
+} from '../../components/common/TotalCard/TotalCard';
+import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
+import EmptyBasket from '../../components/errors/EmptyBasket/EmptyBasket';
+import IconButton from '../../components/ui/IconButton/IconButton';
+import {CustomerTabStackParamList} from '../../routes/CustomerStack';
+import {handleError} from '../../utils/errorHandler';
+import {getLocation} from '../../utils/getLocation';
 import {handleApiResponseObj} from '../../utils/handleApiResponseObj';
 
 type CustomerOrderBasketScreenProps = NativeStackScreenProps<
@@ -36,11 +40,15 @@ const CustomerOrderBasketScreen = ({
   // Route
   const {customerId} = route.params;
 
+  // State
+  const [isLoading, setIsLoading] = useState(false);
+
   // Store
   const selectedProducts = useTypesSelector(selectedOrderProducts);
 
   // API
   const customerRes = useGetCustomerByIdQuery(customerId);
+  const [addData] = useAddProductOrderMutation();
 
   // Customer
   const customerData = useMemo<ICustomer | null>(() => {
@@ -77,7 +85,51 @@ const CustomerOrderBasketScreen = ({
   }, [navigation]);
 
   // Handle submit
-  const handleSubmit = useCallback(() => {}, []);
+  const handleSubmit = useCallback(async () => {
+    setIsLoading(true);
+
+    const location = await getLocation();
+    if (!location) {
+      Toast.show({
+        type: 'info',
+        text1: 'Buyurtma bajarilmadi',
+        text2: 'Buyurtma bajarilishi uchun sizning manzilingiz olinishi kerak.',
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const data: OrderAdd = {
+        client_id: customerId,
+        product_list: [],
+        izoh: '',
+        izoh_dostavka: '',
+        alohida: false,
+        lat: location.latitude,
+        lon: location.longitude,
+      };
+      console.log('🚀 ~ handleSubmit ~ data:', data);
+      return;
+      const res = await addData(data).unwrap();
+
+      if (res.success) {
+        Toast.show({
+          type: 'success',
+          text1: res.message,
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: res.message,
+        });
+      }
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [addData, customerId]);
 
   return (
     <Container>
@@ -112,6 +164,8 @@ const CustomerOrderBasketScreen = ({
             <Button
               color={'secondary'}
               title={`Buyurtmani yuborish (${selectedOrderProducts.length})`}
+              onPress={handleSubmit}
+              loading={isLoading}
             />
           </View>
         </>
