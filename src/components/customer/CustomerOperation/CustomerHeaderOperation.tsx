@@ -18,6 +18,7 @@ type CustomerHeaderOperationProps = {
   title: string;
   showSearch?: boolean;
   setSearchVal?: (value: string) => void;
+  borderShown?: boolean;
 };
 
 const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
@@ -25,6 +26,7 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
   title,
   showSearch,
   setSearchVal,
+  borderShown = true,
 }) => {
   // Navigation
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -62,7 +64,7 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
   );
 
   return showSearchInput ? (
-    <View style={styles.container}>
+    <View style={[styles.container, borderShown && styles.border]}>
       <SearchInput
         inputRef={searchRef}
         setValue={handleChange}
@@ -70,7 +72,7 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
       />
     </View>
   ) : (
-    <View style={styles.container}>
+    <View style={[styles.container, borderShown && styles.border]}>
       {/* Back Button */}
       <TouchableOpacity onPress={handleBack}>
         <Icon name="chevron-left" size={24} color={'#22282b'} />
@@ -101,6 +103,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 8,
     backgroundColor: '#fff',
+  },
+  border: {
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },

@@ -13,27 +13,11 @@ type CustomerOrderProps = NativeStackScreenProps<
 >;
 
 const CustomerOrderScreen = ({navigation, route}: CustomerOrderProps) => {
-  // Route
-  const {customerId} = route.params;
-
-  // Handle navigate to order add
-  const handleNavigate = useCallback(() => {
-    navigation.push('CustomerOrderAddScreen', {customerId});
-  }, [navigation, customerId]);
+  
 
   return (
     <Container>
-      <CustomerHeaderOperation
-        title="Buyurtmalar"
-        customElements={
-          <Button
-            title={'Yangi'}
-            size="sm"
-            color={'secondary'}
-            onPress={handleNavigate}
-          />
-        }
-      />
+     
       <MainScrollView>
         <Text>Lorem</Text>
       </MainScrollView>

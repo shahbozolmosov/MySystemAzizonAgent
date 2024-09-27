@@ -4,17 +4,17 @@ import {
 } from '@react-navigation/native-stack';
 import React from 'react';
 import CustomerOrderAddScreen from '../../screens/customer/CustomerOrderAddScreen';
-import CustomerOrderScreen from '../../screens/customer/CustomerOrderScreen';
-import {CustomerTabStackParamList} from './CustomerStack';
 import CustomerOrderBasketScreen from '../../screens/customer/CustomerOrderBasketScreen';
-
-const CustomerOrderStack =
-  createNativeStackNavigator<CustomerTabStackParamList>();
+import CustomerOrderHistoryTabStack from './CustomerOrderHistoryTabStack';
+import {CustomerTabStackParamList} from './CustomerStack';
 
 type CustomerOrderStackProps = NativeStackScreenProps<
   CustomerTabStackParamList,
   'CustomerOrderStackScreen'
 >;
+
+const CustomerOrderStack =
+  createNativeStackNavigator<CustomerTabStackParamList>();
 
 const CustomerOrderStackScreen = ({route}: CustomerOrderStackProps) => {
   const {customerId} = route.params;
@@ -22,8 +22,8 @@ const CustomerOrderStackScreen = ({route}: CustomerOrderStackProps) => {
   return (
     <CustomerOrderStack.Navigator screenOptions={{headerShown: false}}>
       <CustomerOrderStack.Screen
-        name="CustomerOrderScreen"
-        component={CustomerOrderScreen}
+        name="CustomerOrderHistory"
+        component={CustomerOrderHistoryTabStack}
         initialParams={{customerId}}
       />
       <CustomerOrderStack.Screen
