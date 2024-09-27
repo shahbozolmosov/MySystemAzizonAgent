@@ -9,6 +9,7 @@ import CustomerHeaderOperation from '../../components/customer/CustomerOperation
 import EmptyBasket from '../../components/errors/EmptyBasket/EmptyBasket';
 import {CustomerTabStackParamList} from '../../routes/CustomerStack';
 import IconButton from '../../components/ui/IconButton/IconButton';
+import TotalCard from '../../components/common/TotalCard/TotalCard';
 
 type CustomerOrderBasketScreenProps =
   NativeStackScreenProps<CustomerTabStackParamList>;
@@ -40,7 +41,16 @@ const CustomerOrderBasketScreen = ({
       {!selectedProducts.length ? (
         <EmptyBasket onGoBack={handleBack} />
       ) : (
-        <BasketProductCardList list={selectedProducts} />
+        <>
+          <TotalCard
+            amount={40}
+            massa={503}
+            price={2300000}
+            discount={-3042}
+            payment={2000000}
+          />
+          <BasketProductCardList list={selectedProducts} />
+        </>
       )}
     </Container>
   );

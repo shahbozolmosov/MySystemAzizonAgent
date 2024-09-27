@@ -91,7 +91,7 @@ const BasketProductCard = (props: BasketProductCardProps) => {
         <TextInput
           dataDetectorTypes={'flightNumber'}
           keyboardType="number-pad"
-          style={[styles.input, weight && styles.bg]}
+          style={styles.input}
           placeholder="kg"
           value={weight}
           placeholderTextColor={'#D2D4DA'}
