@@ -18,7 +18,6 @@ const BasketProductCardList = ({list}: BasketProductCardListProps) => {
       data={list}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
-      showsVerticalScrollIndicator={false}
     />
   );
 };

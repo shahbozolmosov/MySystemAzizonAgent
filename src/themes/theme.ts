@@ -4,6 +4,7 @@ export const theme = createTheme({
   lightColors: {
     primary: '#1e232c',
     secondary: '#007fff',
+    error: '#ff5d5d',
   },
   darkColors: {
     primary: '#ffffff',
