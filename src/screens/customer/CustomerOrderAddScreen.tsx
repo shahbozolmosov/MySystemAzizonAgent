@@ -1,6 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {Alert, ScrollView} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {
   clearOrderProduct,
   selectedOrderProductsAmount,
@@ -16,7 +17,8 @@ import CustomerHeaderOperation from '../../components/customer/CustomerOperation
 import IconButton from '../../components/ui/IconButton/IconButton';
 import {CustomerTabStackParamList} from '../../routes/CustomerStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
-import {useDispatch} from 'react-redux';
+import {Text} from '@rneui/themed';
+import NoResult from '../../components/errors/NoResult/NoResult';
 
 type CustomerOrderAddScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -91,9 +93,15 @@ const CustomerOrderAddScreen = ({
           </>
         }
       />
-      <ScrollView>
-        <OrderProductCardList list={productData} />
-      </ScrollView>
+      {productRes.isLoading || productRes.isFetching ? (
+        <Text>Loading...</Text>
+      ) : productData.length ? (
+        <NoResult title="Mahlumotlar topilmadi" desc="Hozircha sizda mahsulotlar mavjud emas!" />
+      ) : (
+        <ScrollView>
+          <OrderProductCardList list={productData} />
+        </ScrollView>
+      )}
     </Container>
   );
 };
