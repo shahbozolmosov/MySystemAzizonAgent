@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList} from 'react-native';
 import BasketProductCard, {BasketProductCardProps} from './BasketProductCard';
 
 interface BasketProductCardListProps {
@@ -14,20 +14,13 @@ const BasketProductCardList = ({list}: BasketProductCardListProps) => {
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={list}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}
-      />
-    </View>
+    <FlatList
+      data={list}
+      renderItem={renderItem}
+      keyExtractor={item => item.id.toString()}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(BasketProductCardList);

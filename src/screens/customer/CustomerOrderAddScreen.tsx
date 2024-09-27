@@ -1,6 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Text} from '@rneui/themed';
 import React, {useCallback, useEffect, useMemo} from 'react';
-import {Alert, ScrollView} from 'react-native';
+import {Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {
   clearOrderProduct,
@@ -14,11 +15,10 @@ import {useTypesSelector} from '../../app/store';
 import Container from '../../components/common/Container/Container';
 import OrderProductCardList from '../../components/common/OrderProductCard/OrderProductCardList';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
+import NoResult from '../../components/errors/NoResult/NoResult';
 import IconButton from '../../components/ui/IconButton/IconButton';
 import {CustomerTabStackParamList} from '../../routes/CustomerStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
-import {Text} from '@rneui/themed';
-import NoResult from '../../components/errors/NoResult/NoResult';
 
 type CustomerOrderAddScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -96,11 +96,12 @@ const CustomerOrderAddScreen = ({
       {productRes.isLoading || productRes.isFetching ? (
         <Text>Loading...</Text>
       ) : !productData.length ? (
-        <NoResult title="Mahlumotlar topilmadi" desc="Hozircha sizda mahsulotlar mavjud emas!" />
+        <NoResult
+          title="Mahlumotlar topilmadi"
+          desc="Hozircha sizda mahsulotlar mavjud emas!"
+        />
       ) : (
-        <ScrollView>
-          <OrderProductCardList list={productData} />
-        </ScrollView>
+        <OrderProductCardList list={productData} />
       )}
     </Container>
   );

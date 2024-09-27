@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList} from 'react-native';
 import OrderProductCard, {OrderProductCardProps} from './OrderProductCard';
 
 interface OrderProductCardListProps {
@@ -14,20 +14,12 @@ const OrderProductCardList = ({list}: OrderProductCardListProps) => {
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={list}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}
-      />
-    </View>
+    <FlatList
+      data={list}
+      renderItem={renderItem}
+      keyExtractor={item => item.id.toString()}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(OrderProductCardList);
