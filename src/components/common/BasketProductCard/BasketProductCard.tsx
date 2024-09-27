@@ -1,6 +1,7 @@
 import {Image} from '@rneui/themed';
 import React, {useCallback, useState} from 'react';
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -56,6 +57,23 @@ const BasketProductCard = (props: BasketProductCardProps) => {
     dispatch(removeOrderProduct(id));
   }, [dispatch, id]);
 
+  const handleOpenDialog = useCallback(() => {
+    Alert.alert(
+      "O'chirish!",
+      "Mahsulotni savatdan o'chirmoqchimisiz?",
+      [
+        {text: 'Bekor qilish', style: 'cancel', onPress: () => {}},
+        {
+          text: 'Ha',
+          style: 'destructive',
+
+          onPress: () => handleRemove(),
+        },
+      ],
+      {cancelable: true},
+    );
+  }, [handleRemove]);
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={ProductImage} />
@@ -80,7 +98,7 @@ const BasketProductCard = (props: BasketProductCardProps) => {
           onChangeText={handleChange}
         />
       </View>
-      <TouchableOpacity style={styles.removeBtn} onPress={handleRemove}>
+      <TouchableOpacity style={styles.removeBtn} onPress={handleOpenDialog}>
         <Icon name="x" size={24} color={'#ff5d5d'} />
       </TouchableOpacity>
     </View>
