@@ -75,7 +75,7 @@ const OrderProductCard = (props: OrderProductCardProps) => {
           placeholder="kg"
           value={inputValue}
           defaultValue={inputValue}
-          placeholderTextColor={'#D2D4DA'}
+          placeholderTextColor={weight ? '#8d9bb8' : '#D2D4DA'}
           onChangeText={handleChange}
         />
       </View>
@@ -92,8 +92,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   bg: {
-    // backgroundColor: 'rgba(3, 133, 255, 0.2)',
-    backgroundColor: 'rgba(11, 197, 116, 0.27)',
+    backgroundColor: 'rgba(3, 133, 255, 0.2)',
+    // color: '#ffffff',
+    // backgroundColor: 'rgba(11, 197, 116, 0.27)',
   },
   image: {
     width: 64,
