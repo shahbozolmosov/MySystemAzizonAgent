@@ -67,19 +67,28 @@ const CustomerOrderBasketScreen = ({
       return a;
     }, 0);
 
-    const price = selectedProducts.reduce((a, b) => {
+    const discountPrice = selectedProducts.reduce((a, b) => {
       if (b.inputAmount) {
         return a + b.inputAmount * b.price;
       }
       return a;
     }, 0);
 
+    const realPrice = selectedProducts.reduce((a, b) => {
+      if (b.inputAmount) {
+        return a + b.inputAmount * b.real_price;
+      }
+      return a;
+    }, 0);
+
+    const discountVal = realPrice - discountPrice;
+
     return {
       amount: selectedOrderProducts.length,
       massa,
-      price,
-      discount: 0,
-      payment: price,
+      price: discountPrice,
+      discount: discountVal <= 0 ? 0 : -discountVal,
+      payment: discountPrice,
     };
   }, [selectedProducts]);
 

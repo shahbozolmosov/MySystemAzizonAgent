@@ -15,6 +15,9 @@ export interface Product {
 }
 
 // index
+interface ProductAllParam {
+  customerId: string;
+}
 interface ProductAllRes extends IApiRes {
   data: Product[];
 }
@@ -26,8 +29,8 @@ export const productApi = api
   .injectEndpoints({
     endpoints: build => ({
       // Index
-      getProductAll: build.query<ProductAllRes, void>({
-        query: () => allUrls.productsGetAll,
+      getProductAll: build.query<ProductAllRes, ProductAllParam>({
+        query: ({customerId}) => allUrls.productsGetByCustomer(customerId),
       }),
     }),
   });

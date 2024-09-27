@@ -42,7 +42,7 @@ const CustomerOrderAddScreen = ({
   const dispatch = useDispatch();
 
   // API
-  const productRes = useGetProductAllQuery();
+  const productRes = useGetProductAllQuery({customerId});
 
   const productData = useMemo<Product[]>(() => {
     return handleApiResponse(productRes);
