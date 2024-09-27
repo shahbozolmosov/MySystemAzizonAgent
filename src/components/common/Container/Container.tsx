@@ -7,8 +7,15 @@ type ContainerProps = {
   paddingHorizontal?: number;
 };
 
-export default function Container({children}: ContainerProps) {
-  return <SafeAreaView style={styles.container}>{children}</SafeAreaView>;
+export default function Container({
+  children,
+  paddingHorizontal,
+}: ContainerProps) {
+  return (
+    <SafeAreaView style={[styles.container, {paddingHorizontal}]}>
+      {children}
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({

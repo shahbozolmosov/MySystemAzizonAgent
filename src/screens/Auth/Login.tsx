@@ -24,7 +24,7 @@ export default function Login(): JSX.Element {
   const [login] = useLoginMutation();
 
   return (
-    <Container>
+    <Container paddingHorizontal={14}>
       <ScrollView focusable={false}>
         <View style={styles.body}>
           <Text style={styles.title}>Xush kelibsiz!</Text>
