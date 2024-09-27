@@ -29,6 +29,7 @@ const IconButton = ({
       {badgeShown && (
         <View style={styles.badge}>
           <Badge
+            containerStyle={styles.badgeContainer}
             badgeStyle={styles.badgeBody}
             textStyle={styles.badgeText}
             value={badgeAmount}
@@ -66,9 +67,12 @@ const styles = StyleSheet.create({
     right: -10,
     zIndex: 1,
   },
+  badgeContainer: {
+    minWidth: 20,
+    minHeight: 20,
+  },
   badgeBody: {
     backgroundColor: '#0385FF',
-    padding: 1,
   },
   badgeText: {
     fontFamily: 'Roboto-Medium',
