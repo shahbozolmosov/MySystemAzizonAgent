@@ -223,10 +223,13 @@ const CustomerOrderBasketScreen = ({
               />
               <View style={styles.switchBox}>
                 <Switch
-                  ios_backgroundColor="#3e3e3e"
+                  trackColor={{false: '#C4C4C4', true: '#0080ff'}}
+                  thumbColor={isEnabled ? '#ffffff' : '#f4f3f4'}
+                  ios_backgroundColor="#D9D9D9"
                   onValueChange={toggleSwitch}
                   value={isEnabled}
                 />
+
                 <Text style={styles.descInputBoxTitle}>Yangi buyurtma</Text>
               </View>
             </View>
