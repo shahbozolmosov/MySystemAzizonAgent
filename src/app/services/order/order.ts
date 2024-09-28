@@ -13,7 +13,7 @@ interface OrderProduct {
   real_price: '59800';
 }
 
-interface Order {
+export interface Order {
   id: string;
   client: ICustomer;
   sana: string;

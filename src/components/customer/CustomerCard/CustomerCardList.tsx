@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   list: {},
 });
 
-export default CustomerCardList;
+export default React.memo(CustomerCardList);

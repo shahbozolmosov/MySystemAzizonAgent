@@ -1,11 +1,13 @@
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 import React, {useMemo} from 'react';
-import {Text} from 'react-native';
-import Container from '../../components/common/Container/Container';
-import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {useGetProductOrderAllQuery} from '../../app/services/order/order';
+import Container from '../../components/common/Container/Container';
+import OrderCard, {
+  OrderCardProps,
+} from '../../components/common/OrderCard/OrderCard';
+import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
-import OrderCard from '../../components/common/OrderCard/OrderCard';
+import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 
 type CustomerOrderProcessProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -18,15 +20,15 @@ const CustomerOrderProcess = ({
 }: CustomerOrderProcessProps) => {
   const orderRes = useGetProductOrderAllQuery();
 
-  const data = useMemo(() => {
+  const data = useMemo<OrderCardProps[]>(() => {
     return handleApiResponse(orderRes);
   }, [orderRes]);
 
-  console.log(JSON.stringify(data, null, 2))
-  
+  console.log(JSON.stringify(data, null, 2));
+
   return (
     <Container>
-      <OrderCard />
+      <OrderCardList list={data} />
     </Container>
   );
 };

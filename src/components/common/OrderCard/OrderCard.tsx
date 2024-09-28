@@ -1,34 +1,52 @@
 import React from 'react';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Order} from '../../../app/services/order/order';
 
-const OrderCard = () => {
+export interface OrderCardProps extends Order {}
+
+const OrderCard = ({
+  id,
+  vaqt,
+  client,
+  mahsulot_soni,
+  taxmin_summa,
+  status,
+}: OrderCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.orderId} selectable={true}>
-          #3566123
+          #{id}
         </Text>
-        <Text style={styles.date}>20/03/2020</Text>
+        <Text style={styles.date}>{vaqt.replace(/\./g, '/')}</Text>
       </View>
       <View style={styles.body}>
         <View style={styles.bodyItem}>
-          <Text style={styles.bodyItemTitle}>Shahboz Olmosov</Text>
-          <Text style={styles.bodyItemTitle}>+998(12)-123-12-12</Text>
+          <Text style={styles.bodyItemTitle}>{client.fio}</Text>
+          <Text style={styles.bodyItemTitle}>{client.telefon}</Text>
         </View>
         <View style={styles.bodyItem}>
           <Text style={styles.bodyItemTitle}>
-            Jami soni: <Text style={styles.fontBold}>03</Text>
+            Jami soni: <Text style={styles.fontBold}>{mahsulot_soni}</Text>
           </Text>
           <Text style={styles.bodyItemTitle}>
-            Summa: <Text style={styles.fontBold}>$150</Text>
+            Taxminiy summa:{' '}
+            <Text style={styles.fontBold}>{taxmin_summa.toLocaleString()}</Text>
           </Text>
         </View>
       </View>
       <View style={styles.footer}>
-        <Pressable style={styles.detailBtn} onPress={() => Alert.alert('Mahsulotlar',"Buyurtma mahsulotlarini ko'rish qurish jarayonida...")}>
+        <Pressable
+          style={styles.detailBtn}
+          onPress={() =>
+            Alert.alert(
+              'Mahsulotlar',
+              "Buyurtma mahsulotlarini ko'rish qurish jarayonida...",
+            )
+          }>
           <Text style={styles.detailBtnText}>Mahsulotlar</Text>
         </Pressable>
-        <Text style={styles.status}>Delivered</Text>
+        <Text style={styles.status}>{status}</Text>
       </View>
     </View>
   );
