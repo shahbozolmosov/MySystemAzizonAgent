@@ -6,16 +6,22 @@ export const requestLocationPermission = async (): Promise<boolean> => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: 'Location Access Required',
-          message: 'This App needs to access your location',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
+          title: "Joylashuvga ro'xsat berish talab qilinadi",
+          message: 'Bu ilova sizning joylashuvingizga kirishi kerak',
+          buttonNeutral: 'Keyinroq',
+          buttonNegative: 'Bekor qilish',
+          buttonPositive: 'Ha',
         },
       );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('Location permission granted');
+      } else {
+        console.log('Location permission denied');
+      }
+
       return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (err) {
-      console.error('Permission error', err);
+      console.warn('Permission error', err);
       return false;
     }
   } else {

@@ -1,6 +1,6 @@
-import Geolocation from '@react-native-community/geolocation';
 import Toast from 'react-native-toast-message';
 import {requestLocationPermission} from './permission/requestLocationPermission';
+import Geolocation from 'react-native-geolocation-service';
 
 interface Location {
   latitude: number;
@@ -23,13 +23,16 @@ export const getLocation = async (): Promise<Location | null> => {
         console.error('Location error', error);
         Toast.show({
           type: 'error',
-          text1: 'Lokatsiya manzili olinmadi',
-          text2:
-            "Sizning lokatsiya manzilingiz olinmadi.Qaytadan urinib ko'ring yoki biz bilan bog'laning",
+          text1: 'Sizning lokatsiya manzilingiz olinmadi.',
+          text2: "Qaytadan urinib ko'ring yoki biz bilan bog'laning",
         });
         reject(error);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      {
+        enableHighAccuracy: true,
+        timeout: 30000, // 30s
+        maximumAge: 10000,
+      },
     );
   });
 };
