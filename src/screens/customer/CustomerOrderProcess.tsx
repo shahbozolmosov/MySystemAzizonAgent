@@ -2,12 +2,10 @@ import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 import React, {useMemo} from 'react';
 import {useGetProductOrderAllQuery} from '../../app/services/order/order';
 import Container from '../../components/common/Container/Container';
-import OrderCard, {
-  OrderCardProps,
-} from '../../components/common/OrderCard/OrderCard';
+import {OrderCardProps} from '../../components/common/OrderCard/OrderCard';
+import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
-import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 
 type CustomerOrderProcessProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -18,13 +16,14 @@ const CustomerOrderProcess = ({
   navigation,
   route,
 }: CustomerOrderProcessProps) => {
-  const orderRes = useGetProductOrderAllQuery();
+  // Route
+  const {customerId} = route.params;
+
+  const orderRes = useGetProductOrderAllQuery({customerId, status: 'new'});
 
   const data = useMemo<OrderCardProps[]>(() => {
     return handleApiResponse(orderRes);
   }, [orderRes]);
-
-  console.log(JSON.stringify(data, null, 2));
 
   return (
     <Container>

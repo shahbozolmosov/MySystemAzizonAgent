@@ -1,3 +1,4 @@
+import {OrderAllParams} from '../app/services/order/order';
 import {TDate} from '../types/types';
 
 export const baseUrl = 'https://azizon-system.uz/api-demo';
@@ -33,12 +34,12 @@ export const allUrls = {
   categoryGetAll: '/agent/get-category.php',
 
   // Order
-  orderGetAll: '/agent/get-my-orders.php',
+  orderGetAll: ({customerId = '', status = ''}: OrderAllParams) =>
+    `/agent/get-my-orders.php?client_id=${customerId}&status=${status}`,
   orderGetById: (orderId: string) => `/agent/get-my-orders.php?id=${orderId}`,
   orderGetByDate: (date: TDate) =>
     `/agent/get-my-orders.php?sana1=${date.end}&sana2=${date.end}`,
-  orderGetByCustomer: (customerId: string) =>
-    `/agent/get-my-orders.php?client_id=${customerId}`,
+
   orderAdd: '/agent/add-sale-order.php',
   orderItemUpdate: (orderId: string) =>
     `/agent/edit-sale-order.php?order_id=${orderId}`,

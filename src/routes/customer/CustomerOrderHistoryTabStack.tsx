@@ -106,10 +106,18 @@ const CustomerOrderHistoryTabStack = ({
         <Tab.Screen
           name="Process"
           component={CustomerOrderProcess}
-          initialParams={{customerId: '1'}}
+          initialParams={{customerId}}
         />
-        <Tab.Screen name="Delivered" component={CustomerOrderDelivered} />
-        <Tab.Screen name="Canceled" component={CustomerOrderCanceled} />
+        <Tab.Screen
+          name="Delivered"
+          component={CustomerOrderDelivered}
+          initialParams={{customerId}}
+        />
+        <Tab.Screen
+          name="Canceled"
+          component={CustomerOrderCanceled}
+          initialParams={{customerId}}
+        />
       </Tab.Navigator>
     </>
   );
