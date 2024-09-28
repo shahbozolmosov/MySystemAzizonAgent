@@ -46,7 +46,7 @@ const CustomerOrderHistoryTabStack = ({
 
   const tabBarLabel = useCallback(
     (props: TabBarLabelProps, tabRoute: {name: string}) => {
-      let label = 'Process';
+      let label = 'Jarayonda';
 
       switch (tabRoute.name) {
         case 'Delivered':
