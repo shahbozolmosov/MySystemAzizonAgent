@@ -83,11 +83,14 @@ const CustomerOrderBasketScreen = ({
 
     const discountVal = realPrice - discountPrice;
 
+    const percent = (discountVal / realPrice) * 100;
+
     return {
-      amount: selectedOrderProducts.length,
+      amount: selectedProducts.length,
       massa,
-      price: discountPrice,
+      price: realPrice,
       discount: discountVal <= 0 ? 0 : -discountVal,
+      discountPercent: Math.round(percent),
       payment: discountPrice,
     };
   }, [selectedProducts]);
@@ -223,7 +226,7 @@ const CustomerOrderBasketScreen = ({
             />
             <Button
               color={'secondary'}
-              title={`Buyurtmani yuborish (${selectedOrderProducts.length})`}
+              title={`Buyurtmani yuborish (${selectedProducts.length})`}
               onPress={handleSubmit}
               loading={isLoading}
             />

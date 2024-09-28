@@ -6,6 +6,7 @@ export type TotalCardProps = {
   massa: number;
   price: number;
   discount: number;
+  discountPercent: number;
   payment: number;
 };
 
@@ -14,6 +15,7 @@ const TotalCard = ({
   massa,
   price,
   discount,
+  discountPercent,
   payment,
 }: TotalCardProps) => {
   return (
@@ -39,7 +41,7 @@ const TotalCard = ({
         </View>
         <View style={styles.listItem}>
           <Text style={styles.label}>Chegirma</Text>
-          <Text style={styles.value}>{discount.toLocaleString()}&nbsp;</Text>
+          <Text style={styles.value}>{discount.toLocaleString()}&nbsp; ({discountPercent}%)</Text>
         </View>
         <View style={styles.listItem}>
           <Text style={styles.label}>To'lov</Text>
