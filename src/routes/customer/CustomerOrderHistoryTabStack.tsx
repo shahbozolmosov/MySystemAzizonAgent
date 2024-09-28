@@ -90,18 +90,20 @@ const CustomerOrderHistoryTabStack = ({
           },
           tabBarItemStyle: {
             // width: 'auto', // Make each tab's width fit its content
+            width: width / 4,
             minWidth: 80, // Optional: Set a minimum width if needed
           },
           // Use custom label with Text and optional View for more customization
           tabBarLabel: props => tabBarLabel(props, route),
           tabBarIndicatorStyle: {
             width: width / 3 - 60,
-            marginLeft: 40,
+            marginLeft: 25,
             height: 4,
             backgroundColor: '#1e232c',
             borderRadius: 16,
           },
           tabBarPressColor: 'transparent',
+          tabBarScrollEnabled: true,
         })}>
         <Tab.Screen
           name="Process"

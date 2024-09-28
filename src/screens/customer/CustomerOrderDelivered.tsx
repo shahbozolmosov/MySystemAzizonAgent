@@ -1,11 +1,34 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
+import React, {useMemo} from 'react';
+import {useGetProductOrderAllQuery} from '../../app/services/order/order';
+import Container from '../../components/common/Container/Container';
+import {OrderCardProps} from '../../components/common/OrderCard/OrderCard';
+import OrderCardList from '../../components/common/OrderCard/OrderCardList';
+import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
+import {handleApiResponse} from '../../utils/handleApiResponse';
 
-const CustomerOrderDelivered = () => {
+type CustomerOrderDeliveredProps = MaterialTopTabScreenProps<
+  CustomerOrderHistoryTabStackParamList,
+  'Delivered'
+>;
+
+const CustomerOrderDelivered = ({
+  navigation,
+  route,
+}: CustomerOrderDeliveredProps) => {
+  // Route
+  const {customerId} = route.params;
+
+  const orderRes = useGetProductOrderAllQuery({customerId, status: 'new'});
+
+  const data = useMemo<OrderCardProps[]>(() => {
+    return handleApiResponse(orderRes);
+  }, [orderRes]);
+
   return (
-    <View>
-      <Text>CustomerOrderDelivered</Text>
-    </View>
+    <Container>
+      <OrderCardList list={data} />
+    </Container>
   );
 };
 
