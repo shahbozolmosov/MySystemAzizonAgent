@@ -2,13 +2,14 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Button} from '@rneui/themed';
 import React, {useCallback} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
 import CustomerOrderCanceled from '../../screens/customer/CustomerOrderCanceled';
 import CustomerOrderDelivered from '../../screens/customer/CustomerOrderDelivered';
 import CustomerOrderProcess from '../../screens/customer/CustomerOrderProcess';
 import {CustomerTabStackParamList} from './CustomerStack';
+import IconButton from '../../components/ui/IconButton/IconButton';
 
 export type CustomerOrderHistoryTabStackParamList = {
   Process: {customerId: string};
@@ -67,12 +68,16 @@ const CustomerOrderHistoryTabStack = ({
       <CustomerHeaderOperation
         title="Buyurtmalar"
         customElements={
-          <Button
-            title={'Yangi'}
-            size="sm"
-            color={'secondary'}
-            onPress={handleNavigate}
-          />
+          <>
+            <IconButton icon="filter" />
+            <Button
+              title={'Yangi'}
+              size="sm"
+              color={'secondary'}
+              onPress={handleNavigate}
+              containerStyle={styles.addBtnContainer}
+            />
+          </>
         }
         borderShown={false}
       />
@@ -109,5 +114,12 @@ const CustomerOrderHistoryTabStack = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  addBtnContainer: {
+    paddingVertical: 4,
+    marginLeft: 8,
+  },
+});
 
 export default React.memo(CustomerOrderHistoryTabStack);
