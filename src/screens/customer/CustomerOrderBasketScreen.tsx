@@ -58,25 +58,35 @@ const CustomerOrderBasketScreen = ({
     return handleApiResponseObj<ICustomer>(customerRes);
   }, [customerRes]);
 
+  const getNumber = useCallback((value: string) => {
+    if (value) {
+      return parseFloat(value);
+    }
+    return 0;
+  }, []);
+
   // Total data
   const totalData = useMemo<TotalCardProps>(() => {
     const massa = selectedProducts.reduce((a, b) => {
-      if (b.inputAmount) {
-        return a + b.inputAmount;
+      const number = getNumber(b.inputAmount);
+      if (number) {
+        return a + number;
       }
       return a;
     }, 0);
 
     const discountPrice = selectedProducts.reduce((a, b) => {
-      if (b.inputAmount) {
-        return a + b.inputAmount * b.price;
+      const number = getNumber(b.inputAmount);
+      if (number) {
+        return a + number * b.price;
       }
       return a;
     }, 0);
 
     const realPrice = selectedProducts.reduce((a, b) => {
-      if (b.inputAmount) {
-        return a + b.inputAmount * b.real_price;
+      const number = getNumber(b.inputAmount);
+      if (number) {
+        return a + number * b.real_price;
       }
       return a;
     }, 0);
@@ -93,7 +103,7 @@ const CustomerOrderBasketScreen = ({
       discountPercent: Math.round(percent),
       payment: discountPrice,
     };
-  }, [selectedProducts]);
+  }, [getNumber, selectedProducts]);
 
   const handleBack = useCallback(() => {
     navigation.goBack();
@@ -108,7 +118,9 @@ const CustomerOrderBasketScreen = ({
     setIsLoading(true);
 
     if (
-      selectedProducts.find(item => !item.inputAmount || item.inputAmount < 0)
+      selectedProducts.find(
+        item => !item.inputAmount || getNumber(item.inputAmount) < 0,
+      )
     ) {
       Toast.show({
         type: 'error',
@@ -136,7 +148,7 @@ const CustomerOrderBasketScreen = ({
         product_list: selectedProducts.map(item => ({
           product_id: item.id,
           aritcle: item.article,
-          massa: item.inputAmount || 0,
+          massa: getNumber(item.inputAmount) || 0,
           price: item.price,
           price_chegirma: item.real_price,
         })),
@@ -172,6 +184,7 @@ const CustomerOrderBasketScreen = ({
     customerId,
     desc,
     descSupplier,
+    getNumber,
     isEnabled,
     navigation,
     selectedProducts,

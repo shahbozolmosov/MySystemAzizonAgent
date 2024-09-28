@@ -1,5 +1,5 @@
 import {Image} from '@rneui/themed';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import ProductImage from '../../../../assets/product.jpg';
@@ -22,38 +22,33 @@ const OrderProductCard = (props: OrderProductCardProps) => {
     selectedOrderProductsById(state, id),
   );
 
-  const [weight, setWeight] = useState('');
-
   const handleChange = useCallback(
     (text: string) => {
-      const numericValue = text.replace(/[^0-9.]/g, '');
-
-      const formatted = formatComNum(numericValue);
+      const numericValue = text
+        .replace(/[^0-9.]/g, '')
+        .replace(/(\..*?)\..*/g, '$1');
 
       if (numericValue) {
         dispatch(
           setOrderProduct({
             ...props,
-            inputAmount: parseFloat(numericValue),
+            inputAmount: numericValue,
+            // inputAmount: parseFloat('2.3'),
           }),
         );
       } else {
         dispatch(removeOrderProduct(props.id));
       }
-
-      setWeight(formatted);
     },
     [dispatch, props],
   );
 
   const inputValue = useMemo<string>(() => {
     if (product) {
-      const formatted = formatComNum(product.inputAmount.toString());
-      return formatted;
+      return product.inputAmount.toString();
     }
     return '';
   }, [product]);
-
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={ProductImage} />
@@ -71,11 +66,11 @@ const OrderProductCard = (props: OrderProductCardProps) => {
         <TextInput
           dataDetectorTypes={'flightNumber'}
           keyboardType="number-pad"
-          style={[styles.input, weight && styles.bg]}
+          style={[styles.input, inputValue && styles.bg]}
           placeholder="kg"
           value={inputValue}
           defaultValue={inputValue}
-          placeholderTextColor={weight ? '#8d9bb8' : '#D2D4DA'}
+          placeholderTextColor={inputValue ? '#8d9bb8' : '#D2D4DA'}
           onChangeText={handleChange}
         />
       </View>

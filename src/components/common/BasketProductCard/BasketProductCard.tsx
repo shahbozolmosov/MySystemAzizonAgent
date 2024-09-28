@@ -1,5 +1,5 @@
 import {Image} from '@rneui/themed';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {
   Alert,
   StyleSheet,
@@ -14,8 +14,10 @@ import ProductImage from '../../../../assets/product.jpg';
 import {
   OrderProduct,
   removeOrderProduct,
+  selectedOrderProductsById,
   setOrderProduct,
 } from '../../../app/services/order/orderSlice';
+import {useTypesSelector} from '../../../app/store';
 import {formatComNum} from '../../../utils/formatComNum';
 
 export interface BasketProductCardProps extends OrderProduct {}
@@ -24,19 +26,21 @@ const BasketProductCard = (props: BasketProductCardProps) => {
   const {id, name, article, price} = props;
   const dispatch = useDispatch();
 
-  const [weight, setWeight] = useState(props.inputAmount.toString());
+  const product = useTypesSelector(state =>
+    selectedOrderProductsById(state, id),
+  );
 
   const handleChange = useCallback(
     (text: string) => {
-      let numericValue = text.replace(/[^0-9.]/g, '');
-
-      const formatted = formatComNum(numericValue);
+      const numericValue = text
+        .replace(/[^0-9.]/g, '')
+        .replace(/(\..*?)\..*/g, '$1');
 
       if (numericValue) {
         dispatch(
           setOrderProduct({
             ...props,
-            inputAmount: parseFloat(numericValue),
+            inputAmount: numericValue,
           }),
         );
       } else {
@@ -47,8 +51,6 @@ const BasketProductCard = (props: BasketProductCardProps) => {
           }),
         );
       }
-
-      setWeight(formatted);
     },
     [dispatch, props],
   );
@@ -74,6 +76,13 @@ const BasketProductCard = (props: BasketProductCardProps) => {
     );
   }, [handleRemove]);
 
+  const inputValue = useMemo<string>(() => {
+    if (product) {
+      return product.inputAmount.toString();
+    }
+    return '';
+  }, [product]);
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={ProductImage} />
@@ -93,7 +102,7 @@ const BasketProductCard = (props: BasketProductCardProps) => {
           keyboardType="number-pad"
           style={styles.input}
           placeholder="kg"
-          value={weight}
+          value={inputValue}
           placeholderTextColor={'#D2D4DA'}
           onChangeText={handleChange}
         />

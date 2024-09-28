@@ -4,7 +4,7 @@ import {RootState} from '../../store';
 import {addProductOrder} from './order';
 
 export interface OrderProduct extends Product {
-  inputAmount: number | '';
+  inputAmount: string | '';
 }
 
 interface InitialState {
