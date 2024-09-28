@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
   bodyItemTitle: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
-    fontSize: 16,
+    fontSize: 14,
     color: '#808080',
   },
   fontBold: {
     fontFamily: 'Roboto-Bold',
     fontWeight: '500',
-    fontSize: 16,
+    fontSize: 14,
     color: '#242424',
   },
   footer: {
