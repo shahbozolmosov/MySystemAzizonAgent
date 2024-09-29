@@ -94,7 +94,7 @@ const CustomerOrderHistoryTabStack = ({
           tabBarLabel: props => tabBarLabel(props, TabRoute),
           tabBarIndicatorStyle: {
             width: 60,
-            marginLeft: 50,
+            marginLeft: 55,
             height: 4,
             backgroundColor: '#1e232c',
             borderRadius: 16,
