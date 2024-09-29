@@ -42,7 +42,7 @@ const CustomerOrderHistoryTabStack = ({
 
   // Handle navigate to order add
   const handleNavigate = useCallback(() => {
-    navigation.push('CustomerOrderAddScreen', {customerId});
+    navigation.push('CustomerOrderAdd', {customerId});
   }, [navigation, customerId]);
 
   const tabBarLabel = useCallback(

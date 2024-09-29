@@ -30,7 +30,7 @@ import {handleApiResponseObj} from '../../utils/handleApiResponseObj';
 
 type CustomerOrderBasketScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
-  'CustomerOrderBasketScreen'
+  'CustomerOrderBasket'
 >;
 
 const CustomerOrderBasketScreen = ({

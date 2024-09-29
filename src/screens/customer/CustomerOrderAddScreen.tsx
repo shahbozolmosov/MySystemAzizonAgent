@@ -22,7 +22,7 @@ import {handleApiResponse} from '../../utils/handleApiResponse';
 
 type CustomerOrderAddScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
-  'CustomerOrderAddScreen'
+  'CustomerOrderAdd'
 >;
 
 const CustomerOrderAddScreen = ({
@@ -49,7 +49,7 @@ const CustomerOrderAddScreen = ({
   }, [productRes]);
 
   const handleNavigateBasket = useCallback(() => {
-    navigation.push('CustomerOrderBasketScreen', {customerId});
+    navigation.push('CustomerOrderBasket', {customerId});
   }, [customerId, navigation]);
 
   useEffect(() => {

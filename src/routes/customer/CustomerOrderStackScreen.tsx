@@ -10,7 +10,7 @@ import {CustomerTabStackParamList} from './CustomerStack';
 
 type CustomerOrderStackProps = NativeStackScreenProps<
   CustomerTabStackParamList,
-  'CustomerOrderStackScreen'
+  'CustomerOrderStack'
 >;
 
 const CustomerOrderStack =
@@ -27,12 +27,12 @@ const CustomerOrderStackScreen = ({route}: CustomerOrderStackProps) => {
         initialParams={{customerId}}
       />
       <CustomerOrderStack.Screen
-        name="CustomerOrderAddScreen"
+        name="CustomerOrderAdd"
         component={CustomerOrderAddScreen}
         initialParams={{customerId}}
       />
       <CustomerOrderStack.Screen
-        name="CustomerOrderBasketScreen"
+        name="CustomerOrderBasket"
         component={CustomerOrderBasketScreen}
         initialParams={{customerId}}
       />

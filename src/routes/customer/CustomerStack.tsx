@@ -18,15 +18,16 @@ export type CustomerStackParamList = {
   };
 };
 export type CustomerTabStackParamList = {
-  CustomerHomeScreen: {customerId: string};
+  CustomerHome: {customerId: string};
   // order
-  CustomerOrderStackScreen: {customerId: string};
+  CustomerOrderStack: {customerId: string};
   CustomerOrderHistory: {customerId: string};
-  CustomerOrderAddScreen: {customerId: string};
-  CustomerOrderBasketScreen: {customerId: string};
+  CustomerOrderAdd: {customerId: string};
+  CustomerOrderBasket: {customerId: string};
+  CustomerOrderDetails: {customerId: string; orderId: string};
 
-  CustomerVisitScreen: {customerId: string};
-  CustomerReportScreen: {customerId: string};
+  CustomerVisit: {customerId: string};
+  CustomerReport: {customerId: string};
 };
 
 const Tab = createBottomTabNavigator<CustomerTabStackParamList>();
@@ -47,7 +48,7 @@ const TabNavigation = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="CustomerHomeScreen"
+      initialRouteName="CustomerHome"
       screenOptions={{
         headerShown: false,
         tabBarInactiveTintColor: '#7e919a',
@@ -61,7 +62,7 @@ const TabNavigation = () => {
         },
       }}>
       <Tab.Screen
-        name="CustomerHomeScreen"
+        name="CustomerHome"
         component={CustomerHomeScreen}
         options={{
           tabBarLabel: 'Asosiy',
@@ -70,7 +71,7 @@ const TabNavigation = () => {
         initialParams={{customerId}}
       />
       <Tab.Screen
-        name="CustomerOrderStackScreen"
+        name="CustomerOrderStack"
         component={CustomerOrderStackScreen}
         options={{
           tabBarLabel: 'Buyurtma',
@@ -80,7 +81,7 @@ const TabNavigation = () => {
         initialParams={{customerId}}
       />
       <Tab.Screen
-        name="CustomerOrderAddScreen"
+        name="CustomerOrderAdd"
         component={CustomerOrderAddScreen}
         options={{
           tabBarLabel: 'Buyurtma',
@@ -90,7 +91,7 @@ const TabNavigation = () => {
         initialParams={{customerId}}
       />
       <Tab.Screen
-        name="CustomerVisitScreen"
+        name="CustomerVisit"
         component={CustomerVisitScreen}
         options={{
           tabBarLabel: 'Tashrif',
@@ -99,7 +100,7 @@ const TabNavigation = () => {
         initialParams={{customerId}}
       />
       <Tab.Screen
-        name="CustomerReportScreen"
+        name="CustomerReport"
         component={CustomerReportScreen}
         options={{
           tabBarLabel: 'Hisobot',
