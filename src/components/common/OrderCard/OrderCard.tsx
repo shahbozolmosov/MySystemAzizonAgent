@@ -5,7 +5,7 @@ import {Order} from '../../../app/services/order/order';
 export interface IOrderCard extends Order {}
 
 export interface OrderCardProps extends IOrderCard {
-  onNavigate: (orderId: string) => void;
+  onNavigate?: (orderId: string) => void;
 }
 
 const OrderCard = ({
@@ -18,7 +18,9 @@ const OrderCard = ({
   onNavigate,
 }: OrderCardProps) => {
   const handleNavigate = useCallback(() => {
-    onNavigate(id);
+    if (onNavigate) {
+      onNavigate(id);
+    }
   }, [id, onNavigate]);
 
   return (

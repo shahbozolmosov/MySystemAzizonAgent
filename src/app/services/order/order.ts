@@ -43,8 +43,14 @@ export type OrderAllParams = {
   customerId?: string;
   status?: 'new' | 'bekor_qilingan' | 'jarayonda' | 'topshirildi' | '';
 };
+
 interface OrderAllRes extends IApiRes {
   data: Order[];
+}
+
+// Show
+interface OrderGetByIdRes extends IApiRes {
+  data: Order;
 }
 
 // post
@@ -65,6 +71,7 @@ export interface OrderAdd {
   lat: number;
   lon: number;
 }
+
 interface OrderAddRes extends IApiRes {}
 
 const PRODUCT_ORDER_TAG = 'PRODUCT_ORDER';
@@ -76,6 +83,13 @@ export const productOrderApi = api
       // Index
       getProductOrderAll: build.query<OrderAllRes, OrderAllParams>({
         query: params => allUrls.orderGetAll(params),
+        providesTags: [PRODUCT_ORDER_TAG],
+      }),
+
+      // Show
+      getProductById: build.query<OrderGetByIdRes, string>({
+        query: id => allUrls.orderGetById(id),
+        providesTags: [PRODUCT_ORDER_TAG],
       }),
 
       // Post
@@ -85,12 +99,16 @@ export const productOrderApi = api
           method: 'POST',
           body,
         }),
+        invalidatesTags: [PRODUCT_ORDER_TAG],
       }),
     }),
   });
 
-export const {useGetProductOrderAllQuery, useAddProductOrderMutation} =
-  productOrderApi;
+export const {
+  useGetProductOrderAllQuery,
+  useGetProductByIdQuery,
+  useAddProductOrderMutation,
+} = productOrderApi;
 
 export const {
   endpoints: {addProductOrder},

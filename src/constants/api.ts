@@ -36,7 +36,7 @@ export const allUrls = {
   // Order
   orderGetAll: ({customerId = '', status = ''}: OrderAllParams) =>
     `/agent/get-my-orders.php?client_id=${customerId}&status=${status}`,
-  orderGetById: (orderId: string) => `/agent/get-my-orders.php?id=${orderId}`,
+  orderGetById: (id: string) => `/agent/get-my-orders.php?id=${id}`,
   orderGetByDate: (date: TDate) =>
     `/agent/get-my-orders.php?sana1=${date.end}&sana2=${date.end}`,
 
