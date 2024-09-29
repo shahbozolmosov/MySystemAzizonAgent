@@ -2,7 +2,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Button} from '@rneui/themed';
 import React, {useCallback} from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
 import CustomerOrderCanceled from '../../screens/customer/CustomerOrderCanceledScreen';
@@ -10,6 +10,8 @@ import CustomerOrderDelivered from '../../screens/customer/CustomerOrderDelivere
 import CustomerOrderProcess from '../../screens/customer/CustomerOrderProcessScreen';
 import {CustomerTabStackParamList} from './CustomerStack';
 import IconButton from '../../components/ui/IconButton/IconButton';
+import Icon from 'react-native-vector-icons/Feather';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export type CustomerOrderHistoryTabStackParamList = {
   Process: {customerId: string};
@@ -30,8 +32,6 @@ type TabBarLabelProps = {
 
 const Tab =
   createMaterialTopTabNavigator<CustomerOrderHistoryTabStackParamList>();
-
-const {width} = Dimensions.get('window');
 
 const CustomerOrderHistoryTabStack = ({
   navigation,
@@ -64,19 +64,16 @@ const CustomerOrderHistoryTabStack = ({
   );
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+      <Pressable onPress={handleNavigate} style={styles.addBtnContainer}>
+        <Icon name={'plus'} size={20} color={'#ffffff'} />
+      </Pressable>
+
       <CustomerHeaderOperation
         title="Buyurtmalar"
         customElements={
           <>
             <IconButton icon="filter" />
-            <Button
-              title={'Yangi'}
-              size="sm"
-              color={'secondary'}
-              onPress={handleNavigate}
-              containerStyle={styles.addBtnContainer}
-            />
           </>
         }
         borderShown={false}
@@ -119,14 +116,39 @@ const CustomerOrderHistoryTabStack = ({
           initialParams={{customerId}}
         />
       </Tab.Navigator>
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+    zIndex: 0,
+    flex: 1,
+  },
   addBtnContainer: {
+    position: 'absolute',
+    bottom: 40,
+    right: 20,
+
+    width: 50,
+    height: 50,
+    paddingHorizontal: 4,
     paddingVertical: 4,
-    marginLeft: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#007fff',
+
+    borderRadius: 50 / 2,
+    elevation: 10,
+    shadowColor: 'rgba(153, 161, 169, 1)',
+    shadowOffset: {
+      width: 44,
+      height: 44,
+    },
+    shadowRadius: 10,
+
+    zIndex: 1,
   },
 });
 
