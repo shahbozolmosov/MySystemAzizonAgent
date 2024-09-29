@@ -18,9 +18,10 @@ const DrawerItemBtn = ({label, icon, onPress}: DrawerItemBtnProps) => {
     <Button
       onPress={handlePress}
       type="clear"
-      icon={<Icon style={styles.icon} name={icon} size={22} />}
+      icon={<Icon style={styles.icon} name={icon} size={20} />}
       title={label}
       buttonStyle={styles.btnContainer}
+      titleStyle={styles.title}
       size="lg"
     />
   );

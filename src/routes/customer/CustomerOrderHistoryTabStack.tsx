@@ -89,17 +89,18 @@ const CustomerOrderHistoryTabStack = ({
             paddingHorizontal: 10,
           },
           tabBarItemStyle: {
-            width: width / 3 - 10,
+            width: 100,
             minWidth: 80,
           },
           tabBarLabel: props => tabBarLabel(props, TabRoute),
           tabBarIndicatorStyle: {
-            width: width / 3 - 60,
-            marginLeft: 35,
+            width: 60,
+            marginLeft: 30,
             height: 4,
             backgroundColor: '#1e232c',
             borderRadius: 16,
           },
+          tabBarGap: 10,
           tabBarPressColor: 'transparent',
           tabBarScrollEnabled: true,
         })}>
