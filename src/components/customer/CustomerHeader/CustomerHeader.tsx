@@ -12,6 +12,7 @@ import {RootStackParamList} from '../../../routes/RootNavigator';
 import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
 import MenuBtn from '../MenuBtn/MenuBtn';
+import HeaderTitle from '../../ui/HeaderTitle/HeaderTitle.tsx';
 
 type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -63,16 +64,18 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
       <MenuBtn />
 
       {/* Header Title */}
-      <Text h4 h4Style={styles.title}>
-        {customerRes.isLoading || customerRes.isFetching ? (
-          'Yuklanmoqda...'
-        ) : (
-          <>
-            {firstName}&nbsp;
-            {lastName}.
-          </>
-        )}
-      </Text>
+      {customerRes.isLoading || customerRes.isFetching ? (
+        <HeaderTitle title={'Yuklanmoqda...'} />
+      ) : (
+        <HeaderTitle
+          title={
+            <>
+              {firstName}&nbsp;
+              {lastName}.
+            </>
+          }
+        />
+      )}
 
       {/* Right Side Buttons */}
       <View style={styles.rightSideButtons}>
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 10,
-    paddingHorizontal: 8,
+    paddingHorizontal: 14,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
@@ -105,6 +108,7 @@ const styles = StyleSheet.create({
   },
   rightSideButtons: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 10,
   },
   btn: {

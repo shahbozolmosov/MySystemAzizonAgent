@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import IconButton from '../../ui/IconButton/IconButton';
 import SearchInput from '../../ui/SearchInput/SearchInput';
+import HeaderTitle from '../../ui/HeaderTitle/HeaderTitle.tsx';
 
 type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -79,9 +80,7 @@ const CustomerHeaderOperation: React.FC<CustomerHeaderOperationProps> = ({
       </TouchableOpacity>
 
       {/* Header Title */}
-      <Text h4 h4Style={styles.title}>
-        {title}
-      </Text>
+      <HeaderTitle title={title} />
 
       {/* Right Side Buttons */}
       <View style={styles.customElements}>
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 10,
     paddingVertical: 10,
-    paddingHorizontal: 8,
+    paddingHorizontal: 14,
     backgroundColor: '#fff',
   },
   border: {

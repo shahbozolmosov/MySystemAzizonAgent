@@ -21,7 +21,7 @@ const PhoneBtn = ({phoneNumber}: {phoneNumber: string}) => {
 
   return (
     <TouchableOpacity onPress={makePhoneCall}>
-      <Icon name="phone" size={22} color="#22282b" />
+      <Icon name="phone" size={20} color="#22282b" />
     </TouchableOpacity>
   );
 };

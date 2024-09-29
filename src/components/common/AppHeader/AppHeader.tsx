@@ -3,6 +3,7 @@ import React, {memo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import MenuBtn from '../../customer/MenuBtn/MenuBtn.tsx';
+import HeaderTitle from '../../ui/HeaderTitle/HeaderTitle.tsx';
 
 const AppHeader = () => {
   return (
@@ -10,9 +11,7 @@ const AppHeader = () => {
       <MenuBtn />
 
       {/* Header Title */}
-      <Text h4 h4Style={styles.title}>
-        Asosiy
-      </Text>
+      <HeaderTitle title={'Asosiy'} />
 
       {/* Right Side Buttons */}
       <View style={styles.rightSideButtons}>
@@ -30,13 +29,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 10,
-    paddingHorizontal: 8,
+    paddingHorizontal: 14,
     backgroundColor: '#fff',
     // borderBottomWidth: ,
-  },
-  title: {
-    textAlign: 'center',
-    color: '#22282b',
   },
   rightSideButtons: {
     flexDirection: 'row',
