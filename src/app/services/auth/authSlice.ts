@@ -76,7 +76,9 @@ const slice = createSlice({
         state.isLoading = false;
 
         // Save token
-        saveToken(state.token);
+        if (state.token) {
+          saveToken(state.token);
+        }
       })
       .addMatcher(login.matchRejected, state => {
         state.isLoading = false;

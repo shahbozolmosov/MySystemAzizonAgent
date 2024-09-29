@@ -1,6 +1,6 @@
 import {authUrls} from '../../../constants/api';
 import {IApiRes} from '../../../types/api';
-import {api} from '../api';
+import {apiSlice} from '../apiSlice.ts';
 
 export interface IAuthLogin {
   login: string;
@@ -24,7 +24,7 @@ interface IAuthLoginRes extends IApiRes {
   };
 }
 
-const authApi = api.injectEndpoints({
+const authApi = apiSlice.injectEndpoints({
   endpoints: build => ({
     // Login
     login: build.mutation<IAuthLoginRes, IAuthLogin>({

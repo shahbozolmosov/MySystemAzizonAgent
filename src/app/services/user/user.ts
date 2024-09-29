@@ -1,6 +1,6 @@
 import {userUrls} from '../../../constants/api';
 import {IApiRes} from '../../../types/api';
-import {api} from '../api';
+import {apiSlice} from '../apiSlice.ts';
 
 const USER_TAG = 'USER';
 
@@ -23,7 +23,7 @@ interface IUserRes extends IApiRes {
   data: IUser;
 }
 
-export const userApi = api
+export const userApi = apiSlice
   .enhanceEndpoints({addTagTypes: [USER_TAG]})
   .injectEndpoints({
     endpoints: build => ({

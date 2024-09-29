@@ -1,6 +1,6 @@
 import {allUrls} from '../../../constants/api';
 import {IApiRes} from '../../../types/api';
-import {api} from '../api';
+import {apiSlice} from '../apiSlice.ts';
 import {ICustomer} from '../customer/customer';
 
 export interface OrderProduct {
@@ -77,7 +77,7 @@ interface OrderAddRes extends IApiRes {}
 
 const PRODUCT_ORDER_TAG = 'PRODUCT_ORDER';
 
-export const productOrderApi = api
+export const productOrderApi = apiSlice
   .enhanceEndpoints({addTagTypes: [PRODUCT_ORDER_TAG]})
   .injectEndpoints({
     endpoints: build => ({

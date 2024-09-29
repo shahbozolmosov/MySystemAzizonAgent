@@ -1,5 +1,5 @@
 import {configureStore, ConfigureStoreOptions} from '@reduxjs/toolkit';
-import {api} from './services/api';
+import {apiSlice} from './services/apiSlice.ts';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import authSlice from './services/auth/authSlice';
 import orderSlice from './services/order/orderSlice';
@@ -9,12 +9,12 @@ export const createStore = (
 ) =>
   configureStore({
     reducer: {
-      [api.reducerPath]: api.reducer,
+      [apiSlice.reducerPath]: apiSlice.reducer,
       auth: authSlice,
       productOrder: orderSlice,
     },
     middleware: getDefaultMiddleware =>
-      getDefaultMiddleware().concat(api.middleware),
+      getDefaultMiddleware().concat(apiSlice.middleware),
     ...options,
   });
 

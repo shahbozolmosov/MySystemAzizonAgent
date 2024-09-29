@@ -34,7 +34,7 @@ const baseQueryWithRetry = retry(baseQuery, {
   maxRetries: 3,
 });
 
-export const api = createApi({
+export const apiSlice = createApi({
   reducerPath: 'splitApi',
   // baseQuery: baseQueryWithRetry,
   baseQuery: async (args: any, api, extraOptions) => {

@@ -1,6 +1,6 @@
 import {allUrls} from '../../../constants/api';
 import {IApiRes} from '../../../types/api';
-import {api} from '../api';
+import {apiSlice} from '../apiSlice.ts';
 
 export interface ICustomer {
   id: string;
@@ -36,7 +36,7 @@ interface ICustomerByIdRes extends IApiRes {
 // TAG
 const CUSTOMER_TAG = 'CUSTOMER_TAG';
 
-export const customerApi = api
+export const customerApi = apiSlice
   .enhanceEndpoints({addTagTypes: [CUSTOMER_TAG]})
   .injectEndpoints({
     endpoints: build => ({

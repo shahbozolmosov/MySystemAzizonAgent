@@ -1,6 +1,7 @@
 import {BaseQueryApi} from '@reduxjs/toolkit/query';
 import Toast from 'react-native-toast-message';
 import {logout} from '../app/services/auth/authSlice';
+import {apiSlice} from '../app/services/apiSlice.ts';
 
 export const authCheckApiResponse = <T>(
   response: {data?: T},
@@ -11,6 +12,8 @@ export const authCheckApiResponse = <T>(
       const data = response.data;
 
       if (data.error_code === 401) {
+        api.dispatch(api.util.resetApiState());
+
         Toast.show({
           type: 'info',
           text1: 'Qaytadan kiring!',
