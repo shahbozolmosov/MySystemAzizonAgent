@@ -6,7 +6,6 @@ import {
 import Container from '../../components/common/Container/Container';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 import CustomerCardList from '../../components/customer/CustomerCard/CustomerCardList';
-import AppHeader from '../../components/common/AppHeader/AppHeader.tsx';
 
 function HomeScreen() {
   // API
