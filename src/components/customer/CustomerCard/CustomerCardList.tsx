@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import CustomerCard, {ICustomerCard} from './CustomerCard';
 
@@ -32,33 +32,20 @@ const CustomerCardList = ({list}: CustomerCardListProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mijozlar</Text>
-      <View style={styles.list}>
-        <FlatList
-          data={list}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+      <FlatList
+        data={list}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 12,
+    paddingVertical: 10,
   },
-  title: {
-    marginHorizontal: 16,
-    marginBottom: 8,
-    fontFamily: 'Roboto-Bold',
-    fontWeight: '600',
-    fontSize: 16,
-    lineHeight: 20,
-    color: '#000000',
-  },
-  list: {},
 });
 
 export default React.memo(CustomerCardList);

@@ -1,12 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
+import {number} from 'yup';
 
 type SectionTitleProps = {
   title: string;
+  paddingHorizontal?: number;
 };
 
-const SectionTitle = ({title}: SectionTitleProps) => {
-  return <Text style={styles.title}>{title}</Text>;
+const SectionTitle = ({title, paddingHorizontal = 0}: SectionTitleProps) => {
+  return <Text style={[styles.title, {paddingHorizontal}]}>{title}</Text>;
 };
 
 const styles = StyleSheet.create({
