@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {number} from 'yup';
 
 type SectionTitleProps = {
   title: string;
