@@ -3,9 +3,10 @@ import {
   ICustomer,
   useGetCustomerAllQuery,
 } from '../../app/services/customer/customer';
-import Container from '../../components/common/Container/Container'; 
+import Container from '../../components/common/Container/Container';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 import CustomerCardList from '../../components/customer/CustomerCard/CustomerCardList';
+import AppHeader from '../../components/common/AppHeader/AppHeader.tsx';
 
 function HomeScreen() {
   // API
