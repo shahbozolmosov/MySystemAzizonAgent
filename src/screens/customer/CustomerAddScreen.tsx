@@ -1,8 +1,13 @@
 import React from 'react';
+import {Text} from 'react-native';
 import {View} from 'react-native';
 
 const CustomerAddScreen = () => {
-  return <View>Customer add screen</View>;
+  return (
+    <View>
+      <Text>Customer add screen</Text>
+    </View>
+  );
 };
 
 export default React.memo(CustomerAddScreen);
