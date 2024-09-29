@@ -12,7 +12,7 @@ const SectionTitle = ({title}: SectionTitleProps) => {
 const styles = StyleSheet.create({
   title: {
     fontFamily: 'Roboto-Back',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
     color: '#223263',
     lineHeight: 40,
