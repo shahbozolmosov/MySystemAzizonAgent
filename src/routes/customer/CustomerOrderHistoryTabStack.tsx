@@ -5,9 +5,9 @@ import React, {useCallback} from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
-import CustomerOrderCanceled from '../../screens/customer/CustomerOrderCanceled';
-import CustomerOrderDelivered from '../../screens/customer/CustomerOrderDelivered';
-import CustomerOrderProcess from '../../screens/customer/CustomerOrderProcess';
+import CustomerOrderCanceled from '../../screens/customer/CustomerOrderCanceledScreen';
+import CustomerOrderDelivered from '../../screens/customer/CustomerOrderDeliveredScreen';
+import CustomerOrderProcess from '../../screens/customer/CustomerOrderProcessScreen';
 import {CustomerTabStackParamList} from './CustomerStack';
 import IconButton from '../../components/ui/IconButton/IconButton';
 

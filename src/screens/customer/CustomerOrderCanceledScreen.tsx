@@ -7,16 +7,21 @@ import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 
-type CustomerOrderProcessProps = MaterialTopTabScreenProps<
+type CustomerOrderCanceledScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
-  'Process'
+  'Canceled'
 >;
 
-const CustomerOrderProcess = ({route}: CustomerOrderProcessProps) => {
+const CustomerOrderCanceledScreen = ({
+  route,
+}: CustomerOrderCanceledScreenProps) => {
   // Route
   const {customerId} = route.params;
 
-  const orderRes = useGetProductOrderAllQuery({customerId, status: 'new'});
+  const orderRes = useGetProductOrderAllQuery({
+    customerId,
+    status: 'bekor_qilingan',
+  });
 
   const data = useMemo<OrderCardProps[]>(() => {
     return handleApiResponse(orderRes);
@@ -29,4 +34,4 @@ const CustomerOrderProcess = ({route}: CustomerOrderProcessProps) => {
   );
 };
 
-export default React.memo(CustomerOrderProcess);
+export default React.memo(CustomerOrderCanceledScreen);

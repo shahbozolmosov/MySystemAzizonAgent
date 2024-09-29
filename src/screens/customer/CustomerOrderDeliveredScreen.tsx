@@ -7,12 +7,12 @@ import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 
-type CustomerOrderDeliveredProps = MaterialTopTabScreenProps<
+type CustomerOrderDeliveredScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
   'Delivered'
 >;
 
-const CustomerOrderDelivered = ({route}: CustomerOrderDeliveredProps) => {
+const CustomerOrderDeliveredScreen = ({route}: CustomerOrderDeliveredScreenProps) => {
   // Route
   const {customerId} = route.params;
 
@@ -32,4 +32,4 @@ const CustomerOrderDelivered = ({route}: CustomerOrderDeliveredProps) => {
   );
 };
 
-export default React.memo(CustomerOrderDelivered);
+export default React.memo(CustomerOrderDeliveredScreen);
