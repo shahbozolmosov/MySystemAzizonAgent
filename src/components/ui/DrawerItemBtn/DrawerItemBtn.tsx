@@ -16,7 +16,6 @@ const DrawerItemBtn = ({label, icon}: DrawerItemBtnProps) => {
       title={label}
       buttonStyle={styles.btnContainer}
       size="lg"
-      touchSoundDisabled={false}
     />
   );
 };
@@ -26,9 +25,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 18,
   },
+  title: {
+    fontFamily: 'Roboto-Regular',
+    fontWeight: '400',
+    color: '#4b4b4b',
+    fontSize: 14,
+  },
   icon: {
-    marginRight: 18,
-    color: '#7e919a',
+    marginRight: 14,
+    color: '#4b4b4b',
   },
 });
 

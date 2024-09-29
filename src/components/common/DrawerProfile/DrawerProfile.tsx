@@ -6,10 +6,10 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import ProfileImage from '../../../../assets/profile.png';
 import {selectedUser} from '../../../app/services/auth/authSlice';
 import {useTypesSelector} from '../../../app/store';
-import {AppNativeStackParamList} from '../../../routes/App/AppNativeStack';
+import {AppDrawerStackParamList} from '../../../routes/App/AppRootStack.tsx';
 
 type DrawerProfileNavigationProp = NativeStackNavigationProp<
-  AppNativeStackParamList,
+  AppDrawerStackParamList,
   'Profile'
 >;
 
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f4',
     flexDirection: 'row',
     gap: 20,
+    marginBottom: 20,
   },
   profileImage: {
     width: 50,

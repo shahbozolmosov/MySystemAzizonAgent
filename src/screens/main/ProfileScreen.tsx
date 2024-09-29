@@ -55,12 +55,14 @@ const ProfileScreen = ({navigation}: ProfileScreenProps) => {
 
 const styles = StyleSheet.create({
   profileCard: {},
-  btnList: {},
+  btnList: {
+  },
   btn: {
     flexDirection: 'row',
     gap: 10,
     justifyContent: 'space-between',
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
   },
   btnBody: {
     flexDirection: 'row',

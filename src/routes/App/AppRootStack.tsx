@@ -10,6 +10,7 @@ import AppTabStack from './AppTabStack';
 import AllOrderHistoryScreen from '../../screens/main/AllOrderHistoryScreen';
 import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
 import ProfileScreen from '../../screens/main/ProfileScreen';
+import CustomerAddScreen from '../../screens/customer/CustomerAddScreen.tsx';
 
 export type AppDrawerStackParamList = {
   AppTabStack: undefined;
@@ -17,6 +18,7 @@ export type AppDrawerStackParamList = {
   CreateCustomer: undefined;
   AllOrderHistory: undefined;
   CustomerReport: undefined;
+  CustomerAdd: undefined;
 };
 
 const Drawer = createDrawerNavigator<AppDrawerStackParamList>();
@@ -25,9 +27,10 @@ function CustomDrawerContent() {
   return (
     <>
       <DrawerProfile />
-      <DrawerItemBtn label="Yangi mijoz" icon="user-plus" />
-      <DrawerItemBtn label="Buyurtmalar tarixi" icon="clock" />
-      <DrawerItemBtn label="Mijozlar hisoboti" icon="file-text" />
+      <DrawerItemBtn label="Yangi mijoz" icon="user" />
+      <DrawerItemBtn label="Buyurtmalar" icon="inbox" />
+      <DrawerItemBtn label="Mijozlar hisoboti" icon="users" />
+      <DrawerItemBtn label="Sozlamalar" icon="settings" />
     </>
   );
 }
@@ -63,6 +66,7 @@ const AppRootStack = () => {
           headerShown: false,
         }}
       />
+      <Drawer.Screen name={'CustomerAdd'} component={CustomerAddScreen} />
       <Drawer.Screen name="AllOrderHistory" component={AllOrderHistoryScreen} />
       <Drawer.Screen name="CustomerReport" component={CustomerReportScreen} />
     </Drawer.Navigator>
