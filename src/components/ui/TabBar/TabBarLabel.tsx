@@ -5,11 +5,23 @@ type TabBarLabelProps = {
   label: string;
   focused: boolean;
   color: string;
+  currentColor?: boolean;
 };
 
-const TabBarLabel = ({label, focused}: TabBarLabelProps) => {
+const TabBarLabel = ({
+  label,
+  focused,
+  color,
+  currentColor,
+}: TabBarLabelProps) => {
   return (
-    <Text style={focused ? styles.labelFocused : styles.label}>{label}</Text>
+    <Text
+      style={
+        (focused ? styles.labelFocused : styles.label,
+        currentColor && focused ? {color} : styles.color)
+      }>
+      {label}
+    </Text>
   );
 };
 
@@ -19,7 +31,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 14,
     fontWeight: '300',
-    color: '#1e232c',
   },
   labelFocused: {
     flex: 1,
@@ -27,6 +38,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  color: {
     color: '#1e232c',
   },
 });

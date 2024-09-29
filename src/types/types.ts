@@ -9,3 +9,9 @@ export type TDate= {
   start: string;
   end: string;
 }
+
+export  type TabBarLabelProps = {
+  focused: boolean;
+  color: string;
+  children: string;
+};

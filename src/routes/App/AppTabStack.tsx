@@ -1,8 +1,10 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
+import React, {useCallback} from 'react';
 import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
 import HomeScreen from '../../screens/main/HomeScreen';
 import AppHeader from '../../components/common/AppHeader/AppHeader.tsx';
+import TabBarLabel from '../../components/ui/TabBar/TabBarLabel.tsx';
+import {TabBarLabelProps} from '../../types/types.ts';
 
 export type AppTabStackParamList = {
   Home: undefined;
@@ -12,43 +14,39 @@ export type AppTabStackParamList = {
 const Tab = createMaterialTopTabNavigator<AppTabStackParamList>();
 
 const AppTabStack = () => {
+  const tabBarLabel = useCallback(
+    (props: TabBarLabelProps, tabRoute: {name: string}) => {
+      let label = 'Asosiy';
+
+      switch (tabRoute.name) {
+        case 'Analytics':
+          label = 'Jami';
+          break;
+      }
+
+      return <TabBarLabel {...props} color={"#007fff"} label={label} currentColor={true} />;
+    },
+    [],
+  );
   return (
     <>
       <AppHeader />
       <Tab.Navigator
         initialRouteName="Home"
-        screenOptions={{
+        screenOptions={({route: TabRoute}) => ({
           tabBarStyle: {
             elevation: 0,
-            paddingHorizontal: 10,
           },
-          tabBarLabelStyle: {
-            fontFamily: 'Roboto',
-            fontSize: 14,
-            fontWeight: '700',
-          },
-          tabBarInactiveTintColor: '#7e919a',
-          tabBarActiveTintColor: '#0d96fa',
+          tabBarLabel: props => tabBarLabel(props, TabRoute),
           tabBarIndicatorStyle: {
+            // height: 4,
+            // backgroundColor: '#1e232c',
             borderRadius: 16,
-            backgroundColor: '#0d96fa',
           },
           tabBarPressColor: 'transparent',
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarLabel: 'Asosiy',
-          }}
-        />
-        <Tab.Screen
-          name="Analytics"
-          component={AnalyticsScreen}
-          options={{
-            tabBarLabel: 'Jami',
-          }}
-        />
+        })}>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Analytics" component={AnalyticsScreen} />
       </Tab.Navigator>
     </>
   );

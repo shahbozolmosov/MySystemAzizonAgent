@@ -12,6 +12,7 @@ import {CustomerTabStackParamList} from './CustomerStack';
 import IconButton from '../../components/ui/IconButton/IconButton';
 import Icon from 'react-native-vector-icons/Feather';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {TabBarLabelProps} from '../../types/types.ts';
 
 export type CustomerOrderHistoryTabStackParamList = {
   Process: {customerId: string};
@@ -23,12 +24,6 @@ type CustomerOrderHistoryTabStackProps = NativeStackScreenProps<
   CustomerTabStackParamList,
   'CustomerOrderHistory'
 >;
-
-type TabBarLabelProps = {
-  focused: boolean;
-  color: string;
-  children: string;
-};
 
 const Tab =
   createMaterialTopTabNavigator<CustomerOrderHistoryTabStackParamList>();
@@ -83,20 +78,13 @@ const CustomerOrderHistoryTabStack = ({
         screenOptions={({route: TabRoute}) => ({
           tabBarStyle: {
             elevation: 0,
-            paddingHorizontal: 10,
-          },
-          tabBarItemStyle: {
-            minWidth: 80,
           },
           tabBarLabel: props => tabBarLabel(props, TabRoute),
           tabBarIndicatorStyle: {
-            width: 60,
-            marginLeft: 55,
             height: 4,
             backgroundColor: '#1e232c',
             borderRadius: 16,
           },
-          tabBarGap: 10,
           tabBarPressColor: 'transparent',
           tabBarScrollEnabled: true,
         })}>
