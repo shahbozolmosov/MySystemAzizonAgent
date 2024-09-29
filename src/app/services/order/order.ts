@@ -34,7 +34,7 @@ export interface Order {
   tasdiqlangan_summa: number;
   taxmin_chegirma: number;
   tasdiqlangan_chegirma: number;
-  tolov_summa: string;
+  tolov_summa: number;
   product_list: OrderProduct[];
   after_balans: number;
 }

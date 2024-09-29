@@ -1,9 +1,9 @@
 import {OrderProduct} from '../../../app/services/order/order.ts';
 import ProductImage from '../../../../assets/product.jpg';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Image} from '@rneui/themed';
 import React from 'react';
-import IconButton from '../../ui/IconButton/IconButton.tsx';
+import Icon from 'react-native-vector-icons/Feather';
 
 export interface ProductCardOfDetailsProps extends OrderProduct {}
 
@@ -13,9 +13,9 @@ const ProductCardOfDetails = (props: ProductCardOfDetailsProps) => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={ProductImage} />
-      <View style={styles.editBtn}>
-        <IconButton icon={'edit-3'} />
-      </View>
+      <TouchableOpacity style={styles.removeBtn} onPress={() => {}}>
+        <Icon name="trash" size={16} color={'#1e232c'} />
+      </TouchableOpacity>
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
           <Text style={styles.title} selectable={true}>
@@ -56,10 +56,10 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 12,
   },
-  editBtn: {
+  removeBtn: {
     position: 'absolute',
-    top: 4,
-    right: 4,
+    top: 10,
+    right: 10,
     zIndex: 1,
   },
   body: {
