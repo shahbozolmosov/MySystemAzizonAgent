@@ -3,14 +3,15 @@ import {IApiRes} from '../../../types/api';
 import {api} from '../api';
 import {ICustomer} from '../customer/customer';
 
-interface OrderProduct {
+export interface OrderProduct {
   id: string;
   name: string;
   article: string;
-  massa: '1';
-  tayyorlandi: '0';
-  price: '59800';
-  real_price: '59800';
+  massa: number;
+  price: number;
+  real_price: number;
+  summa: number;
+  status: string;
 }
 
 export interface Order {
