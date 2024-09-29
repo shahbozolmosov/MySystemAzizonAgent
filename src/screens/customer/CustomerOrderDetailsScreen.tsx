@@ -40,7 +40,7 @@ const CustomerOrderDetailsScreen = ({
     if (data) {
       return {
         productCount: data.mahsulot_soni,
-        productAmount: data.jami_massa,
+        productAmount: data.buyurtma_massa,
         productTotalPrice: data.tasdiqlangan_summa,
         tasdiqlangan_chegirma: data.tasdiqlangan_chegirma,
         tolov_summa: data.tolov_summa,

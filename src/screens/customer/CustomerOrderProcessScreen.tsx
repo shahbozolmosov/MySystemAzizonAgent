@@ -6,6 +6,7 @@ import {IOrderCard} from '../../components/common/OrderCard/OrderCard';
 import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
+import {Text} from '@rneui/themed';
 
 type CustomerOrderProcessScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -26,7 +27,11 @@ const CustomerOrderProcessScreen = ({
 
   return (
     <Container>
-      <OrderCardList list={data} customerId={customerId} />
+      {orderRes.isLoading || orderRes.isFetching ? (
+        <Text>Loading...</Text>
+      ) : (
+        <OrderCardList list={data} customerId={customerId} />
+      )}
     </Container>
   );
 };
