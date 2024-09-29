@@ -7,6 +7,7 @@ import CustomerOrderAddScreen from '../../screens/customer/CustomerOrderAddScree
 import CustomerOrderBasketScreen from '../../screens/customer/CustomerOrderBasketScreen';
 import CustomerOrderHistoryTabStack from './CustomerOrderHistoryTabStack';
 import {CustomerTabStackParamList} from './CustomerStack';
+import CustomerOrderDetailsScreen from '../../screens/customer/CustomerOrderDetailsScreen.tsx';
 
 type CustomerOrderStackProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -34,6 +35,11 @@ const CustomerOrderStackScreen = ({route}: CustomerOrderStackProps) => {
       <CustomerOrderStack.Screen
         name="CustomerOrderBasket"
         component={CustomerOrderBasketScreen}
+        initialParams={{customerId}}
+      />
+      <CustomerOrderStack.Screen
+        name="CustomerOrderDetails"
+        component={CustomerOrderDetailsScreen}
         initialParams={{customerId}}
       />
     </CustomerOrderStack.Navigator>

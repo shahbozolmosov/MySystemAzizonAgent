@@ -1,15 +1,35 @@
 import React, {useCallback} from 'react';
 import {FlatList} from 'react-native';
-import OrderCard, {OrderCardProps} from './OrderCard';
+import OrderCard, {IOrderCard} from './OrderCard';
+import {useNavigation} from '@react-navigation/native';
+import {CustomerTabStackParamList} from '../../../routes/customer/CustomerStack.tsx';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 type OrderCardList = {
-  list: OrderCardProps[];
+  list: IOrderCard[];
+  customerId: string;
 };
 
-const OrderCardList = ({list}: OrderCardList) => {
-  const renderItem = useCallback(({item}: {item: OrderCardProps}) => {
-    return <OrderCard {...item} />;
-  }, []);
+type CustomerCardListNavigationProp =
+  NativeStackNavigationProp<CustomerTabStackParamList>;
+
+const OrderCardList = ({list, customerId}: OrderCardList) => {
+  const navigation = useNavigation<CustomerCardListNavigationProp>();
+
+  const handleNavigate = useCallback(
+    (orderId: string) => {
+      console.log('orderId----------',orderId)
+      navigation.push('CustomerOrderDetails', {customerId, orderId});
+    },
+    [customerId, navigation],
+  );
+
+  const renderItem = useCallback(
+    ({item}: {item: IOrderCard}) => {
+      return <OrderCard {...item} onNavigate={handleNavigate} />;
+    },
+    [handleNavigate],
+  );
 
   return (
     <FlatList

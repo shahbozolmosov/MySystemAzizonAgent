@@ -2,7 +2,7 @@ import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 import React, {useMemo} from 'react';
 import {useGetProductOrderAllQuery} from '../../app/services/order/order';
 import Container from '../../components/common/Container/Container';
-import {OrderCardProps} from '../../components/common/OrderCard/OrderCard';
+import {IOrderCard} from '../../components/common/OrderCard/OrderCard';
 import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
@@ -21,7 +21,7 @@ const CustomerOrderDeliveredScreen = ({route}: CustomerOrderDeliveredScreenProps
     status: 'topshirildi',
   });
 
-  const data = useMemo<OrderCardProps[]>(() => {
+  const data = useMemo<IOrderCard[]>(() => {
     return handleApiResponse(orderRes);
   }, [orderRes]);
 

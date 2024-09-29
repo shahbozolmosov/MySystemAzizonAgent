@@ -1,8 +1,12 @@
-import React from 'react';
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Order} from '../../../app/services/order/order';
 
-export interface OrderCardProps extends Order {}
+export interface IOrderCard extends Order {}
+
+export interface OrderCardProps extends IOrderCard {
+  onNavigate: (orderId: string) => void;
+}
 
 const OrderCard = ({
   id,
@@ -11,7 +15,12 @@ const OrderCard = ({
   mahsulot_soni,
   taxmin_summa,
   status,
+  onNavigate,
 }: OrderCardProps) => {
+  const handleNavigate = useCallback(() => {
+    onNavigate(id);
+  }, [id, onNavigate]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -36,14 +45,7 @@ const OrderCard = ({
         </View>
       </View>
       <View style={styles.footer}>
-        <Pressable
-          style={styles.detailBtn}
-          onPress={() =>
-            Alert.alert(
-              'Mahsulotlar',
-              "Buyurtma mahsulotlarini ko'rish qurish jarayonida...",
-            )
-          }>
+        <Pressable style={styles.detailBtn} onPress={handleNavigate}>
           <Text style={styles.detailBtnText}>Mahsulotlar</Text>
         </Pressable>
         <Text style={styles.status}>{status}</Text>
