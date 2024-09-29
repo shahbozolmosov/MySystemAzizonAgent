@@ -41,7 +41,7 @@ export interface Order {
 // index
 export type OrderAllParams = {
   customerId?: string;
-  status?: 'new' | 'bekor_qilingan' | 'jarayonda' | '';
+  status?: 'new' | 'bekor_qilingan' | 'jarayonda' | 'topshirildi' | '';
 };
 interface OrderAllRes extends IApiRes {
   data: Order[];
@@ -75,7 +75,7 @@ export const productOrderApi = api
     endpoints: build => ({
       // Index
       getProductOrderAll: build.query<OrderAllRes, OrderAllParams>({
-        query: (params) => allUrls.orderGetAll(params),
+        query: params => allUrls.orderGetAll(params),
       }),
 
       // Post

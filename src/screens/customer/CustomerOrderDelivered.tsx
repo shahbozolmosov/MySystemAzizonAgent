@@ -12,14 +12,14 @@ type CustomerOrderDeliveredProps = MaterialTopTabScreenProps<
   'Delivered'
 >;
 
-const CustomerOrderDelivered = ({
-  navigation,
-  route,
-}: CustomerOrderDeliveredProps) => {
+const CustomerOrderDelivered = ({route}: CustomerOrderDeliveredProps) => {
   // Route
   const {customerId} = route.params;
 
-  const orderRes = useGetProductOrderAllQuery({customerId, status: 'new'});
+  const orderRes = useGetProductOrderAllQuery({
+    customerId,
+    status: 'topshirildi',
+  });
 
   const data = useMemo<OrderCardProps[]>(() => {
     return handleApiResponse(orderRes);

@@ -83,21 +83,19 @@ const CustomerOrderHistoryTabStack = ({
       />
       <Tab.Navigator
         initialRouteName="Process"
-        screenOptions={({route}) => ({
+        screenOptions={({route: TabRoute}) => ({
           tabBarStyle: {
             elevation: 0,
             paddingHorizontal: 10,
           },
           tabBarItemStyle: {
-            // width: 'auto', // Make each tab's width fit its content
-            width: width / 4,
-            minWidth: 80, // Optional: Set a minimum width if needed
+            width: width / 3 - 10,
+            minWidth: 80,
           },
-          // Use custom label with Text and optional View for more customization
-          tabBarLabel: props => tabBarLabel(props, route),
+          tabBarLabel: props => tabBarLabel(props, TabRoute),
           tabBarIndicatorStyle: {
             width: width / 3 - 60,
-            marginLeft: 25,
+            marginLeft: 35,
             height: 4,
             backgroundColor: '#1e232c',
             borderRadius: 16,

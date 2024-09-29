@@ -12,10 +12,7 @@ type CustomerOrderProcessProps = MaterialTopTabScreenProps<
   'Process'
 >;
 
-const CustomerOrderProcess = ({
-  navigation,
-  route,
-}: CustomerOrderProcessProps) => {
+const CustomerOrderProcess = ({route}: CustomerOrderProcessProps) => {
   // Route
   const {customerId} = route.params;
 
