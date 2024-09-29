@@ -87,11 +87,10 @@ const styles = StyleSheet.create({
   date: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: 12,
     color: '#808080',
   },
   body: {
-    marginBottom: 10,
     padding: 14,
   },
   bodyItem: {
@@ -103,19 +102,20 @@ const styles = StyleSheet.create({
   bodyItemTitle: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: 12,
     color: '#808080',
   },
   fontBold: {
     fontFamily: 'Roboto-Bold',
     fontWeight: '500',
-    fontSize: 14,
+    fontSize: 12,
     color: '#242424',
   },
   footer: {
     flexDirection: 'row',
     gap: 10,
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 14,
     paddingTop: 0,
   },
@@ -126,13 +126,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#242424',
     marginLeft: -14,
     maxWidth: 150,
+    padding: 10,
   },
   detailBtnText: {
     textAlign: 'center',
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
     fontSize: 14,
-    padding: 14,
     color: '#ffffff',
   },
   status: {
