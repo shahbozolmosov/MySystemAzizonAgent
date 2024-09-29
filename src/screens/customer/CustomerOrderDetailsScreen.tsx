@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useMemo} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack.tsx';
@@ -65,12 +65,14 @@ const CustomerOrderDetailsScreen = ({
     <Container>
       <CustomerHeaderOperation title={`#${data.id}`} />
 
-      <View style={styles.container}>
-        <SectionTitle title={'Mahsulotlar'} />
-        <ProductCardOfDetailsList list={data.product_list} />
-        <SectionTitle title={"To'lov"} />
-        <PaymentDetailsCard {...paymentData} />
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <SectionTitle title={'Mahsulotlar'} />
+          <ProductCardOfDetailsList list={data.product_list} />
+          <SectionTitle title={"To'lov"} />
+          <PaymentDetailsCard {...paymentData} />
+        </View>
+      </ScrollView>
     </Container>
   );
 };
