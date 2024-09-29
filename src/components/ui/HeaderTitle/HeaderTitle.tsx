@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Roboto-Bold',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     color: '#22282b',
   },
