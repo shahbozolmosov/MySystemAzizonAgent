@@ -12,7 +12,9 @@ type CustomerOrderDeliveredScreenProps = MaterialTopTabScreenProps<
   'Delivered'
 >;
 
-const CustomerOrderDeliveredScreen = ({route}: CustomerOrderDeliveredScreenProps) => {
+const CustomerOrderDeliveredScreen = ({
+  route,
+}: CustomerOrderDeliveredScreenProps) => {
   // Route
   const {customerId} = route.params;
 
@@ -27,7 +29,7 @@ const CustomerOrderDeliveredScreen = ({route}: CustomerOrderDeliveredScreenProps
 
   return (
     <Container>
-      <OrderCardList list={data} />
+      <OrderCardList list={data} customerId={customerId} />
     </Container>
   );
 };

@@ -26,7 +26,7 @@ const CustomerOrderProcessScreen = ({
 
   return (
     <Container>
-      <OrderCardList list={data} />
+      <OrderCardList list={data} customerId={customerId} />
     </Container>
   );
 };
