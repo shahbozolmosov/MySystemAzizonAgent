@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
@@ -8,6 +8,13 @@ import AppPageHeader from '../../components/common/AppPageHeader/AppPageHeader.t
 import Container from '../../components/common/Container/Container.tsx';
 import {Dropdown} from 'react-native-element-dropdown'; // Dropdown import qiling
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {
+  District,
+  Region,
+  useGetDistrictByRegionQuery,
+  useGetRegionQuery,
+} from '../../app/services/region/region.ts';
+import {handleApiResponse} from '../../utils/handleApiResponse.ts';
 
 // Validation schema using Yup
 const CustomerSchema = Yup.object().shape({
@@ -26,40 +33,48 @@ const CustomerSchema = Yup.object().shape({
   dostavka_id: Yup.string().required('Dostavka ID is required'),
 });
 
+const initialValues: ICustomerAdd = {
+  fio: '',
+  telefon: '',
+  direktor: '',
+  direktor_telefon: '',
+  telegram_id: '',
+  korxona: '',
+  manzil: '',
+  lokatsiya: '',
+  latitude: '',
+  longitude: '',
+  viloyat_id: '7',
+  tuman_id: '39',
+  category_id: '',
+  dostavka_id: '',
+};
+
 const CustomerAddScreen = () => {
   const formik = useFormik<ICustomerAdd>({
-    initialValues: {
-      fio: '',
-      telefon: '',
-      direktor: '',
-      direktor_telefon: '',
-      telegram_id: '',
-      korxona: '',
-      manzil: '',
-      lokatsiya: '',
-      latitude: '',
-      longitude: '',
-      viloyat_id: '2',
-      tuman_id: '',
-      category_id: '',
-      dostavka_id: '',
-    },
+    initialValues,
     validationSchema: CustomerSchema,
     onSubmit: values => {
       console.log('Form submitted:', values);
     },
   });
 
-  // Example data for Dropdown components
-  const viloyatlar = [
-    {id: '1', name: 'Viloyat 1'},
-    {id: '2', name: 'Viloyat 2'},
-  ];
+  // API
+  const regionRes = useGetRegionQuery();
+  const districtByRegionRes = useGetDistrictByRegionQuery(
+    formik.values.viloyat_id,
+    {
+      skip: !formik.values.viloyat_id,
+    },
+  );
 
-  const tumans = [
-    {id: '1', name: 'Tuman 1'},
-    {id: '2', name: 'Tuman 2'},
-  ];
+  const regionOptions = useMemo<Region[]>(() => {
+    return handleApiResponse<Region[]>(regionRes);
+  }, [regionRes]);
+
+  const districtOptions = useMemo<District[]>(() => {
+    return handleApiResponse<District[]>(districtByRegionRes);
+  }, [districtByRegionRes]);
 
   const categories = [
     {id: '1', name: 'Category 1'},
@@ -81,9 +96,14 @@ const CustomerAddScreen = () => {
           {/* Viloyat Select */}
           <View style={styles.row}>
             <Dropdown
+              search={true}
               style={styles.dropdown}
-              data={viloyatlar}
-              labelField="name"
+              itemTextStyle={styles.dropdownItemText}
+              inputSearchStyle={styles.dropdownSearchInput}
+              containerStyle={styles.dropdownItemContainer}
+              searchPlaceholder={'Qidirish'}
+              data={regionOptions}
+              labelField="nomi"
               valueField="id"
               placeholder="Viloyatni tanlang"
               value={formik.values.viloyat_id}
@@ -101,9 +121,14 @@ const CustomerAddScreen = () => {
           {/* Tuman Select */}
           <View style={styles.row}>
             <Dropdown
+              search={true}
               style={styles.dropdown}
-              data={tumans}
-              labelField="name"
+              itemTextStyle={styles.dropdownItemText}
+              inputSearchStyle={styles.dropdownSearchInput}
+              containerStyle={styles.dropdownItemContainer}
+              searchPlaceholder={'Qidirish'}
+              data={districtOptions}
+              labelField="nomi"
               valueField="id"
               placeholder="Tumanni tanlang"
               value={formik.values.tuman_id}
@@ -122,6 +147,10 @@ const CustomerAddScreen = () => {
           <View style={styles.row}>
             <Dropdown
               style={styles.dropdown}
+              itemTextStyle={styles.dropdownItemText}
+              inputSearchStyle={styles.dropdownSearchInput}
+              containerStyle={styles.dropdownItemContainer}
+              searchPlaceholder={'Qidirish'}
               data={categories}
               labelField="name"
               valueField="id"
@@ -142,6 +171,10 @@ const CustomerAddScreen = () => {
           <View style={styles.row}>
             <Dropdown
               style={styles.dropdown}
+              itemTextStyle={styles.dropdownItemText}
+              inputSearchStyle={styles.dropdownSearchInput}
+              containerStyle={styles.dropdownItemContainer}
+              searchPlaceholder={'Qidirish'}
               data={dostavkalar}
               labelField="name"
               valueField="id"
@@ -263,21 +296,45 @@ const styles = StyleSheet.create({
   row: {
     marginBottom: 20,
   },
+  // Dropdown
   dropdown: {
-    height: 50,
-    borderColor: '#ccc',
+    height: 60,
+    borderColor: '#e9edf4',
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 8,
+    paddingHorizontal: 14,
     marginBottom: 10,
+    backgroundColor: '#f7f8f9',
   },
-  submitSection: {
-    marginTop: 30,
+  dropdownItemText: {
+    fontFamily: 'Roboto-Regular',
+    fontWeight: '400',
+    fontSize: 16,
+  },
+  dropdownSearchInput: {
+    borderRadius: 6,
+    backgroundColor: '#f7f8f9',
+    color: '#0d1017',
+  },
+  dropdownItemContainer: {
+    borderRadius: 10,
+    elevation: 40,
+    shadowColor: 'rgba(153, 161, 169, 1)',
+    shadowOffset: {
+      width: 400,
+      height: 100,
+    },
+    shadowRadius: 10,
+    backgroundColor: '#ffff',
   },
   errorText: {
-    color: 'red',
+    color: '#ff5d5d',
     fontSize: 12,
     marginTop: 4,
+  },
+  // Dropdown end
+  submitSection: {
+    marginTop: 30,
   },
 });
 
