@@ -73,6 +73,8 @@ export interface ICustomerAdd {
   dostavka_id: string;
 }
 
+interface ICustomerAddRes extends IApiRes {}
+
 // TAG
 const CUSTOMER_TAG = 'CUSTOMER_TAG';
 
@@ -96,6 +98,14 @@ export const customerApi = apiSlice
       getCustomerById: build.query<ICustomerByIdRes, string>({
         query: id => allUrls.customerGetById(id),
       }),
+      // Post
+      addCustomer: build.mutation<ICustomerAddRes, ICustomerAdd>({
+        query: body => ({
+          url: allUrls.customerAdd,
+          method: 'POST',
+          body,
+        }),
+      }),
     }),
   });
 
@@ -104,4 +114,5 @@ export const {
   useGetCustomerCategoryQuery,
   useGetCustomerSupplierQuery,
   useGetCustomerByIdQuery,
+  useAddCustomerMutation
 } = customerApi;

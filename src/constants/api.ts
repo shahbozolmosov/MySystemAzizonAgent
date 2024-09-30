@@ -16,6 +16,7 @@ export const allUrls = {
   customerGetAll: '/agent/get-clients.php',
   customerGetById: (id: string) => `/agent/get-clients.php?id=${id}`,
   customerGetCategory: '/agent/get-client-category.php',
+  customerAdd: '/agent/add-client.php',
 
   // Supplier
   supplierGetAll: '/agent/get-dostavka.php',

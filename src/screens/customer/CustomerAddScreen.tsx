@@ -7,6 +7,7 @@ import {
   ICustomerAdd,
   ICustomerCategory,
   Supplier,
+  useAddCustomerMutation,
   useGetCustomerCategoryQuery,
   useGetCustomerSupplierQuery,
 } from '../../app/services/customer/customer.ts';
@@ -23,23 +24,30 @@ import {handleApiResponse} from '../../utils/handleApiResponse.ts';
 import Icon from 'react-native-vector-icons/Feather';
 import {getLocation} from '../../utils/getLocation.ts';
 import Toast from 'react-native-toast-message';
-import {boolean} from 'yup';
+import {handleError} from '../../utils/errorHandler.ts';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {AppDrawerStackParamList} from '../../routes/App/AppRootStack.tsx';
+
+type CustomerAddScreenProps = DrawerScreenProps<
+  AppDrawerStackParamList,
+  'CustomerAdd'
+>;
 
 // Validation schema using Yup
 const CustomerSchema = Yup.object().shape({
-  fio: Yup.string().required('FIO is required'),
-  telefon: Yup.string().required('Telefon is required'),
-  direktor: Yup.string().required('Direktor is required'),
-  direktor_telefon: Yup.string().required('Direktor telefon is required'),
-  telegram_id: Yup.number().required('Telegram ID is required'),
-  korxona: Yup.string().required('Korxona is required'),
-  manzil: Yup.string().required('Manzil is required'),
-  latitude: Yup.number().required('Latitude is required'),
-  longitude: Yup.number().required('Longitude is required'),
-  viloyat_id: Yup.string().required('Viloyat ID is required'),
-  tuman_id: Yup.string().required('Tuman ID is required'),
-  category_id: Yup.string().required('Category ID is required'),
-  dostavka_id: Yup.string().required('Dostavka ID is required'),
+  fio: Yup.string().required('FIO talab qilinadi'),
+  telefon: Yup.string().required('Telefon talab qilinadi'),
+  direktor: Yup.string().required('Direktor talab qilinadi'),
+  direktor_telefon: Yup.string().required('Direktor telefon talab qilinadi'),
+  telegram_id: Yup.number().required('Telegram ID talab qilinadi'),
+  korxona: Yup.string().required('Korxona talab qilinadi'),
+  manzil: Yup.string().required('Manzil talab qilinadi'),
+  latitude: Yup.number().required('Latitude talab qilinadi'),
+  longitude: Yup.number().required('Longitude talab qilinadi'),
+  viloyat_id: Yup.string().required('Viloyat talab qilinadi'),
+  tuman_id: Yup.string().required('Tuman talab qilinadi'),
+  category_id: Yup.string().required('Kategoriya talab qilinadi'),
+  dostavka_id: Yup.string().required('Dostavka talab qilinadi'),
 });
 
 const initialValues: ICustomerAdd = {
@@ -59,16 +67,44 @@ const initialValues: ICustomerAdd = {
   dostavka_id: '',
 };
 
-const CustomerAddScreen = () => {
+const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
   // State
   const [locationIsLoading, setLocationIsLoading] = useState(false);
+
+  // API
+  const [addData] = useAddCustomerMutation();
 
   // Formik
   const formik = useFormik<ICustomerAdd>({
     initialValues,
     validationSchema: CustomerSchema,
-    onSubmit: values => {
+    onSubmit: async (values, {resetForm, setSubmitting, setFieldValue}) => {
       console.log('Form submitted:', values);
+      try {
+        const res = await addData(values).unwrap();
+        if (res.success) {
+          Toast.show({
+            type: 'success',
+            text1: res.message,
+          });
+
+          resetForm();
+
+          setFieldValue('viloyat_id', '7');
+          setFieldValue('tuman_id', '39');
+
+          navigation.goBack();
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: res.message,
+          });
+        }
+      } catch (err) {
+        handleError(err);
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
 
@@ -332,12 +368,9 @@ const CustomerAddScreen = () => {
               loading={locationIsLoading}
               onPress={handleGetLocation}
             />
-            {formik.touched.latitude &&
-              formik.touched.longitude &&
-              formik.errors.latitude &&
-              formik.errors.longitude && (
-                <Text style={styles.errorText}>{formik.errors.latitude}</Text>
-              )}
+            {formik.touched.latitude && formik.errors.latitude && (
+              <Text style={styles.errorText}>{formik.errors.latitude}</Text>
+            )}
           </View>
 
           <View style={styles.row}>
@@ -369,6 +402,7 @@ const CustomerAddScreen = () => {
               title="Submit"
               size={'lg'}
               onPress={formik.handleSubmit as (values: any) => void}
+              loading={formik.isSubmitting}
             />
           </View>
         </View>
