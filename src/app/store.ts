@@ -3,6 +3,7 @@ import {apiSlice} from './services/apiSlice.ts';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import authSlice from './services/auth/authSlice';
 import orderSlice from './services/order/orderSlice';
+import starterSlice from './services/starter/starterSlice.ts';
 
 export const createStore = (
   options?: ConfigureStoreOptions['preloadedState'] | undefined,
@@ -10,6 +11,7 @@ export const createStore = (
   configureStore({
     reducer: {
       [apiSlice.reducerPath]: apiSlice.reducer,
+      starter: starterSlice,
       auth: authSlice,
       productOrder: orderSlice,
     },
