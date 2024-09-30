@@ -36,6 +36,9 @@ export const theme = createTheme({
         borderRadius: 8,
         borderWidth: 1,
       },
+      containerStyle: {
+        paddingHorizontal: 0,
+      },
       inputContainerStyle: {
         borderBottomWidth: 0,
         // borderBottomColor: '#007bff',
