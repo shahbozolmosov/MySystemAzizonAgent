@@ -29,6 +29,17 @@ interface ICustomerRes extends IApiRes {
   data: ICustomer[];
 }
 
+// index category
+export interface ICustomerCategory {
+  id: string;
+  name: string;
+  turkum_id: string;
+}
+
+interface ICustomerCategoryRes extends IApiRes {
+  data: ICustomerCategory[];
+}
+
 // show
 interface ICustomerByIdRes extends IApiRes {
   data: ICustomer;
@@ -63,6 +74,10 @@ export const customerApi = apiSlice
       getCustomerAll: build.query<ICustomerRes, void>({
         query: () => allUrls.customerGetAll,
       }),
+      // Index category
+      getCustomerCategory: build.query<ICustomerCategoryRes, void>({
+        query: () => allUrls.customerGetCategory,
+      }),
       // Show
       getCustomerById: build.query<ICustomerByIdRes, string>({
         query: id => allUrls.customerGetById(id),
@@ -71,4 +86,8 @@ export const customerApi = apiSlice
     }),
   });
 
-export const {useGetCustomerAllQuery, useGetCustomerByIdQuery} = customerApi;
+export const {
+  useGetCustomerAllQuery,
+  useGetCustomerCategoryQuery,
+  useGetCustomerByIdQuery,
+} = customerApi;

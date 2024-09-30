@@ -3,7 +3,11 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {Button, Input} from '@rneui/themed';
-import {ICustomerAdd} from '../../app/services/customer/customer.ts';
+import {
+  ICustomerAdd,
+  ICustomerCategory,
+  useGetCustomerCategoryQuery,
+} from '../../app/services/customer/customer.ts';
 import AppPageHeader from '../../components/common/AppPageHeader/AppPageHeader.tsx';
 import Container from '../../components/common/Container/Container.tsx';
 import {Dropdown} from 'react-native-element-dropdown'; // Dropdown import qiling
@@ -67,6 +71,7 @@ const CustomerAddScreen = () => {
       skip: !formik.values.viloyat_id,
     },
   );
+  const customerCategoryRes = useGetCustomerCategoryQuery();
 
   const regionOptions = useMemo<Region[]>(() => {
     return handleApiResponse<Region[]>(regionRes);
@@ -76,10 +81,9 @@ const CustomerAddScreen = () => {
     return handleApiResponse<District[]>(districtByRegionRes);
   }, [districtByRegionRes]);
 
-  const categories = [
-    {id: '1', name: 'Category 1'},
-    {id: '2', name: 'Category 2'},
-  ];
+  const customerCategoryOptions = useMemo<ICustomerCategory[]>(() => {
+    return handleApiResponse<ICustomerCategory[]>(customerCategoryRes);
+  }, [customerCategoryRes]);
 
   const dostavkalar = [
     {id: '1', name: 'Dostavka 1'},
@@ -146,12 +150,13 @@ const CustomerAddScreen = () => {
           {/* Category Select */}
           <View style={styles.row}>
             <Dropdown
+              search={true}
               style={styles.dropdown}
               itemTextStyle={styles.dropdownItemText}
               inputSearchStyle={styles.dropdownSearchInput}
               containerStyle={styles.dropdownItemContainer}
               searchPlaceholder={'Qidirish'}
-              data={categories}
+              data={customerCategoryOptions}
               labelField="name"
               valueField="id"
               placeholder="Kategoriya tanlang"
