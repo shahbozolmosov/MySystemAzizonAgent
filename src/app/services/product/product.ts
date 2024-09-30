@@ -15,9 +15,10 @@ export interface Product {
 }
 
 // index
-interface ProductAllParam {
-  customerId: string;
+export interface ProductAllParam {
+  customerId?: string;
 }
+
 interface ProductAllRes extends IApiRes {
   data: Product[];
 }
@@ -30,7 +31,7 @@ export const productApi = apiSlice
     endpoints: build => ({
       // Index
       getProductAll: build.query<ProductAllRes, ProductAllParam>({
-        query: ({customerId}) => allUrls.productsGetByCustomer(customerId),
+        query: params => allUrls.productsGetAll(params),
       }),
     }),
   });

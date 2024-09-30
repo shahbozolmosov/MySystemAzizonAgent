@@ -1,5 +1,6 @@
 import {OrderAllParams} from '../app/services/order/order';
 import {TDate} from '../types/types';
+import {ProductAllParam} from '../app/services/product/product.ts';
 
 export const baseUrl = 'https://azizon-system.uz/api-demo';
 
@@ -27,9 +28,7 @@ export const allUrls = {
     `/agent/get-tuman.php?viloyat_id=${regionId}`,
 
   // Product
-  productsGetAll: 'agent/get-products.php',
-  productsGetByCustomer: (customerId: string) =>
-    `/agent/get-products.php?client_id=${customerId}`,
+  productsGetAll: ({customerId=''}:ProductAllParam) =>`/agent/get-products.php?customerId=${customerId}`,
 
   // Category
   categoryGetAll: '/agent/get-category.php',

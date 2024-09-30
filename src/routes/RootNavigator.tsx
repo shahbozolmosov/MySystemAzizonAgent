@@ -7,8 +7,10 @@ import {useTypesSelector} from '../app/store';
 import AuthStack from './AuthStack';
 import CustomerStack from './customer/CustomerStack';
 import AppRootStack from './App/AppRootStack';
+import StarterScreen from '../screens/starter/StarterScreen.tsx';
 
 export type RootStackParamList = {
+  Starter: undefined;
   AppRootStack: undefined;
   CustomerStack: {
     customerId: string;
@@ -20,13 +22,16 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   const isAuthenticated = useTypesSelector(selectedIsAuthenticated);
+  const isSync = true;
 
   return (
     <RootStack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      {isAuthenticated ? (
+      {isAuthenticated && isSync ? (
+        <RootStack.Screen name="Starter" component={StarterScreen} />
+      ) : isAuthenticated ? (
         <>
           <RootStack.Screen name="AppRootStack" component={AppRootStack} />
           <RootStack.Screen name="CustomerStack" component={CustomerStack} />
