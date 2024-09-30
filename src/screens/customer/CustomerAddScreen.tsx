@@ -156,8 +156,6 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
     }
   }, [formik]);
 
-  console.log(JSON.stringify(formik.values, null, 2));
-
   const handleOpenMap = useCallback(() => {
     Linking.openURL(
       `https://www.google.com/maps?q=${formik.values.latitude},${formik.values.longitude}`,
@@ -174,9 +172,12 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
             <Dropdown
               search={true}
               style={styles.dropdown}
+              placeholderStyle={styles.dropdownPlaceholder}
               itemTextStyle={styles.dropdownItemText}
               inputSearchStyle={styles.dropdownSearchInput}
               containerStyle={styles.dropdownItemContainer}
+              selectedTextStyle={styles.selectedTextStyle}
+              fontFamily={'Roboto-Regular'}
               searchPlaceholder={'Qidirish'}
               data={regionOptions}
               labelField="nomi"
@@ -199,9 +200,12 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
             <Dropdown
               search={true}
               style={styles.dropdown}
+              placeholderStyle={styles.dropdownPlaceholder}
               itemTextStyle={styles.dropdownItemText}
               inputSearchStyle={styles.dropdownSearchInput}
               containerStyle={styles.dropdownItemContainer}
+              selectedTextStyle={styles.selectedTextStyle}
+              fontFamily={'Roboto-Regular'}
               searchPlaceholder={'Qidirish'}
               data={districtOptions}
               labelField="nomi"
@@ -224,9 +228,12 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
             <Dropdown
               search={true}
               style={styles.dropdown}
+              placeholderStyle={styles.dropdownPlaceholder}
               itemTextStyle={styles.dropdownItemText}
               inputSearchStyle={styles.dropdownSearchInput}
               containerStyle={styles.dropdownItemContainer}
+              selectedTextStyle={styles.selectedTextStyle}
+              fontFamily={'Roboto-Regular'}
               searchPlaceholder={'Qidirish'}
               data={customerCategoryOptions}
               labelField="name"
@@ -249,9 +256,12 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
             <Dropdown
               search={true}
               style={styles.dropdown}
+              placeholderStyle={styles.dropdownPlaceholder}
               itemTextStyle={styles.dropdownItemText}
               inputSearchStyle={styles.dropdownSearchInput}
               containerStyle={styles.dropdownItemContainer}
+              selectedTextStyle={styles.selectedTextStyle}
+              fontFamily={'Roboto-Regular'}
               searchPlaceholder={'Qidirish'}
               data={supplierOptions}
               labelField="dostavchik"
@@ -428,10 +438,23 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: '#f7f8f9',
   },
+  selectedTextStyle: {
+    fontFamily: 'Roboto-Regular',
+    fontWeight: '400',
+    fontSize: 16,
+    color: '#0d1017',
+  },
+  dropdownPlaceholder: {
+    fontFamily: 'Roboto-Regular',
+    fontWeight: '400',
+    color: '#8391A1',
+    fontSize: 16,
+  },
   dropdownItemText: {
     fontFamily: 'Roboto-Regular',
     fontWeight: '400',
     fontSize: 16,
+    color: '#0d1017',
   },
   dropdownSearchInput: {
     borderRadius: 6,
