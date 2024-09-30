@@ -24,7 +24,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 const logResponse = <T>(response: {data?: T}, api: BaseQueryApi) => {
-  // Auth check
+  // auth check
   authCheckApiResponse(response, api);
 
   return response;
