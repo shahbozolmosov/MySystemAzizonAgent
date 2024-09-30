@@ -40,6 +40,16 @@ interface ICustomerCategoryRes extends IApiRes {
   data: ICustomerCategory[];
 }
 
+// index supplier
+export interface Supplier {
+  id: string;
+  dostavchik: string;
+}
+
+interface SupplierRes extends IApiRes {
+  data: Supplier[];
+}
+
 // show
 interface ICustomerByIdRes extends IApiRes {
   data: ICustomer;
@@ -78,16 +88,20 @@ export const customerApi = apiSlice
       getCustomerCategory: build.query<ICustomerCategoryRes, void>({
         query: () => allUrls.customerGetCategory,
       }),
+      // Index supplier
+      getCustomerSupplier: build.query<SupplierRes, void>({
+        query: () => allUrls.supplierGetAll,
+      }),
       // Show
       getCustomerById: build.query<ICustomerByIdRes, string>({
         query: id => allUrls.customerGetById(id),
       }),
-      // Post
     }),
   });
 
 export const {
   useGetCustomerAllQuery,
   useGetCustomerCategoryQuery,
+  useGetCustomerSupplierQuery,
   useGetCustomerByIdQuery,
 } = customerApi;

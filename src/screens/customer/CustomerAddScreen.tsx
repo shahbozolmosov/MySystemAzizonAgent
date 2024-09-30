@@ -1,17 +1,18 @@
-import React, {useMemo} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useMemo, useState} from 'react';
+import {Linking, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {Button, Input} from '@rneui/themed';
 import {
   ICustomerAdd,
   ICustomerCategory,
+  Supplier,
   useGetCustomerCategoryQuery,
+  useGetCustomerSupplierQuery,
 } from '../../app/services/customer/customer.ts';
 import AppPageHeader from '../../components/common/AppPageHeader/AppPageHeader.tsx';
 import Container from '../../components/common/Container/Container.tsx';
 import {Dropdown} from 'react-native-element-dropdown'; // Dropdown import qiling
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   District,
   Region,
@@ -19,6 +20,10 @@ import {
   useGetRegionQuery,
 } from '../../app/services/region/region.ts';
 import {handleApiResponse} from '../../utils/handleApiResponse.ts';
+import Icon from 'react-native-vector-icons/Feather';
+import {getLocation} from '../../utils/getLocation.ts';
+import Toast from 'react-native-toast-message';
+import {boolean} from 'yup';
 
 // Validation schema using Yup
 const CustomerSchema = Yup.object().shape({
@@ -55,6 +60,10 @@ const initialValues: ICustomerAdd = {
 };
 
 const CustomerAddScreen = () => {
+  // State
+  const [locationIsLoading, setLocationIsLoading] = useState(false);
+
+  // Formik
   const formik = useFormik<ICustomerAdd>({
     initialValues,
     validationSchema: CustomerSchema,
@@ -72,6 +81,7 @@ const CustomerAddScreen = () => {
     },
   );
   const customerCategoryRes = useGetCustomerCategoryQuery();
+  const supplierRes = useGetCustomerSupplierQuery();
 
   const regionOptions = useMemo<Region[]>(() => {
     return handleApiResponse<Region[]>(regionRes);
@@ -85,12 +95,38 @@ const CustomerAddScreen = () => {
     return handleApiResponse<ICustomerCategory[]>(customerCategoryRes);
   }, [customerCategoryRes]);
 
-  const dostavkalar = [
-    {id: '1', name: 'Dostavka 1'},
-    {id: '2', name: 'Dostavka 2'},
-  ];
+  const supplierOptions = useMemo<Supplier[]>(() => {
+    return handleApiResponse<Supplier[]>(supplierRes);
+  }, [supplierRes]);
 
-  console.log('tuman_id-------', formik.values.viloyat_id);
+  // Handle get location
+  const handleGetLocation = useCallback(async () => {
+    setLocationIsLoading(true);
+    try {
+      const res = await getLocation();
+      if (res) {
+        formik.setFieldValue('latitude', res.latitude);
+        formik.setFieldValue('longitude', res.longitude);
+
+        Toast.show({
+          type: 'success',
+          text1: 'Manzilingiz olindi',
+        });
+      }
+    } catch (err) {
+      console.warn(err);
+    } finally {
+      setLocationIsLoading(false);
+    }
+  }, [formik]);
+
+  console.log(JSON.stringify(formik.values, null, 2));
+
+  const handleOpenMap = useCallback(() => {
+    Linking.openURL(
+      `https://www.google.com/maps?q=${formik.values.latitude},${formik.values.longitude}`,
+    );
+  }, [formik.values]);
 
   return (
     <Container>
@@ -175,13 +211,14 @@ const CustomerAddScreen = () => {
           {/* Dostavka Select */}
           <View style={styles.row}>
             <Dropdown
+              search={true}
               style={styles.dropdown}
               itemTextStyle={styles.dropdownItemText}
               inputSearchStyle={styles.dropdownSearchInput}
               containerStyle={styles.dropdownItemContainer}
               searchPlaceholder={'Qidirish'}
-              data={dostavkalar}
-              labelField="name"
+              data={supplierOptions}
+              labelField="dostavchik"
               valueField="id"
               placeholder="Dostavka tanlang"
               value={formik.values.dostavka_id}
@@ -281,6 +318,52 @@ const CustomerAddScreen = () => {
             }
           />
 
+          <View style={styles.row}>
+            <Button
+              type={'outline'}
+              title="Mening manzilim"
+              icon={
+                <Text>
+                  <Icon name={'map-pin'} size={18} color={'#1c222e'} />
+                  &nbsp;
+                </Text>
+              }
+              size={'lg'}
+              loading={locationIsLoading}
+              onPress={handleGetLocation}
+            />
+            {formik.touched.latitude &&
+              formik.touched.longitude &&
+              formik.errors.latitude &&
+              formik.errors.longitude && (
+                <Text style={styles.errorText}>{formik.errors.latitude}</Text>
+              )}
+          </View>
+
+          <View style={styles.row}>
+            <Button
+              type={'outline'}
+              title="Xaritani ochish"
+              icon={
+                <Text>
+                  <Icon
+                    name={'map'}
+                    size={18}
+                    color={
+                      !formik.values.latitude || !formik.values.longitude
+                        ? '#99a1a8'
+                        : '#1c222e'
+                    }
+                  />
+                  &nbsp;
+                </Text>
+              }
+              size={'lg'}
+              onPress={handleOpenMap}
+              disabled={!formik.values.latitude || !formik.values.longitude}
+            />
+          </View>
+
           <View style={styles.submitSection}>
             <Button
               title="Submit"
@@ -340,6 +423,7 @@ const styles = StyleSheet.create({
   // Dropdown end
   submitSection: {
     marginTop: 30,
+    marginBottom: 60,
   },
 });
 
