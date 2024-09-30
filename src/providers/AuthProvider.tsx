@@ -50,7 +50,7 @@ const AuthProvider = ({children}: IAuthProviderProps) => {
     return <AppNetworkErr onRefetch={handleRefetch} />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
-export default React.memo(AuthProvider);
+export default AuthProvider;
