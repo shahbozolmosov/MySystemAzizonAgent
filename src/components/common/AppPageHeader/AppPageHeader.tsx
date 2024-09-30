@@ -31,12 +31,16 @@ const styles = StyleSheet.create({
     marginHorizontal: -10,
     paddingVertical: 10,
     paddingHorizontal: 14,
+    paddingRight: 18,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 14,
     justifyContent: 'space-between',
   },
-  btn: {},
+  btn: {
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+  },
 });
 
 export default React.memo(AppPageHeader);

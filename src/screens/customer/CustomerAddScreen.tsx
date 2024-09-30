@@ -42,8 +42,8 @@ const CustomerSchema = Yup.object().shape({
   telegram_id: Yup.number().required('Telegram ID talab qilinadi'),
   korxona: Yup.string().required('Korxona talab qilinadi'),
   manzil: Yup.string().required('Manzil talab qilinadi'),
-  latitude: Yup.number().required('Latitude talab qilinadi'),
-  longitude: Yup.number().required('Longitude talab qilinadi'),
+  latitude: Yup.number().required('Manzil talab qilinadi'),
+  longitude: Yup.number().required('Manzil talab qilinadi'),
   viloyat_id: Yup.string().required('Viloyat talab qilinadi'),
   tuman_id: Yup.string().required('Tuman talab qilinadi'),
   category_id: Yup.string().required('Kategoriya talab qilinadi'),
@@ -162,9 +162,13 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
     );
   }, [formik.values]);
 
+  const handleBack = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
   return (
     <Container>
-      <AppPageHeader onBack={() => {}} title={"Mijoz qo'shish"} />
+      <AppPageHeader onBack={handleBack} title={"Mijoz qo'shish"} />
       <ScrollView>
         <View style={styles.container}>
           {/* Viloyat Select */}
@@ -409,7 +413,7 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
 
           <View style={styles.submitSection}>
             <Button
-              title="Submit"
+              title="Yuborish"
               size={'lg'}
               onPress={formik.handleSubmit as (values: any) => void}
               loading={formik.isSubmitting}
