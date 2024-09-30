@@ -7,8 +7,8 @@ import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 import {Text} from '@rneui/themed';
-import NoResult from '../../components/errors/NoResult/NoResult.tsx';
 import NoTask from '../../components/errors/NoTask/NoTask.tsx';
+import NoInternet from '../../components/errors/NoInternet/NoInternet.tsx';
 
 type CustomerOrderProcessScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -31,6 +31,8 @@ const CustomerOrderProcessScreen = ({
     <Container>
       {orderRes.isLoading || orderRes.isFetching ? (
         <Text>Loading...</Text>
+      ) : orderRes.isError ? (
+        <NoInternet refetch={orderRes.refetch} />
       ) : data.length === 0 ? (
         <NoTask
           title="Buyurtmalar topilmadi"

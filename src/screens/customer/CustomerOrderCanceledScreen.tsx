@@ -7,6 +7,8 @@ import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 import {Text} from '@rneui/themed';
+import NoTask from '../../components/errors/NoTask/NoTask.tsx';
+import NoInternet from '../../components/errors/NoInternet/NoInternet.tsx';
 
 type CustomerOrderCanceledScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -32,6 +34,13 @@ const CustomerOrderCanceledScreen = ({
     <Container>
       {orderRes.isLoading || orderRes.isFetching ? (
         <Text>Loading...</Text>
+      ) : orderRes.isError ? (
+        <NoInternet refetch={orderRes.refetch} />
+      ) : data.length === 0 ? (
+        <NoTask
+          title="Buyurtmalar topilmadi"
+          desc="Hozircha sizda mahsulotlar mavjud emas!"
+        />
       ) : (
         <OrderCardList list={data} customerId={customerId} />
       )}
