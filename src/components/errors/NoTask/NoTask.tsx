@@ -1,14 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Image} from '@rneui/themed';
-import NoResultImage from '../../../../assets/no-result.png';
+import NoResultImage from '../../../../assets/no-task.png';
 
-type NoResultProps = {
+type NoTaskProps = {
   title?: string;
   desc: string;
 };
 
-const NoResult = ({title = "Ma'lumot topilmadi", desc}: NoResultProps) => {
+const NoTask = ({title = "Ma'lumot topilmadi", desc}: NoTaskProps) => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={NoResultImage} />
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(NoResult);
+export default React.memo(NoTask);

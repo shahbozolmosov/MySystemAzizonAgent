@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: {
-    fontFamily: 'Roboto-Bold',
-    fontWeight: '700',
+    fontFamily: 'Roboto-Medium',
+    fontWeight: '500',
     fontSize: 18,
     color: '#939090',
     marginBottom: 4,

@@ -112,7 +112,7 @@ const CustomerOrderAddScreen = ({
       ) : !filteredProducts.length ? (
         <NoResult
           title="Mahlumotlar topilmadi"
-          desc="Hozircha sizda mahsulotlar mavjud emas!"
+          desc="Hozircha sizda buyurtmalar mavjud emas!"
         />
       ) : (
         <OrderProductCardList list={filteredProducts} />
