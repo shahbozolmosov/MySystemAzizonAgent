@@ -7,18 +7,21 @@ import {
   ICustomer,
   useGetCustomerAllQuery,
 } from '../../app/services/customer/customer.ts';
-import {useGetProductAllQuery} from '../../app/services/product/product.ts';
+import {
+  Product,
+  useGetProductAllQuery,
+} from '../../app/services/product/product.ts';
 import {useGetProductOrderAllQuery} from '../../app/services/order/order.ts';
 import NoInternet from '../../components/errors/NoInternet/NoInternet.tsx';
 import {useDispatch} from 'react-redux';
 import {starterSyncOn} from '../../app/services/starter/starterSlice.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
 import {createCustomersTable} from '../../database/tables/customers.table.ts';
-import {
-  addMultipleCustomers,
-  getAllCustomers,
-} from '../../database/customers.ts';
+
 import {handleApiResponse} from '../../utils/handleApiResponse.ts';
+import {createProductsTable} from '../../database/tables/product.table.ts';
+import {addMultipleCustomers, getAllCustomers} from '../../database/customers.ts';
+import {addMultipleProducts, getAllProducts} from '../../database/products.ts';
 
 type StarterScreenProps = NativeStackScreenProps<RootStackParamList, 'Starter'>;
 
@@ -48,15 +51,22 @@ function StarterScreen({route, navigation}: StarterScreenProps) {
     return handleApiResponse<ICustomer[]>(customerRes);
   }, [customerRes]);
 
+  const productData = useMemo<Product[]>(() => {
+    return handleApiResponse<Product[]>(productRes);
+  }, [productRes]);
+
   useEffect(() => {
     if (customerRes.isSuccess && productRes.isSuccess && orderRes.isSuccess) {
       const initDB = async () => {
         setConfigLoading(true);
         try {
           const db = await getDBConnection();
-          // await removeCustomersTable(db);
+          // Create tables
           await createCustomersTable(db);
+          await createProductsTable(db);
+
           const allCustomersDB = await getAllCustomers(db);
+          const allProducts = await getAllProducts(db);
 
           const addedCustomers = customerData.filter(item => {
             if (allCustomersDB && allCustomersDB.length) {
@@ -69,7 +79,20 @@ function StarterScreen({route, navigation}: StarterScreenProps) {
             return true;
           });
 
+          const addedProducts = productData.filter(item => {
+            if (allProducts && allProducts.length) {
+              return (
+                allProducts.findIndex(
+                  inItem => inItem.customer_id.toString() === item.id,
+                ) === -1
+              );
+            }
+            return true;
+          });
+
+          // Set multiple to DB
           await addMultipleCustomers(db, addedCustomers);
+          await addMultipleProducts(db, addedProducts);
 
           dispatch(starterSyncOn());
         } catch (err) {
