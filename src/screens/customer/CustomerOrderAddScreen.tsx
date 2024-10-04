@@ -7,10 +7,7 @@ import {
   clearOrderProduct,
   selectedOrderProductsAmount,
 } from '../../app/services/order/orderSlice';
-import {
-  Product,
-  useGetProductAllQuery,
-} from '../../app/services/product/product';
+import {Product} from '../../app/services/product/product';
 import {useTypesSelector} from '../../app/store';
 import Container from '../../components/common/Container/Container';
 import OrderProductCardList from '../../components/common/OrderProductCard/OrderProductCardList';
@@ -18,7 +15,8 @@ import CustomerHeaderOperation from '../../components/customer/CustomerOperation
 import NoResult from '../../components/errors/NoResult/NoResult';
 import IconButton from '../../components/ui/IconButton/IconButton';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack';
-import {handleApiResponse} from '../../utils/handleApiResponse';
+import {getDBConnection} from '../../database/sqlite.ts';
+import {getAllProducts} from '../../database/products.ts';
 
 type CustomerOrderAddScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -34,6 +32,7 @@ const CustomerOrderAddScreen = ({
 
   // State
   const [searchValue, setSearchValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // Store
   const selectedProductsAmount = useTypesSelector(selectedOrderProductsAmount);
@@ -41,12 +40,28 @@ const CustomerOrderAddScreen = ({
   // Dispatch
   const dispatch = useDispatch();
 
-  // API
-  const productRes = useGetProductAllQuery({customerId});
+  // State
+  const [productData, setProductData] = useState<Product[]>([]);
 
-  const productData = useMemo<Product[]>(() => {
-    return handleApiResponse(productRes);
-  }, [productRes]);
+  useEffect(() => {
+    setIsLoading(true);
+    const initDB = async () => {
+      try {
+        const db = await getDBConnection();
+        const allProducts = await getAllProducts(db);
+
+        if (allProducts) {
+          setProductData(allProducts);
+        }
+      } catch (err) {
+        console.error('Failed to initialize database', err);
+      }finally {
+        setIsLoading(false);
+      }
+    };
+
+    initDB();
+  }, []);
 
   const handleNavigateBasket = useCallback(() => {
     navigation.push('CustomerOrderBasket', {customerId});
@@ -60,7 +75,11 @@ const CustomerOrderAddScreen = ({
         'Diqqat!',
         "Agar orqaga qaytadigan bo'lsangiz ma'lumotlar saqlanmaydi?",
         [
-          {text: 'Bekor qilish', style: 'cancel', onPress: () => {}},
+          {
+            text: 'Bekor qilish',
+            style: 'cancel',
+            onPress: () => {},
+          },
           {
             text: 'Ha',
             style: 'destructive',
@@ -107,7 +126,7 @@ const CustomerOrderAddScreen = ({
           </>
         }
       />
-      {productRes.isLoading || productRes.isFetching ? (
+      {isLoading ? (
         <Text>Loading...</Text>
       ) : !filteredProducts.length ? (
         <NoResult

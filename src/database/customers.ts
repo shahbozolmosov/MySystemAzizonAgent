@@ -155,7 +155,7 @@ export const getCustomerById = async (
   db: SQLite.SQLiteDatabase,
   customerId: string,
 ) => {
-  const query = `SELECT * FROM Customers WHERE id = ?;`;
+  const query = `SELECT * FROM Customers WHERE customer_id = ?;`;
 
   try {
     const results = await db.executeSql(query, [customerId]);
