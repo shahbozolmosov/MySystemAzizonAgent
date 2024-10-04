@@ -1,17 +1,15 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {memo, useCallback, useMemo} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import {
-  ICustomer,
-  useGetCustomerByIdQuery,
-} from '../../../app/services/customer/customer';
+import {ICustomer} from '../../../app/services/customer/customer';
 import {RootStackParamList} from '../../../routes/RootNavigator';
-import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
 import MenuBtn from '../MenuBtn/MenuBtn';
 import HeaderTitle from '../../ui/HeaderTitle/HeaderTitle.tsx';
+import {getDBConnection} from '../../../database/sqlite.ts';
+import {getCustomerById} from '../../../database/customers.ts';
 
 type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -26,16 +24,29 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
   // Navigation
   const navigation = useNavigation<RootStackNavigationProp>();
 
+  // State
+  const [customerData, setCustomerData] = useState<ICustomer | null>(null);
+
   if (!customerId) {
     throw new Error('customerId is required');
   }
 
-  // API
-  const customerRes = useGetCustomerByIdQuery(customerId);
+  useEffect(() => {
+    const initDB = async () => {
+      try {
+        const db = await getDBConnection();
+        const allCustomer = await getCustomerById(db, customerId);
+        if (allCustomer) {
+          setCustomerData(allCustomer);
+        }
+        console.log('allCustomer🎉🎉🎉', JSON.stringify(allCustomer, null, 2));
+      } catch (err) {
+        console.error('Failed to initialize database', err);
+      }
+    };
 
-  const customerData = useMemo(() => {
-    return handleApiResponseObj<ICustomer>(customerRes);
-  }, [customerRes]);
+    initDB();
+  }, [customerId]);
 
   // Customer
   const fullName = customerData?.fio || '';
@@ -63,18 +74,14 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
       <MenuBtn />
 
       {/* Header Title */}
-      {customerRes.isLoading || customerRes.isFetching ? (
-        <HeaderTitle title={'Yuklanmoqda...'} />
-      ) : (
-        <HeaderTitle
-          title={
-            <>
-              {firstName}&nbsp;
-              {lastName}.
-            </>
-          }
-        />
-      )}
+      <HeaderTitle
+        title={
+          <>
+            {firstName}&nbsp;
+            {lastName}.
+          </>
+        }
+      />
 
       {/* Right Side Buttons */}
       <View style={styles.rightSideButtons}>

@@ -17,7 +17,6 @@ function HomeScreen() {
         if (allCustomer) {
           setCustomerData(allCustomer);
         }
-        console.log('allCustomer🎉🎉🎉', JSON.stringify(allCustomer, null, 2));
       } catch (err) {
         console.error('Failed to initialize database', err);
       }
