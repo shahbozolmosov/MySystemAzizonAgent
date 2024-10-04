@@ -10,24 +10,27 @@ import {store} from './app/store';
 import AuthProvider from './providers/AuthProvider';
 import RootNavigator from './routes/RootNavigator';
 import {theme} from './themes/theme';
+import DatabaseProvider from './providers/DatabaseProvider.tsx';
 
 const App: React.FC = () => {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
         <AuthProvider>
-          <ThemeProvider theme={theme}>
-            <StatusBar
-              backgroundColor={'#ffffff'}
-              animated
-              showHideTransition={'slide'}
-              barStyle={'dark-content'}
-            />
-            <NavigationContainer>
-              <RootNavigator />
-            </NavigationContainer>
-            <Toast />
-          </ThemeProvider>
+          <DatabaseProvider>
+            <ThemeProvider theme={theme}>
+              <StatusBar
+                backgroundColor={'#ffffff'}
+                animated
+                showHideTransition={'slide'}
+                barStyle={'dark-content'}
+              />
+              <NavigationContainer>
+                <RootNavigator />
+              </NavigationContainer>
+              <Toast />
+            </ThemeProvider>
+          </DatabaseProvider>
         </AuthProvider>
       </Provider>
     </SafeAreaProvider>

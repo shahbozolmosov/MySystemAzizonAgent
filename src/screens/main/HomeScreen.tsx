@@ -1,19 +1,30 @@
-import React, {useMemo} from 'react';
-import {
-  ICustomer,
-  useGetCustomerAllQuery,
-} from '../../app/services/customer/customer';
+import React, {useEffect, useState} from 'react';
 import Container from '../../components/common/Container/Container';
-import {handleApiResponse} from '../../utils/handleApiResponse';
 import CustomerCardList from '../../components/customer/CustomerCard/CustomerCardList';
+import {getDBConnection} from '../../database/sqlite.ts';
+import {getAllCustomers} from '../../database/customers.ts';
+import {ICustomerCard} from '../../components/customer/CustomerCard/CustomerCard.tsx';
 
 function HomeScreen() {
-  // API
-  const customerRes = useGetCustomerAllQuery();
+  // State
+  const [customerData, setCustomerData] = useState<ICustomerCard[]>([]);
 
-  const customerData = useMemo<ICustomer[]>(() => {
-    return handleApiResponse<ICustomer[]>(customerRes);
-  }, [customerRes]);
+  useEffect(() => {
+    const initDB = async () => {
+      try {
+        const db = await getDBConnection();
+        const allCustomer = await getAllCustomers(db);
+        if (allCustomer) {
+          setCustomerData(allCustomer);
+        }
+        console.log('allCustomer🎉🎉🎉', JSON.stringify(allCustomer, null, 2));
+      } catch (err) {
+        console.error('Failed to initialize database', err);
+      }
+    };
+
+    initDB();
+  }, []);
 
   return (
     <Container>

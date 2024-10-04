@@ -1,18 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../routes/RootNavigator.tsx';
 import Container from '../../components/common/Container/Container.tsx';
-import {useGetCustomerAllQuery} from '../../app/services/customer/customer.ts';
+import {
+  ICustomer,
+  useGetCustomerAllQuery,
+} from '../../app/services/customer/customer.ts';
 import {useGetProductAllQuery} from '../../app/services/product/product.ts';
 import {useGetProductOrderAllQuery} from '../../app/services/order/order.ts';
 import NoInternet from '../../components/errors/NoInternet/NoInternet.tsx';
 import {useDispatch} from 'react-redux';
 import {starterSyncOn} from '../../app/services/starter/starterSlice.ts';
+import {getDBConnection} from '../../database/sqlite.ts';
+import {createCustomersTable} from '../../database/tables/customers.table.ts';
+import {
+  addMultipleCustomers,
+  getAllCustomers,
+} from '../../database/customers.ts';
+import {handleApiResponse} from '../../utils/handleApiResponse.ts';
 
 type StarterScreenProps = NativeStackScreenProps<RootStackParamList, 'Starter'>;
 
 function StarterScreen({route, navigation}: StarterScreenProps) {
+  // State
+  const [configLoading, setConfigLoading] = useState<boolean>(false);
+
   // Dispatch
   const dispatch = useDispatch();
 
@@ -31,10 +44,42 @@ function StarterScreen({route, navigation}: StarterScreenProps) {
     },
   );
 
+  const customerData = useMemo<ICustomer[]>(() => {
+    return handleApiResponse<ICustomer[]>(customerRes);
+  }, [customerRes]);
+
   useEffect(() => {
     if (customerRes.isSuccess && productRes.isSuccess && orderRes.isSuccess) {
-      dispatch(starterSyncOn());
-      navigation.popToTop();
+      const initDB = async () => {
+        setConfigLoading(true);
+        try {
+          const db = await getDBConnection();
+          // await removeCustomersTable(db);
+          await createCustomersTable(db);
+          const allCustomersDB = await getAllCustomers(db);
+
+          const addedCustomers = customerData.filter(item => {
+            if (allCustomersDB && allCustomersDB.length) {
+              return (
+                allCustomersDB.findIndex(
+                  inItem => inItem.customer_id.toString() === item.id,
+                ) === -1
+              );
+            }
+            return true;
+          });
+
+          await addMultipleCustomers(db, addedCustomers);
+
+          dispatch(starterSyncOn());
+        } catch (err) {
+          console.error('Failed to initialize database', err);
+        } finally {
+          setConfigLoading(false);
+        }
+      };
+
+      initDB();
     }
   }, [
     customerRes.isSuccess,
@@ -42,6 +87,7 @@ function StarterScreen({route, navigation}: StarterScreenProps) {
     orderRes.isSuccess,
     productRes.isSuccess,
     navigation,
+    customerData,
   ]);
 
   if (!customerRes.isLoading && customerRes.isError) {
@@ -77,6 +123,8 @@ function StarterScreen({route, navigation}: StarterScreenProps) {
           <Text style={styles.title}>Mahsulotlar yuklanmoqda....</Text>
         ) : orderRes.isLoading || orderRes.isFetching ? (
           <Text style={styles.title}>Buyurtmalar yuklanmoqda....</Text>
+        ) : configLoading ? (
+          <Text style={styles.title}>Siz uchun muhit sozlanmoqda....</Text>
         ) : (
           <Text style={styles.title}>Hammasi muvaffaqiyatli</Text>
         )}

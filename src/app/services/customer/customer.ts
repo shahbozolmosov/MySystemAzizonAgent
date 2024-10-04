@@ -6,6 +6,9 @@ export interface ICustomer {
   id: string;
   fio: string;
   korxona: string;
+  direktor: string,
+  direktor_telefon: string,
+  telegram_id: string,
   balans: 0;
   telefon: string;
   rasm: null;

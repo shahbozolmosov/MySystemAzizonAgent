@@ -61,16 +61,41 @@ export const addMultipleCustomers = async (
   customers: ICustomer[],
 ): Promise<void> => {
   const query = `
-    INSERT INTO Customers (fio, korxona, direktor, direktor_telefon, telegram_id, balans, telefon, rasm, manzil, lokatsiya, latitude, registertime, viloyat, tuman, category_id, dostavka_id, viloyat_id, tuman_id, agent_id) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    INSERT INTO Customers (
+      customer_id, 
+      fio,
+      korxona,
+      direktor,
+      direktor_telefon,
+      telegram_id,
+      balans,
+      telefon,
+      rasm,
+      manzil,
+      lokatsiya,
+      latitude,
+      registertime,
+      viloyat,
+      tuman,
+      category_id,
+      dostavka_id,
+      viloyat_id,
+      tuman_id,
+      agent_id
+   ) 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); 
   `;
 
   try {
-    await db.transaction(async tx => {
+    await db.transaction(tx => {
       for (const customer of customers) {
         const {
+          id,
           fio,
           korxona,
+          direktor,
+          direktor_telefon,
+          telegram_id,
           balans,
           telefon,
           rasm,
@@ -86,25 +111,38 @@ export const addMultipleCustomers = async (
           tuman_id,
           agent_id,
         } = customer;
-
-        await tx.executeSql(query, [
-          fio,
-          korxona,
-          balans,
-          telefon,
-          rasm,
-          manzil,
-          lokatsiya,
-          latitude,
-          registertime,
-          viloyat,
-          tuman,
-          category_id,
-          dostavka_id,
-          viloyat_id,
-          tuman_id,
-          agent_id,
-        ]);
+        tx.executeSql(
+          query,
+          [
+            id,
+            fio,
+            korxona,
+            direktor,
+            direktor_telefon,
+            telegram_id,
+            balans,
+            telefon,
+            rasm,
+            manzil,
+            lokatsiya,
+            latitude,
+            registertime,
+            viloyat,
+            tuman,
+            category_id,
+            dostavka_id,
+            viloyat_id,
+            tuman_id,
+            agent_id,
+          ],
+          () => {
+            console.log(`Customer ${fio} added successfully`);
+          },
+          (txObj, error) => {
+            console.error(`Error adding customer ${fio}: `, error);
+            return false; // stop the transaction on error
+          },
+        );
       }
     });
     console.log('Multiple customers added successfully');
@@ -145,5 +183,17 @@ export const getAllCustomers = async (db: SQLite.SQLiteDatabase) => {
     return customers;
   } catch (error) {
     console.error('Error fetching customers: ', error);
+  }
+};
+
+// Delete all customers
+export const deleteAllCustomers = async (db: SQLite.SQLiteDatabase) => {
+  const query = `DELETE FROM Customers;`;
+
+  try {
+    await db.executeSql(query);
+    console.log('All customers deleted successfully');
+  } catch (error) {
+    console.log('Error deleting customer: ', error);
   }
 };
