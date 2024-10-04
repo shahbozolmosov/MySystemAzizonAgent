@@ -27,10 +27,6 @@ export interface ICustomer {
   chegirma: null;
 }
 
-export interface  ICustomerDB extends ICustomer{
-  customer_id: string
-}
-
 // index
 interface ICustomerRes extends IApiRes {
   data: ICustomer[];

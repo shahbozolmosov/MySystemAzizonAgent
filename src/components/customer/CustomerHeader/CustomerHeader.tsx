@@ -3,13 +3,13 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import {ICustomerDB} from '../../../app/services/customer/customer';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import PhoneBtn from '../../ui/PhoneBtn/PhoneBtn';
 import MenuBtn from '../MenuBtn/MenuBtn';
 import HeaderTitle from '../../ui/HeaderTitle/HeaderTitle.tsx';
 import {getDBConnection} from '../../../database/sqlite.ts';
 import {getCustomerById} from '../../../database/customers.ts';
+import {ICustomer} from '../../../app/services/customer/customer.ts';
 
 type RootStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -25,7 +25,7 @@ const CustomerHeader: React.FC<CustomerHeaderProps> = ({customerId}) => {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   // State
-  const [customerData, setCustomerData] = useState<ICustomerDB | null>(null);
+  const [customerData, setCustomerData] = useState<ICustomer | null>(null);
 
   if (!customerId) {
     throw new Error('customerId is required');

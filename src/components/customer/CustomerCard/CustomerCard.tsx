@@ -1,15 +1,15 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {ICustomerDB} from '../../../app/services/customer/customer';
+import {ICustomer} from '../../../app/services/customer/customer';
 
-export interface ICustomerCard extends ICustomerDB {}
+export interface ICustomerCard extends ICustomer {}
 
 interface ICustomerCardProps extends ICustomerCard {
   onNavigate: (customerId: string) => void;
 }
 
 const CustomerCard = ({
-  customer_id,
+  id,
   fio,
   korxona,
   onNavigate,
@@ -24,8 +24,8 @@ const CustomerCard = ({
   }
 
   const handleNavigate = useCallback(() => {
-    onNavigate(customer_id);
-  }, [customer_id, onNavigate]);
+    onNavigate(id);
+  }, [id, onNavigate]);
 
   return (
     <View style={styles.card}>

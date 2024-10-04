@@ -59,10 +59,10 @@ export const addCustomer = async (
 export const addMultipleCustomers = async (
   db: SQLite.SQLiteDatabase,
   customers: ICustomer[],
-): Promise<void> => {
+): Promise<'ok' | null> => {
   const query = `
     INSERT INTO Customers (
-      customer_id, 
+      id, 
       fio,
       korxona,
       direktor,
@@ -146,8 +146,10 @@ export const addMultipleCustomers = async (
       }
     });
     console.log('Multiple customers added successfully');
+    return 'ok';
   } catch (error) {
     console.error('Error adding multiple customers: ', error);
+    return null;
   }
 };
 // Get one customer
@@ -155,7 +157,7 @@ export const getCustomerById = async (
   db: SQLite.SQLiteDatabase,
   customerId: string,
 ) => {
-  const query = `SELECT * FROM Customers WHERE customer_id = ?;`;
+  const query = `SELECT * FROM Customers WHERE id = ?;`;
 
   try {
     const results = await db.executeSql(query, [customerId]);

@@ -12,7 +12,7 @@ export const authCheckApiResponse = <T>(
       const data = response.data;
 
       if (data.error_code === 401) {
-        api.dispatch(api.util.resetApiState());
+        api.dispatch(apiSlice.util.resetApiState());
 
         Toast.show({
           type: 'info',

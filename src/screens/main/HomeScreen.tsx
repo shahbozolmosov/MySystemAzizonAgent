@@ -5,6 +5,9 @@ import {getDBConnection} from '../../database/sqlite.ts';
 import {getAllCustomers} from '../../database/customers.ts';
 import {ICustomerCard} from '../../components/customer/CustomerCard/CustomerCard.tsx';
 import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
+import {removeCustomersTable} from '../../database/tables/customers.table.ts';
+import {Text, TouchableOpacity} from 'react-native';
+import {removeProductsTable} from '../../database/tables/product.table.ts';
 
 function HomeScreen() {
   // State
@@ -27,8 +30,17 @@ function HomeScreen() {
     initDB();
   }, []);
 
+  const handleClear = async () => {
+    const db = await getDBConnection();
+    await removeCustomersTable(db);
+    await removeProductsTable(db);
+  };
+
   return (
     <Container>
+      <TouchableOpacity onPress={handleClear}>
+        <Text>Clear</Text>
+      </TouchableOpacity>
       <CustomerCardList list={customerData} />
 
       <SyncBtn />

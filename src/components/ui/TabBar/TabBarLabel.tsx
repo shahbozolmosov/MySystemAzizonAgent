@@ -16,6 +16,7 @@ const TabBarLabel = ({
 }: TabBarLabelProps) => {
   return (
     <Text
+      key={label}
       style={
         (focused ? styles.labelFocused : styles.label,
         currentColor && focused ? {color} : styles.color)

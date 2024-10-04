@@ -20,7 +20,10 @@ import {createCustomersTable} from '../../database/tables/customers.table.ts';
 
 import {handleApiResponse} from '../../utils/handleApiResponse.ts';
 import {createProductsTable} from '../../database/tables/product.table.ts';
-import {addMultipleCustomers, getAllCustomers} from '../../database/customers.ts';
+import {
+  addMultipleCustomers,
+  getAllCustomers,
+} from '../../database/customers.ts';
 import {addMultipleProducts, getAllProducts} from '../../database/products.ts';
 
 type StarterScreenProps = NativeStackScreenProps<RootStackParamList, 'Starter'>;
@@ -66,25 +69,21 @@ function StarterScreen({route, navigation}: StarterScreenProps) {
           await createProductsTable(db);
 
           const allCustomersDB = await getAllCustomers(db);
-          const allProducts = await getAllProducts(db);
+          const allProductsDB = await getAllProducts(db);
 
           const addedCustomers = customerData.filter(item => {
             if (allCustomersDB && allCustomersDB.length) {
               return (
-                allCustomersDB.findIndex(
-                  inItem => inItem.customer_id.toString() === item.id,
-                ) === -1
+                allCustomersDB.findIndex(inItem => inItem.id === item.id) === -1
               );
             }
             return true;
           });
 
           const addedProducts = productData.filter(item => {
-            if (allProducts && allProducts.length) {
+            if (allProductsDB && allProductsDB.length) {
               return (
-                allProducts.findIndex(
-                  inItem => inItem.customer_id.toString() === item.id,
-                ) === -1
+                allProductsDB.findIndex(inItem => inItem.id === item.id) === -1
               );
             }
             return true;
@@ -111,6 +110,7 @@ function StarterScreen({route, navigation}: StarterScreenProps) {
     productRes.isSuccess,
     navigation,
     customerData,
+    productData,
   ]);
 
   if (!customerRes.isLoading && customerRes.isError) {

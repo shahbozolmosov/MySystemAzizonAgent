@@ -24,7 +24,14 @@ const AppTabStack = () => {
           break;
       }
 
-      return <TabBarLabel {...props} color={"#007fff"} label={label} currentColor={true} />;
+      return (
+        <TabBarLabel
+          {...props}
+          color={'#007fff'}
+          label={label}
+          currentColor={true}
+        />
+      );
     },
     [],
   );

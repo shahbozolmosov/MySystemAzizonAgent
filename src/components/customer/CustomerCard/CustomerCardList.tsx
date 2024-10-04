@@ -35,7 +35,7 @@ const CustomerCardList = ({list}: CustomerCardListProps) => {
       <FlatList
         data={list}
         renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       />
     </View>

@@ -298,6 +298,8 @@ const CustomerAddScreen = ({navigation}: CustomerAddScreenProps) => {
             value={formik.values.telefon}
             onChangeText={formik.handleChange('telefon')}
             onBlur={formik.handleBlur('telefon')}
+            textContentType={'telephoneNumber'}
+            keyboardType={'numeric'}
             errorMessage={
               formik.touched.telefon && formik.errors.telefon
                 ? formik.errors.telefon

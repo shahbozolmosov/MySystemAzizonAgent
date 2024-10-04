@@ -7,6 +7,7 @@ export const addProduct = async (
   product: Product,
 ) => {
   const {
+    id,
     name,
     article,
     nagruzka,
@@ -19,11 +20,12 @@ export const addProduct = async (
 
   const query = `
     INSERT INTO Products (name, article, nagruzka, pishirish, price, real_price, category_id, before_ordered)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
   `;
 
   try {
     await db.executeSql(query, [
+      id,
       name,
       article,
       nagruzka,
@@ -45,14 +47,15 @@ export const addMultipleProducts = async (
   products: Product[],
 ): Promise<void> => {
   const query = `
-    INSERT INTO Products (name, article, nagruzka, pishirish, price, real_price, category_id, before_ordered)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?); 
+    INSERT INTO Products (id, name, article, nagruzka, pishirish, price, real_price, category_id, before_ordered)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?); 
   `;
 
   try {
     await db.transaction(tx => {
       for (const product of products) {
         const {
+          id,
           name,
           article,
           nagruzka,
@@ -65,6 +68,7 @@ export const addMultipleProducts = async (
         tx.executeSql(
           query,
           [
+            id,
             name,
             article,
             nagruzka,

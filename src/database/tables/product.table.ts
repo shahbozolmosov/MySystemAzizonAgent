@@ -3,7 +3,8 @@ import SQLite from 'react-native-sqlite-storage';
 export const createProductsTable = async (db: SQLite.SQLiteDatabase) => {
   const query = `
     CREATE TABLE IF NOT EXISTS Products (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      uid INTEGER PRIMARY KEY AUTOINCREMENT,
+      id TEXT UNIQUE NOT NULL,
       name TEXT NOT NULL,
       article TEXT NOT NULL,
       nagruzka REAL NOT NULL,
