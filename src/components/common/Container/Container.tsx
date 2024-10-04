@@ -20,6 +20,7 @@ export default function Container({
 
 const styles = StyleSheet.create({
   container: {
+    position:'relative',
     flex: 1,
     backgroundColor: '#ffffff',
   },

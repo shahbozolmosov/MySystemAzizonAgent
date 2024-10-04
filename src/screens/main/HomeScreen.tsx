@@ -4,6 +4,7 @@ import CustomerCardList from '../../components/customer/CustomerCard/CustomerCar
 import {getDBConnection} from '../../database/sqlite.ts';
 import {getAllCustomers} from '../../database/customers.ts';
 import {ICustomerCard} from '../../components/customer/CustomerCard/CustomerCard.tsx';
+import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
 
 function HomeScreen() {
   // State
@@ -28,6 +29,8 @@ function HomeScreen() {
   return (
     <Container>
       <CustomerCardList list={customerData} />
+
+      <SyncBtn />
     </Container>
   );
 }
