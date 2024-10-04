@@ -1,8 +1,7 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Button} from '@rneui/themed';
 import React, {useCallback} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
 import CustomerOrderCanceled from '../../screens/customer/CustomerOrderCanceledScreen';
