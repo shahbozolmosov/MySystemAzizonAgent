@@ -24,6 +24,8 @@ const slice = createSlice({
   reducers: {
     setToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
+      state.isLoading = false;
+      state.isAuthenticated = true;
     },
     logout: state => {
       Object.assign(state, initialState);
