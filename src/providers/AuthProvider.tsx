@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {setToken} from '../app/services/auth/authSlice';
+import React, {useCallback, useEffect, useState} from 'react';
+import {selectedToken, setToken} from '../app/services/auth/authSlice';
 import AppLoader from '../components/common/AppLoader/AppLoader';
 import {getToken} from '../utils/tokenSaver';
 import {useDispatch} from 'react-redux';
+import NetInfo from '@react-native-community/netinfo';
+import {useGetUserQuery} from '../app/services/user/user.ts';
+import {useTypesSelector} from '../app/store.ts';
+import AppNetworkErr from '../components/common/AppNetworkErr/AppNetworkErr.tsx';
 
 interface IAuthProviderProps {
   children: React.ReactNode;
@@ -12,10 +16,22 @@ const AuthProvider = ({children}: IAuthProviderProps) => {
   const dispatch = useDispatch();
 
   // State
-  // const [token, setToken] = useState<string | null>(null);
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
   const [tokenLoading, setTokenLoading] = useState<boolean>(true);
 
-  // const token = useTypesSelector(selectedToken);
+  const token = useTypesSelector(selectedToken);
+
+  useEffect(() => {
+    // Tarmoq holatini tekshirish
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
+
+    // Unsubscribe qilish
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     setTokenLoading(true);
@@ -29,23 +45,25 @@ const AuthProvider = ({children}: IAuthProviderProps) => {
     fetchToken();
   }, [dispatch]);
 
-  // const {isLoading, isFetching, isError, refetch} = useGetUserQuery(undefined, {
-  //   skip: !token,
-  // });
+  const {isLoading, isFetching, isError, refetch} = useGetUserQuery(undefined, {
+    skip: !token && isConnected !== null && isConnected,
+  });
 
-  // const handleRefetch = useCallback(() => {
-  //   if (token) {
-  //     refetch();
-  //   }
-  // }, [refetch, token]);
+  console.log('!token && isConnected !== null && isConnected😀😀😀',!token && isConnected !== null && isConnected)
 
-  if (tokenLoading) { //|| isLoading || isFetching
+  const handleRefetch = useCallback(() => {
+    if (token) {
+      refetch();
+    }
+  }, [refetch, token]);
+
+  if (tokenLoading || isLoading || isFetching) {
     return <AppLoader />;
   }
 
-  // if (isError) {
-  //   return <AppNetworkErr onRefetch={handleRefetch} />;
-  // }
+  if (isError && isConnected) {
+    return <AppNetworkErr onRefetch={handleRefetch} />;
+  }
 
   return <>{children}</>;
 };

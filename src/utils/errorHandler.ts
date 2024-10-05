@@ -7,7 +7,13 @@ interface ErrorResponse {
 }
 
 export const handleError = (err: unknown) => {
-  if (err && typeof err === 'object' && 'data' in err) {
+  if(err && typeof err === 'object' && 'status' in err && err?.status === 'FETCH_ERROR'){
+    Toast.show({
+      type: 'error',
+      text1: "Ulanishda xatolik!",
+      text2: "Qaytadan urinib ko'ring.",
+    });
+  }else if (err && typeof err === 'object' && 'data' in err) {
     const {data} = err as ErrorResponse;
     Toast.show({
       type: 'error',

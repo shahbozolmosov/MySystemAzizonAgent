@@ -38,7 +38,7 @@ const slice = createSlice({
     builder
       // Get User
       .addMatcher(getUser.matchPending, state => {
-        state.isAuthenticated = false;
+        // state.isAuthenticated = false;
         state.isLoading = true;
       })
       .addMatcher(getUser.matchFulfilled, (state, action) => {
@@ -58,10 +58,10 @@ const slice = createSlice({
         state.token = userData.token;
         state.isAuthenticated = true;
       })
-      .addMatcher(getUser.matchRejected, state => {
-        state.isLoading = false;
-        state.isAuthenticated = false;
-      })
+      // .addMatcher(getUser.matchRejected, state => {
+      //   state.isLoading = false;
+      //   state.isAuthenticated = false;
+      // })
       // Login
       .addMatcher(login.matchFulfilled, (state, action) => {
         if (!action.payload.success || action.payload.data.rol !== 'agent') {
