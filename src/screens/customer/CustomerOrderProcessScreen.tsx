@@ -1,14 +1,18 @@
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useGetProductOrderAllQuery} from '../../app/services/order/order';
 import Container from '../../components/common/Container/Container';
-import {IOrderCard} from '../../components/common/OrderCard/OrderCard';
+import OrderCard, {
+  IOrderCard,
+} from '../../components/common/OrderCard/OrderCard';
 import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 import {Text} from '@rneui/themed';
 import NoTask from '../../components/errors/NoTask/NoTask.tsx';
 import NoInternet from '../../components/errors/NoInternet/NoInternet.tsx';
+import {getDBConnection} from '../../database/sqlite.ts';
+import {getAllOrders} from '../../database/order.ts';
 
 type CustomerOrderProcessScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -21,25 +25,41 @@ const CustomerOrderProcessScreen = ({
   // Route
   const {customerId} = route.params;
 
-  const orderRes = useGetProductOrderAllQuery({customerId, status: 'new'});
+  // State
+  const [orderData, setOrderData] = useState<IOrderCard[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const data = useMemo<IOrderCard[]>(() => {
-    return handleApiResponse(orderRes);
-  }, [orderRes]);
+  useEffect(() => {
+    const initDB = async () => {
+      setIsLoading(true);
+      try {
+        const db = await getDBConnection();
+        const allOrder = await getAllOrders(db);
+
+        if (allOrder) {
+          setOrderData(allOrder);
+        }
+      } catch (err) {
+        console.error('Failed to initialize database', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initDB();
+  }, []);
 
   return (
     <Container>
-      {orderRes.isLoading || orderRes.isFetching ? (
+      {isLoading ? (
         <Text>Loading...</Text>
-      ) : orderRes.isError ? (
-        <NoInternet refetch={orderRes.refetch} />
-      ) : data.length === 0 ? (
+      ) : orderData.length === 0 ? (
         <NoTask
           title="Buyurtmalar topilmadi"
           desc="Hozircha sizda mahsulotlar mavjud emas!"
         />
       ) : (
-        <OrderCardList list={data} customerId={customerId} />
+        <OrderCardList list={orderData} customerId={customerId} />
       )}
     </Container>
   );
