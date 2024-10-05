@@ -4,7 +4,6 @@ import React, {useCallback} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
-import CustomerOrderCanceled from '../../screens/customer/CustomerOrderCanceledScreen';
 import CustomerOrderDelivered from '../../screens/customer/CustomerOrderDeliveredScreen';
 import CustomerOrderProcess from '../../screens/customer/CustomerOrderProcessScreen';
 import {CustomerTabStackParamList} from './CustomerStack';
@@ -95,11 +94,6 @@ const CustomerOrderHistoryTabStack = ({
         <Tab.Screen
           name="Delivered"
           component={CustomerOrderDelivered}
-          initialParams={{customerId}}
-        />
-        <Tab.Screen
-          name="Canceled"
-          component={CustomerOrderCanceled}
           initialParams={{customerId}}
         />
       </Tab.Navigator>

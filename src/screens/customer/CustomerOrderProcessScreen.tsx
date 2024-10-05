@@ -1,18 +1,13 @@
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
-import React, {useEffect, useMemo, useState} from 'react';
-import {useGetProductOrderAllQuery} from '../../app/services/order/order';
+import React, {useEffect, useState} from 'react';
 import Container from '../../components/common/Container/Container';
-import OrderCard, {
-  IOrderCard,
-} from '../../components/common/OrderCard/OrderCard';
+import {IOrderCard} from '../../components/common/OrderCard/OrderCard';
 import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
-import {handleApiResponse} from '../../utils/handleApiResponse';
 import {Text} from '@rneui/themed';
 import NoTask from '../../components/errors/NoTask/NoTask.tsx';
-import NoInternet from '../../components/errors/NoInternet/NoInternet.tsx';
 import {getDBConnection} from '../../database/sqlite.ts';
-import {getAllOrders} from '../../database/order.ts';
+import {getOrderByCustomerId} from '../../database/order.ts';
 
 type CustomerOrderProcessScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -34,10 +29,17 @@ const CustomerOrderProcessScreen = ({
       setIsLoading(true);
       try {
         const db = await getDBConnection();
-        const allOrder = await getAllOrders(db);
+        const orderByCustomerId = await getOrderByCustomerId(db, customerId, [
+          'new',
+          'tayyorlanmoqda',
+          'tayyorlandi',
+          'tekshirilmoqda',
+          'tekshirildi',
+          'dostavka',
+        ]);
 
-        if (allOrder) {
-          setOrderData(allOrder);
+        if (orderByCustomerId) {
+          setOrderData(orderByCustomerId);
         }
       } catch (err) {
         console.error('Failed to initialize database', err);
@@ -47,7 +49,7 @@ const CustomerOrderProcessScreen = ({
     };
 
     initDB();
-  }, []);
+  }, [customerId]);
 
   return (
     <Container>
@@ -56,7 +58,7 @@ const CustomerOrderProcessScreen = ({
       ) : orderData.length === 0 ? (
         <NoTask
           title="Buyurtmalar topilmadi"
-          desc="Hozircha sizda mahsulotlar mavjud emas!"
+          desc="Hozircha sizda buyurtmalar mavjud emas!"
         />
       ) : (
         <OrderCardList list={orderData} customerId={customerId} />

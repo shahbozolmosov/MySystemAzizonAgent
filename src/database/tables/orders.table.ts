@@ -6,6 +6,7 @@ export const createOrdersTable = async (db: SQLite.SQLiteDatabase) => {
       uid INTEGER PRIMARY KEY AUTOINCREMENT,
       id TEXT UNIQUE NOT NULL,
       client TEXT NOT NULL, -- JSON sifatida saqlanadi
+      customer_id TEXT NOT NULL,
       sana TEXT NOT NULL,
       izoh TEXT,
       agent TEXT,

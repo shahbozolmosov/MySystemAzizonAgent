@@ -1,10 +1,7 @@
 import SQLite from 'react-native-sqlite-storage';
 import {Order} from '../app/services/order/order.ts';
- // Add Order
-export const addOrder = async (
-  db: SQLite.SQLiteDatabase,
-  order: Order,
-) => {
+// Add Order
+export const addOrder = async (db: SQLite.SQLiteDatabase, order: Order) => {
   const {
     id,
     client,
@@ -31,14 +28,15 @@ export const addOrder = async (
   } = order;
 
   const query = `
-    INSERT INTO Orders (id, client, sana, izoh, agent, dostavchik, dostavka_id, dostavchik_telefon, status, vaqt, old_client_balans, belgilangan_chegirma, mahsulot_soni, buyurtma_massa, jami_massa, taxmin_summa, tasdiqlangan_summa, taxmin_chegirma, tasdiqlangan_chegirma, tolov_summa, product_list, after_balans)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    INSERT INTO Orders (id, client, customer_id, sana, izoh, agent, dostavchik, dostavka_id, dostavchik_telefon, status, vaqt, old_client_balans, belgilangan_chegirma, mahsulot_soni, buyurtma_massa, jami_massa, taxmin_summa, tasdiqlangan_summa, taxmin_chegirma, tasdiqlangan_chegirma, tolov_summa, product_list, after_balans)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
   `;
 
   try {
     await db.executeSql(query, [
       id,
-      JSON.stringify(client), // JSON formatda saqlash
+      JSON.stringify(client),
+      client.id,
       sana,
       izoh,
       agent,
@@ -57,7 +55,7 @@ export const addOrder = async (
       taxmin_chegirma,
       tasdiqlangan_chegirma,
       tolov_summa,
-      JSON.stringify(product_list), // JSON formatda saqlash
+      JSON.stringify(product_list),
       after_balans,
     ]);
     console.log('Order added successfully');
@@ -72,8 +70,8 @@ export const addMultipleOrders = async (
   orders: Order[],
 ): Promise<'ok' | null> => {
   const query = `
-    INSERT INTO Orders (id, client, sana, izoh, agent, dostavchik, dostavka_id, dostavchik_telefon, status, vaqt, old_client_balans, belgilangan_chegirma, mahsulot_soni, buyurtma_massa, jami_massa, taxmin_summa, tasdiqlangan_summa, taxmin_chegirma, tasdiqlangan_chegirma, tolov_summa, product_list, after_balans)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+    INSERT INTO Orders (id, client, customer_id, sana, izoh, agent, dostavchik, dostavka_id, dostavchik_telefon, status, vaqt, old_client_balans, belgilangan_chegirma, mahsulot_soni, buyurtma_massa, jami_massa, taxmin_summa, tasdiqlangan_summa, taxmin_chegirma, tasdiqlangan_chegirma, tolov_summa, product_list, after_balans)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
   `;
 
   try {
@@ -109,6 +107,7 @@ export const addMultipleOrders = async (
           [
             id,
             JSON.stringify(client), // JSON format
+            client.id,
             sana,
             izoh,
             agent,
@@ -161,13 +160,41 @@ export const getOrderById = async (
       const order = results[0].rows.item(0);
       return {
         ...order,
-        client: JSON.parse(order.client), // JSON formatda qayta o'qish
-        product_list: JSON.parse(order.product_list), // JSON formatda qayta o'qish
+        client: JSON.parse(order.client),
+        product_list: JSON.parse(order.product_list),
       };
     } else {
       console.log('Order not found');
       return null;
     }
+  } catch (error) {
+    console.error('Error fetching order: ', error);
+  }
+};
+
+// Get one order by Customer Id
+export const getOrderByCustomerId = async (
+  db: SQLite.SQLiteDatabase,
+  customerId: string,
+  statuses: string[],
+) => {
+  const placeholders = statuses.map(() => '?').join(',');
+  const query = `SELECT * FROM Orders WHERE customer_id = ? AND status IN (${placeholders});`;
+
+  try {
+    const results = await db.executeSql(query, [customerId, ...statuses]);
+    const orders = [];
+    for (let i = 0; i < results[0].rows.length; i++) {
+      const order = results[0].rows.item(i);
+
+      orders.push({
+        ...order,
+        client: JSON.parse(order.client),
+        product_list: JSON.parse(order.product_list),
+      });
+    }
+
+    return orders;
   } catch (error) {
     console.error('Error fetching order: ', error);
   }
@@ -184,8 +211,8 @@ export const getAllOrders = async (db: SQLite.SQLiteDatabase) => {
       const order = results[0].rows.item(i);
       orders.push({
         ...order,
-        client: JSON.parse(order.client), // JSON formatda qayta o'qish
-        product_list: JSON.parse(order.product_list), // JSON formatda qayta o'qish
+        client: JSON.parse(order.client),
+        product_list: JSON.parse(order.product_list),
       });
     }
     return orders;

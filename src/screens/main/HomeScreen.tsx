@@ -8,6 +8,7 @@ import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
 import {removeCustomersTable} from '../../database/tables/customers.table.ts';
 import {Text, TouchableOpacity} from 'react-native';
 import {removeProductsTable} from '../../database/tables/product.table.ts';
+import {removeOrdersTable} from '../../database/tables/orders.table.ts';
 
 function HomeScreen() {
   // State
@@ -34,6 +35,7 @@ function HomeScreen() {
     const db = await getDBConnection();
     await removeCustomersTable(db);
     await removeProductsTable(db);
+    await removeOrdersTable(db);
   };
 
   return (
