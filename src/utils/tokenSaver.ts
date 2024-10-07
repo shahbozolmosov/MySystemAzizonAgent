@@ -5,7 +5,7 @@ export const saveToken = async (token: string) => {
   try {
     await Keychain.setGenericPassword('userToken', token);
   } catch (error: any) {
-    console.error('Error saving token:', error);
+    console.error('🗝️Error saving token:', error);
   }
 };
 
@@ -14,14 +14,14 @@ export const getToken = async (): Promise<string | null> => {
   try {
     const credentials = await Keychain.getGenericPassword();
     if (credentials) {
-      console.log('Token retrieved successfully');
+      console.log('🗝️Token retrieved successfully');
       return credentials.password;
     }
 
-    console.log('No token found');
+    console.log('🗝️No token found');
     return null;
   } catch (error: any) {
-    console.error('Error retrieving token:', error);
+    console.error('🗝️Error retrieving token:', error);
     return null;
   }
 };
@@ -30,8 +30,8 @@ export const getToken = async (): Promise<string | null> => {
 export const deleteToken = async () => {
   try {
     await Keychain.resetGenericPassword();
-    console.log('Token deleted successfully');
+    console.log('🗝️Token deleted successfully');
   } catch (error: any) {
-    console.log('Error deleting token:', error);
+    console.log('🗝️Error deleting token:', error);
   }
 };

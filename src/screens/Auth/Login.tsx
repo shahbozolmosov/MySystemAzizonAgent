@@ -1,12 +1,16 @@
 import {Button, Input, Text} from '@rneui/themed';
 import {Formik} from 'formik';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup'; // Yup for validation
 import {IAuthLogin, useLoginMutation} from '../../app/services/auth/auth';
 import Container from '../../components/common/Container/Container';
 import {handleError} from '../../utils/errorHandler';
+import { getDBConnection } from '../../database/sqlite';
+import { createUserTable } from '../../database/tables/user.table';
+import { addUser, deleteAllUsers } from '../../database/user';
+import { IUser } from '../../app/services/user/user';
 
 // Yup validation schema
 const validationSchema = Yup.object().shape({
@@ -23,6 +27,13 @@ export default function Login(): JSX.Element {
   // Api
   const [login] = useLoginMutation();
 
+  const handleSaveUserData = useCallback(async (userData:IUser):Promise<'ok'|null> => {
+    const db = await getDBConnection();
+    await createUserTable(db);
+    await deleteAllUsers(db);
+    return await addUser(db, userData);
+  }, []);
+  
   return (
     <Container paddingHorizontal={14}>
       <ScrollView focusable={false}>
@@ -43,6 +54,8 @@ export default function Login(): JSX.Element {
                       text1: 'Muvaffaqiyatli',
                       text2: res.message,
                     });
+
+                    handleSaveUserData(res.data);
                   } else {
                     Toast.show({
                       type: 'error',
@@ -57,8 +70,6 @@ export default function Login(): JSX.Element {
                     text2: res.message,
                   });
                 }
-
-                console.log('login res ->>>>', res);
               } catch (err) {
                 handleError(err);
               }

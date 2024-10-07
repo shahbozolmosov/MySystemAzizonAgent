@@ -33,7 +33,7 @@ import {createOrdersTable} from '../../database/tables/orders.table.ts';
 
 type StarterScreenProps = NativeStackScreenProps<RootStackParamList, 'Starter'>;
 
-function StarterScreen({route, navigation}: StarterScreenProps) {
+function StarterScreen({navigation}: StarterScreenProps) {
   // State
   const [configLoading, setConfigLoading] = useState<boolean>(false);
 

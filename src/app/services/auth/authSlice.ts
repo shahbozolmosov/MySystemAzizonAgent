@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {deleteToken, saveToken} from '../../../utils/tokenSaver';
+import {RootState} from '../../store';
 import {getUser, IUser} from '../user/user';
 import {login} from './auth';
-import {RootState} from '../../store';
-import {deleteToken, saveToken} from '../../../utils/tokenSaver';
 
 type TAuthState = {
   user: null | IUser;
@@ -43,12 +43,13 @@ const slice = createSlice({
       })
       .addMatcher(getUser.matchFulfilled, (state, action) => {
         state.isLoading = false;
-
+        
         if (!action.payload.success || action.payload.data.rol !== 'agent') {
+          console.log('⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️',JSON.stringify(action.payload));
           // Delete the token
-          deleteToken();
+          // deleteToken();
 
-          state.isAuthenticated = false;
+          // state.isAuthenticated = false;
           return;
         }
 

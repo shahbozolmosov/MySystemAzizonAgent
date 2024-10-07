@@ -14,10 +14,10 @@ export const getDBConnection = (): SQLite.SQLiteDatabase => {
       location: 'default',
     },
     () => {
-      console.log('Database opened successfully');
+      console.log('📂 Database opened successfully');
     },
     (error: any) => {
-      console.log('Error opening database', error);
+      console.log('🌋 Error opening database', error);
     },
   );
 };

@@ -37,7 +37,6 @@ const AuthProvider = ({children}: IAuthProviderProps) => {
     setTokenLoading(true);
     const fetchToken = async () => {
       const savedToken = await getToken();
-      // setToken(savedToken);
       dispatch(setToken(savedToken));
       setTokenLoading(false);
     };
@@ -46,10 +45,8 @@ const AuthProvider = ({children}: IAuthProviderProps) => {
   }, [dispatch]);
 
   const {isLoading, isFetching, isError, refetch} = useGetUserQuery(undefined, {
-    skip: !token && isConnected !== null && isConnected,
+    skip: !token || (token && !isConnected),
   });
-
-  console.log('!token && isConnected !== null && isConnected😀😀😀',!token && isConnected !== null && isConnected)
 
   const handleRefetch = useCallback(() => {
     if (token) {

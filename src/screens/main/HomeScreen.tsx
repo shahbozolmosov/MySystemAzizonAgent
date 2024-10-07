@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import Container from '../../components/common/Container/Container';
-import CustomerCardList from '../../components/customer/CustomerCard/CustomerCardList';
-import {getDBConnection} from '../../database/sqlite.ts';
-import {getAllCustomers} from '../../database/customers.ts';
-import {ICustomerCard} from '../../components/customer/CustomerCard/CustomerCard.tsx';
-import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
-import {removeCustomersTable} from '../../database/tables/customers.table.ts';
 import {Text, TouchableOpacity} from 'react-native';
-import {removeProductsTable} from '../../database/tables/product.table.ts';
+import Container from '../../components/common/Container/Container';
+import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
+import {ICustomerCard} from '../../components/customer/CustomerCard/CustomerCard.tsx';
+import CustomerCardList from '../../components/customer/CustomerCard/CustomerCardList';
+import {getAllCustomers} from '../../database/customers.ts';
+import {getDBConnection} from '../../database/sqlite.ts';
+import {removeCustomersTable} from '../../database/tables/customers.table.ts';
 import {removeOrdersTable} from '../../database/tables/orders.table.ts';
+import {removeProductsTable} from '../../database/tables/product.table.ts';
 
 function HomeScreen() {
   // State
