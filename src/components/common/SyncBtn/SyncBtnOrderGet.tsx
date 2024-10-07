@@ -12,12 +12,12 @@ import {getDBConnection} from '../../../database/sqlite';
 import {createCustomersTable} from '../../../database/tables/customers.table';
 import {handleApiResponse} from '../../../utils/handleApiResponse';
 
-type SyncBtnOrderUploadProps = {
+type SyncBtnOrderGetProps = {
   loading: boolean;
   setLoading: (value: boolean) => void;
 };
 
-const SyncBtnOrderUpload = ({loading, setLoading}: SyncBtnOrderUploadProps) => {
+const SyncBtnOrderGet = ({loading, setLoading}: SyncBtnOrderGetProps) => {
   // State
   const [fetchData, setFetchData] = useState(false);
 
@@ -47,7 +47,7 @@ const SyncBtnOrderUpload = ({loading, setLoading}: SyncBtnOrderUploadProps) => {
       Toast.show({
         type: 'success',
         text1: 'Muvaffaqiyatli',
-        text2: 'Qoralamalar muvaffaqiyatli yuborildi',
+        text2: 'Buyurtmalar muvaffaqiyatli qabul qilinadi',
       });
     } catch (err) {
       console.error('Failed to initialize database', err);
@@ -58,7 +58,7 @@ const SyncBtnOrderUpload = ({loading, setLoading}: SyncBtnOrderUploadProps) => {
 
   return (
     <SpeedDial.Action
-      icon={<Icon name={'upload'} size={20} color={'#ffffff'} />}
+      icon={<Icon name={'download'} size={20} color={'#ffffff'} />}
       title="Buyurtmalar"
       onPress={handleSync}
       loading={loading}
@@ -66,4 +66,4 @@ const SyncBtnOrderUpload = ({loading, setLoading}: SyncBtnOrderUploadProps) => {
   );
 };
 
-export default React.memo(SyncBtnOrderUpload);
+export default React.memo(SyncBtnOrderGet);
