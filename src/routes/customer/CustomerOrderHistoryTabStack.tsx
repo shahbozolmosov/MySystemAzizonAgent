@@ -2,20 +2,21 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Feather';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
+import IconButton from '../../components/ui/IconButton/IconButton';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
 import CustomerOrderDelivered from '../../screens/customer/CustomerOrderDeliveredScreen';
+import CustomerOrderDraftScreen from '../../screens/customer/CustomerOrderDraftScreen.tsx';
 import CustomerOrderProcess from '../../screens/customer/CustomerOrderProcessScreen';
-import {CustomerTabStackParamList} from './CustomerStack';
-import IconButton from '../../components/ui/IconButton/IconButton';
-import Icon from 'react-native-vector-icons/Feather';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {TabBarLabelProps} from '../../types/types.ts';
+import {CustomerTabStackParamList} from './CustomerStack';
 
 export type CustomerOrderHistoryTabStackParamList = {
   Process: {customerId: string};
   Delivered: {customerId: string};
-  Canceled: {customerId: string};
+  OrderDraft: {customerId: string};
 };
 
 type CustomerOrderHistoryTabStackProps = NativeStackScreenProps<
@@ -46,8 +47,8 @@ const CustomerOrderHistoryTabStack = ({
         case 'Delivered':
           label = 'Yetkazildi';
           break;
-        case 'Canceled':
-          label = 'Bekor qilindi ';
+        case 'OrderDraft':
+          label = 'Qoralamalar';
           break;
       }
 
@@ -94,6 +95,11 @@ const CustomerOrderHistoryTabStack = ({
         <Tab.Screen
           name="Delivered"
           component={CustomerOrderDelivered}
+          initialParams={{customerId}}
+        />
+        <Tab.Screen
+          name="OrderDraft"
+          component={CustomerOrderDraftScreen}
           initialParams={{customerId}}
         />
       </Tab.Navigator>
