@@ -36,8 +36,13 @@ const SyncBtnProduct = ({loading, setLoading}: SyncBtnProductProps) => {
   }, [productRes]);
 
   const handleSync = useCallback(async () => {
-    setLoading(true);
     setFetchData(true);
+
+    if (!productData.length) {
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const db = await getDBConnection();

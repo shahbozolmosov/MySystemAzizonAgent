@@ -33,9 +33,13 @@ const SyncBtnOrderGet = ({loading, setLoading}: SyncBtnOrderGetProps) => {
   }, [orderRes]);
 
   const handleSync = useCallback(async () => {
-    setLoading(true);
     setFetchData(true);
 
+    if (!orderData.length) {
+      return;
+    }
+
+    setLoading(true);
     try {
       const db = await getDBConnection();
       // Create tables

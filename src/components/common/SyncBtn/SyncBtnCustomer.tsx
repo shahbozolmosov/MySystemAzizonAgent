@@ -33,8 +33,13 @@ const SyncBtnCustomer = ({loading, setLoading}: SyncBtnCustomerProps) => {
   }, [customerRes]);
 
   const handleSyncCustomer = useCallback(async () => {
-    setLoading(true);
     setFetchCustomer(true);
+
+    if (!customerData.length) {
+      return;
+    }
+    
+    setLoading(true);
 
     try {
       const db = await getDBConnection();
