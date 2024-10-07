@@ -42,7 +42,7 @@ const SyncBtnOrderGet = ({loading, setLoading}: SyncBtnOrderGetProps) => {
       // Create tables
       await createCustomersTable(db);
       await deleteAllCustomers(db);
-      addMultipleOrders(db, orderData);
+      await addMultipleOrders(db, orderData);
 
       Toast.show({
         type: 'success',

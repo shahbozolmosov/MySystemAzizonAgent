@@ -38,7 +38,7 @@ const SyncBtnCustomer = ({loading, setLoading}: SyncBtnCustomerProps) => {
       // Create tables
       await createCustomersTable(db);
       await deleteAllCustomers(db);
-      addMultipleCustomers(db, customerData);
+      await addMultipleCustomers(db, customerData);
 
       Toast.show({
         type: 'success',
