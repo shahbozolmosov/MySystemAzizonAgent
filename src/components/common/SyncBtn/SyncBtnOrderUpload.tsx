@@ -4,12 +4,7 @@ import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
 import {ICustomer} from '../../../app/services/customer/customer';
 import {useGetProductAllQuery} from '../../../app/services/product/product';
-import {
-  addMultipleCustomers,
-  deleteAllCustomers,
-} from '../../../database/customers';
 import {getDBConnection} from '../../../database/sqlite';
-import {createCustomersTable} from '../../../database/tables/customers.table';
 import {handleApiResponse} from '../../../utils/handleApiResponse';
 
 type SyncBtnOrderUploadProps = {
@@ -35,19 +30,19 @@ const SyncBtnOrderUpload = ({loading, setLoading}: SyncBtnOrderUploadProps) => {
 
   const handleSync = useCallback(async () => {
     setLoading(true);
-    setFetchData(true);
+    // setFetchData(true);
 
     try {
       const db = await getDBConnection();
       // Create tables
-      await createCustomersTable(db);
-      await deleteAllCustomers(db);
-      addMultipleCustomers(db, productData);
+      // await createCustomersTable(db);
+      // await deleteAllCustomers(db);
+      // addMultipleCustomers(db, productData);
 
       Toast.show({
-        type: 'success',
-        text1: 'Muvaffaqiyatli',
-        text2: 'Qoralamalar muvaffaqiyatli yuborildi',
+        type: 'info',
+        text1: 'Qurish jarayonida',
+        // text2: 'Qoralamalar muvaffaqiyatli yuborildi',
       });
     } catch (err) {
       console.error('Failed to initialize database', err);
