@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 50,
+    paddingHorizontal: 20,
   },
   image: {
     width: 140,
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: {
+    textAlign: 'center',
     fontFamily: 'Roboto-Medium',
     fontWeight: '500',
     fontSize: 18,
