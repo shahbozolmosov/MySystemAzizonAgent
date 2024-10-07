@@ -44,13 +44,15 @@ const SyncBtn = () => {
       />
       {/* Product */}
       <SyncBtnProduct loading={productLoading} setLoading={setProductLoading} />
+      
+      {/* Order Getting */}
+      <SyncBtnOrderGet loading={orderGetting} setLoading={setOrderGetting} />
+
       {/* Order Uploading */}
       <SyncBtnOrderUpload
         loading={orderUploading}
         setLoading={setOrderUploading}
       />
-      {/* Order Getting */}
-      <SyncBtnOrderGet loading={orderGetting} setLoading={setOrderGetting} />
     </SpeedDial>
   );
 };

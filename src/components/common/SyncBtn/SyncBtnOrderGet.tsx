@@ -2,12 +2,12 @@ import {SpeedDial} from '@rneui/themed';
 import React, {useCallback, useMemo, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
-import {ICustomer} from '../../../app/services/customer/customer';
-import {useGetProductAllQuery} from '../../../app/services/product/product';
 import {
-  addMultipleCustomers,
-  deleteAllCustomers,
-} from '../../../database/customers';
+  Order,
+  useGetProductOrderAllQuery,
+} from '../../../app/services/order/order';
+import {deleteAllCustomers} from '../../../database/customers';
+import {addMultipleOrders} from '../../../database/order';
 import {getDBConnection} from '../../../database/sqlite';
 import {createCustomersTable} from '../../../database/tables/customers.table';
 import {handleApiResponse} from '../../../utils/handleApiResponse';
@@ -22,16 +22,16 @@ const SyncBtnOrderGet = ({loading, setLoading}: SyncBtnOrderGetProps) => {
   const [fetchData, setFetchData] = useState(false);
 
   // API
-  const productRes = useGetProductAllQuery(
+  const orderRes = useGetProductOrderAllQuery(
     {},
     {
       skip: !fetchData,
     },
   );
 
-  const productData = useMemo<ICustomer[]>(() => {
-    return handleApiResponse<ICustomer[]>(productRes);
-  }, [productRes]);
+  const orderData = useMemo<Order[]>(() => {
+    return handleApiResponse<Order[]>(orderRes);
+  }, [orderRes]);
 
   const handleSync = useCallback(async () => {
     setLoading(true);
@@ -42,23 +42,23 @@ const SyncBtnOrderGet = ({loading, setLoading}: SyncBtnOrderGetProps) => {
       // Create tables
       await createCustomersTable(db);
       await deleteAllCustomers(db);
-      addMultipleCustomers(db, productData);
+      addMultipleOrders(db, orderData);
 
       Toast.show({
         type: 'success',
         text1: 'Muvaffaqiyatli',
-        text2: 'Buyurtmalar muvaffaqiyatli qabul qilinadi',
+        text2: 'Buyurtmalar muvaffaqiyatli sinxronlandi',
       });
     } catch (err) {
       console.error('Failed to initialize database', err);
     } finally {
       setLoading(false);
     }
-  }, [productData, setLoading]);
+  }, [orderData, setLoading]);
 
   return (
     <SpeedDial.Action
-      icon={<Icon name={'download'} size={20} color={'#ffffff'} />}
+      icon={<Icon name={'inbox'} size={20} color={'#ffffff'} />}
       title="Buyurtmalar"
       onPress={handleSync}
       loading={loading}

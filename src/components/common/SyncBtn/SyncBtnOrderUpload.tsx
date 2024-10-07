@@ -58,8 +58,8 @@ const SyncBtnOrderUpload = ({loading, setLoading}: SyncBtnOrderUploadProps) => {
 
   return (
     <SpeedDial.Action
-      icon={<Icon name={'upload'} size={20} color={'#ffffff'} />}
-      title="Buyurtmalar"
+      icon={<Icon name={'file-text'} size={20} color={'#ffffff'} />}
+      title={`Qoralamalar (${6})`}
       onPress={handleSync}
       loading={loading}
     />
