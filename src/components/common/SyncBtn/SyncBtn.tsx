@@ -44,7 +44,7 @@ const SyncBtn = () => {
       />
       {/* Product */}
       <SyncBtnProduct loading={productLoading} setLoading={setProductLoading} />
-      
+
       {/* Order Getting */}
       <SyncBtnOrderGet loading={orderGetting} setLoading={setOrderGetting} />
 
