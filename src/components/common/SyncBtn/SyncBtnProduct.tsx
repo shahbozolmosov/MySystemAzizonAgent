@@ -2,12 +2,14 @@ import {SpeedDial} from '@rneui/themed';
 import React, {useCallback, useMemo, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
-import {ICustomer} from '../../../app/services/customer/customer';
-import {useGetProductAllQuery} from '../../../app/services/product/product';
 import {
-  addMultipleCustomers,
-  deleteAllCustomers,
-} from '../../../database/customers';
+  Product,
+  useGetProductAllQuery,
+} from '../../../app/services/product/product';
+import {
+  addMultipleProducts,
+  deleteAllProducts,
+} from '../../../database/products';
 import {getDBConnection} from '../../../database/sqlite';
 import {createCustomersTable} from '../../../database/tables/customers.table';
 import {handleApiResponse} from '../../../utils/handleApiResponse';
@@ -29,8 +31,8 @@ const SyncBtnProduct = ({loading, setLoading}: SyncBtnProductProps) => {
     },
   );
 
-  const productData = useMemo<ICustomer[]>(() => {
-    return handleApiResponse<ICustomer[]>(productRes);
+  const productData = useMemo<Product[]>(() => {
+    return handleApiResponse<Product[]>(productRes);
   }, [productRes]);
 
   const handleSync = useCallback(async () => {
@@ -41,8 +43,8 @@ const SyncBtnProduct = ({loading, setLoading}: SyncBtnProductProps) => {
       const db = await getDBConnection();
       // Create tables
       await createCustomersTable(db);
-      await deleteAllCustomers(db);
-      await addMultipleCustomers(db, productData);
+      await deleteAllProducts(db);
+      await addMultipleProducts(db, productData);
 
       Toast.show({
         type: 'success',

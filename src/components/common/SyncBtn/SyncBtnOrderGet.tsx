@@ -6,8 +6,7 @@ import {
   Order,
   useGetProductOrderAllQuery,
 } from '../../../app/services/order/order';
-import {deleteAllCustomers} from '../../../database/customers';
-import {addMultipleOrders} from '../../../database/order';
+import {addMultipleOrders, deleteAllOrders} from '../../../database/order';
 import {getDBConnection} from '../../../database/sqlite';
 import {createCustomersTable} from '../../../database/tables/customers.table';
 import {handleApiResponse} from '../../../utils/handleApiResponse';
@@ -41,7 +40,7 @@ const SyncBtnOrderGet = ({loading, setLoading}: SyncBtnOrderGetProps) => {
       const db = await getDBConnection();
       // Create tables
       await createCustomersTable(db);
-      await deleteAllCustomers(db);
+      await deleteAllOrders(db);
       await addMultipleOrders(db, orderData);
 
       Toast.show({

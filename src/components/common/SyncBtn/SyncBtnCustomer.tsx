@@ -6,10 +6,13 @@ import {
   ICustomer,
   useGetCustomerAllQuery,
 } from '../../../app/services/customer/customer';
+import {
+  addMultipleCustomers,
+  deleteAllCustomers,
+} from '../../../database/customers';
 import {getDBConnection} from '../../../database/sqlite';
 import {createCustomersTable} from '../../../database/tables/customers.table';
 import {handleApiResponse} from '../../../utils/handleApiResponse';
-import {addMultipleCustomers, deleteAllCustomers} from '../../../database/customers';
 
 type SyncBtnCustomerProps = {
   loading: boolean;
