@@ -68,11 +68,6 @@ const CustomerOrderDraftDetailsScreen = ({
       const order = await getOrderDraftById(db, orderId);
 
       if (order) {
-        console.log(
-          '🎉🎉🎉🎉🎉🎉🎉🎉 ~ initDB ~ order:',
-          JSON.stringify(order, null, 2),
-        );
-        // console.log('🎉🎉🎉🎉🎉🎉🎉🎉 ~ initDB ~ order:', order);
         if (
           order.product_list &&
           Array.isArray(order.product_list) &&
@@ -199,9 +194,6 @@ const CustomerOrderDraftDetailsScreen = ({
 
       // DB
       const db = await getDBConnection();
-
-      // await removeOrdersDraftTable(db);
-      // return;
 
       await createOrdersDraftTable(db);
       const res = await updateOrderDraft(db, orderId, data);
