@@ -1,11 +1,10 @@
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 import {Text} from '@rneui/themed';
 import React, {useEffect, useState} from 'react';
+import {OrderAdd} from '../../app/services/order/order.ts';
 import Container from '../../components/common/Container/Container';
-import {IOrderCard} from '../../components/common/OrderCard/OrderCard';
-import OrderCardList from '../../components/common/OrderCard/OrderCardList';
 import NoResult from '../../components/errors/NoResult/NoResult.tsx';
-import {getOrderByCustomerId} from '../../database/order.ts';
+import {getOrderDraftsByClientId} from '../../database/orderDraft.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 
@@ -19,7 +18,7 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
   const {customerId} = route.params;
 
   // State
-  const [orderData, setOrderData] = useState<IOrderCard[]>([]);
+  const [orderData, setOrderData] = useState<OrderAdd[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -27,12 +26,10 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
       setIsLoading(true);
       try {
         const db = await getDBConnection();
-        const orderByCustomerId = await getOrderByCustomerId(db, customerId, [
-          'topshirildisss',
-        ]);
+        const data = await getOrderDraftsByClientId(db, customerId);
 
-        if (orderByCustomerId) {
-          setOrderData(orderByCustomerId);
+        if (data) {
+          setOrderData(data);
         }
       } catch (err) {
         console.error('Failed to initialize database', err);
@@ -54,7 +51,8 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
           desc="Hozircha sizda qoralamalar mavjud emas!"
         />
       ) : (
-        <OrderCardList list={orderData} customerId={customerId} />
+        <Text>{JSON.stringify(orderData, null, 2)}</Text>
+        // <OrderCardList list={orderData} customerId={customerId} />
       )}
     </Container>
   );

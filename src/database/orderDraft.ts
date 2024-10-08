@@ -48,6 +48,29 @@ export const getOrderDraftAll = async (db: SQLite.SQLiteDatabase) => {
   }
 };
 
+export const getOrderDraftsByClientId = async (
+  db: SQLite.SQLiteDatabase,
+  client_id: string,
+) => {
+  const query = `SELECT * FROM OrderDrafts WHERE client_id = ?;`;
+
+  try {
+    const results = await db.executeSql(query, [client_id]); // client_id parametri qo'shildi
+    const orderDrafts = [];
+
+    for (let i = 0; i < results[0].rows.length; i++) {
+      const item = results[0].rows.item(i);
+      item.product_list = JSON.parse(item.product_list); // product_list JSON formatini qayta parse qilish
+      orderDrafts.push(item);
+    }
+
+    return orderDrafts;
+  } catch (error) {
+    console.error('Error fetching OrderDrafts by client_id: ', error);
+    throw error; // Xatoni qaytarish
+  }
+};
+
 export const getOrderDraftById = async (
   db: SQLite.SQLiteDatabase,
   orderId: number,
