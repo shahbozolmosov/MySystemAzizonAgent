@@ -156,9 +156,9 @@ export const removeAllOrderDraft = async (db: SQLite.SQLiteDatabase) => {
 
 export const updateOrderDraft = async (
   db: SQLite.SQLiteDatabase,
-  uid: number,
+  uid: string,
   updates: Partial<OrderDraft>,
-) => {
+): Promise<'ok' | null> => {
   const {client_id, product_list, izoh, izoh_dostavka, alohida, lat, lon} =
     updates;
 
@@ -188,7 +188,9 @@ export const updateOrderDraft = async (
       uid,
     ]);
     console.log('OrderDraft updated successfully');
+    return 'ok';
   } catch (error) {
     console.error('Error updating OrderDraft: ', error);
+    return null;
   }
 };
