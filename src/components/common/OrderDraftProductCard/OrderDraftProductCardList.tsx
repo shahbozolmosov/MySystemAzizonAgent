@@ -1,20 +1,24 @@
 import React, {useCallback} from 'react';
 import {FlatList} from 'react-native';
 import OrderDraftProductCard, {
-  OrderDraftProductCardProps,
+  IOrderDraftProductCard,
 } from './OrderDraftProductCard';
 
 interface OrderDraftProductCardListProps {
-  list: OrderDraftProductCardProps[];
+  list: IOrderDraftProductCard[];
+  orderDraftId: string;
 }
 
-const OrderDraftProductCardList = ({list}: OrderDraftProductCardListProps) => {
+const OrderDraftProductCardList = ({
+  list,
+  orderDraftId,
+}: OrderDraftProductCardListProps) => {
   // Render function for each item
   const renderItem = useCallback(
-    ({item}: {item: OrderDraftProductCardProps}) => (
-      <OrderDraftProductCard {...item} />
+    ({item}: {item: IOrderDraftProductCard}) => (
+      <OrderDraftProductCard {...item} orderDraftId={orderDraftId} />
     ),
-    [],
+    [orderDraftId],
   );
 
   return (
@@ -27,4 +31,3 @@ const OrderDraftProductCardList = ({list}: OrderDraftProductCardListProps) => {
 };
 
 export default React.memo(OrderDraftProductCardList);
-

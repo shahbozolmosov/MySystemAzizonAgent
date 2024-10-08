@@ -1,7 +1,7 @@
 import SQLite from 'react-native-sqlite-storage';
 import {Product} from '../../app/services/product/product';
 
-interface OrderDraftProduct extends Product {
+export interface OrderDraftProduct extends Product {
   inputAmount: string;
 }
 

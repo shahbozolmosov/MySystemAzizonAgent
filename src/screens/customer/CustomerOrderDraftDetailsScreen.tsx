@@ -1,6 +1,12 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {
+  selectedOrderDraftProducts,
+  setOrderDraftProductMultiple,
+} from '../../app/services/order/orderSlice.ts';
+import {useTypesSelector} from '../../app/store.ts';
 import Container from '../../components/common/Container/Container.tsx';
 import OrderDraftProductCardList from '../../components/common/OrderDraftProductCard/OrderDraftProductCardList.tsx';
 import PaymentDetailsCard, {
@@ -12,7 +18,6 @@ import {getOrderDraftById} from '../../database/orderDraft.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
 import {OrderDraft} from '../../database/tables/orderDraft.table.ts';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack.tsx';
-import {OrderDraftProductCardProps} from '../../components/common/OrderDraftProductCard/OrderDraftProductCard.tsx';
 
 type CustomerOrderDraftDetailsScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -27,6 +32,12 @@ const CustomerOrderDraftDetailsScreen = ({
 
   // State
   const [data, setData] = useState<OrderDraft | null>(null);
+  console.log('🚀 ~ data:', data);
+
+  // Dispatch
+  const dispatch = useDispatch();
+
+  const selectedProducts = useTypesSelector(selectedOrderDraftProducts);
 
   useEffect(() => {
     const initDB = async () => {
@@ -34,29 +45,35 @@ const CustomerOrderDraftDetailsScreen = ({
 
       const order = await getOrderDraftById(db, orderId);
 
-      setData(order);
+      if (order) {
+        dispatch(setOrderDraftProductMultiple(order.products_list));
+        setData(order);
+      }
     };
 
     initDB();
-  }, [orderId]);
+  }, [dispatch, orderId]);
 
-  const productData = useMemo<OrderDraftProductCardProps[]>(() => {
-    if (data) {
-      // return data.product_list;
+  const getNumber = useCallback((value: string) => {
+    if (value) {
+      return parseFloat(value);
     }
-    return [];
-  }, [data]);
+    return 0;
+  }, []);
 
   const paymentData = useMemo<PaymentDetailsCardProps>(() => {
     if (data) {
       const productTotalPrice = data.product_list.reduce(
-        (a, b) => a + b.inputMass * b.price,
+        (a, b) => a + getNumber(b.inputAmount) * b.price,
         0,
       );
 
       return {
         productCount: data.product_list.length,
-        productAmount: data.product_list.reduce((a, b) => a + b.inputMass, 0),
+        productAmount: data.product_list.reduce(
+          (a, b) => a + getNumber(b.inputAmount),
+          0,
+        ),
         productTotalPrice,
         tasdiqlangan_chegirma: 0,
         tolov_summa: 0,
@@ -70,7 +87,7 @@ const CustomerOrderDraftDetailsScreen = ({
       tasdiqlangan_chegirma: 0,
       tolov_summa: 0,
     };
-  }, [data]);
+  }, [data, getNumber]);
 
   return !data ? (
     <Container>
@@ -82,8 +99,14 @@ const CustomerOrderDraftDetailsScreen = ({
 
       <ScrollView>
         <View style={styles.container}>
+          {/* Products */}
           <SectionTitle title={'Mahsulotlar'} />
-          <OrderDraftProductCardList list={productData} />
+          <OrderDraftProductCardList
+            list={selectedProducts}
+            orderDraftId={orderId}
+          />
+
+          {/* Payment */}
           <SectionTitle title={"To'lov"} />
           <PaymentDetailsCard {...paymentData} />
         </View>

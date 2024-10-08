@@ -1,5 +1,6 @@
 import SQLite from 'react-native-sqlite-storage';
 import {AddOrderDraft, OrderDraft} from './tables/orderDraft.table';
+import {Product} from '../app/services/product/product';
 
 export const addOrderDraft = async (
   db: SQLite.SQLiteDatabase,
@@ -27,6 +28,42 @@ export const addOrderDraft = async (
     return 'ok';
   } catch (error) {
     console.error('Error adding OrderDraft: ', error);
+    return null;
+  }
+};
+
+export const removeProductFromOrderDraft = async (
+  db: SQLite.SQLiteDatabase,
+  orderId: string,
+  productId: string,
+): Promise<'ok' | null> => {
+  const query = `SELECT product_list FROM OrderDrafts WHERE uid = ?;`;
+
+  try {
+    const results = await db.executeSql(query, [orderId]);
+    if (results[0].rows.length === 0) {
+      console.log('OrderDraft not found');
+      return null;
+    }
+
+    const orderDraft = results[0].rows.item(0);
+    let productList = JSON.parse(orderDraft.product_list);
+
+    productList = productList.filter(
+      (product: Product) => product.id !== productId,
+    );
+
+    const updatedProductList = JSON.stringify(productList);
+
+    const updateQuery = `UPDATE OrderDrafts SET product_list = ?, updated_at = datetime('now') WHERE uid = ?;`;
+    await db.executeSql(updateQuery, [updatedProductList, orderId]);
+
+    console.log(
+      `✅ Product with id ${productId} removed successfully from OrderDraft with id ${orderId}`,
+    );
+    return 'ok';
+  } catch (error) {
+    console.error('❌ Error removing product from OrderDraft: ', error);
     return null;
   }
 };
