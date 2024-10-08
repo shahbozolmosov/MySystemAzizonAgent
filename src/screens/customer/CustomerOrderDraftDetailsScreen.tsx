@@ -1,8 +1,9 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {
+  clearOrderProduct,
   selectedOrderDraftProducts,
   setOrderDraftProductMultiple,
 } from '../../app/services/order/orderSlice.ts';
@@ -34,7 +35,6 @@ const CustomerOrderDraftDetailsScreen = ({
 
   // State
   const [data, setData] = useState<OrderDraft | null>(null);
-  console.log('🚀 ~ data:', data);
 
   // Dispatch
   const dispatch = useDispatch();
@@ -61,6 +61,36 @@ const CustomerOrderDraftDetailsScreen = ({
 
     initDB();
   }, [dispatch, orderId]);
+
+  useEffect(() => {
+    const beforeRemoveListener = navigation.addListener('beforeRemove', e => {
+      e.preventDefault();
+
+      Alert.alert(
+        'Diqqat!',
+        "Agar orqaga qaytadigan bo'lsangiz ma'lumotlar saqlanmaydi?",
+        [
+          {
+            text: 'Bekor qilish',
+            style: 'cancel',
+            onPress: () => {},
+          },
+          {
+            text: 'Ha',
+            style: 'destructive',
+
+            onPress: () => {
+              dispatch(clearOrderProduct());
+              navigation.dispatch(e.data.action);
+            },
+          },
+        ],
+        {cancelable: true},
+      );
+    });
+    return () =>
+      navigation.removeListener('beforeRemove', beforeRemoveListener);
+  }, [dispatch, navigation]);
 
   const getNumber = useCallback((value: string) => {
     if (value) {
