@@ -5,6 +5,10 @@ import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {useDispatch} from 'react-redux';
 import {
+  OrderAdd,
+  useAddProductOrderMutation,
+} from '../../app/services/order/order.ts';
+import {
   clearOrderProduct,
   selectedOrderDraftProducts,
   setOrderDraftProductMultiple,
@@ -20,6 +24,7 @@ import CustomerHeaderOperation from '../../components/customer/CustomerOperation
 import SectionTitle from '../../components/ui/SectionTitle/SectionTitle.tsx';
 import {
   getOrderDraftById,
+  removeOrderDraftById,
   updateOrderDraft,
 } from '../../database/orderDraft.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
@@ -30,11 +35,6 @@ import {
 } from '../../database/tables/orderDraft.table.ts';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack.tsx';
 import {handleError} from '../../utils/errorHandler.ts';
-import {getLocation} from '../../utils/getLocation.ts';
-import {
-  OrderAdd,
-  useAddProductOrderMutation,
-} from '../../app/services/order/order.ts';
 
 type CustomerOrderDraftDetailsScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -68,7 +68,10 @@ const CustomerOrderDraftDetailsScreen = ({
       const order = await getOrderDraftById(db, orderId);
 
       if (order) {
-        console.log("🎉🎉🎉🎉🎉🎉🎉🎉 ~ initDB ~ order:", JSON.stringify(order, null,2))
+        console.log(
+          '🎉🎉🎉🎉🎉🎉🎉🎉 ~ initDB ~ order:',
+          JSON.stringify(order, null, 2),
+        );
         // console.log('🎉🎉🎉🎉🎉🎉🎉🎉 ~ initDB ~ order:', order);
         if (
           order.product_list &&
@@ -201,7 +204,6 @@ const CustomerOrderDraftDetailsScreen = ({
       // return;
 
       await createOrdersDraftTable(db);
-      console.log('🚀 ~ handleSaveDraft ~ orderId, data:', orderId, data);
       const res = await updateOrderDraft(db, orderId, data);
 
       if (res === 'ok' || false) {
@@ -212,7 +214,7 @@ const CustomerOrderDraftDetailsScreen = ({
 
         dispatch(clearOrderProduct());
 
-        // navigation.goBack();
+        navigation.goBack();
       } else {
         Toast.show({
           type: 'error',
@@ -225,7 +227,15 @@ const CustomerOrderDraftDetailsScreen = ({
     } finally {
       setIsLoadingDraft(false);
     }
-  }, [customerId, dispatch, getNumber, orderDbData, orderId, selectedProducts]);
+  }, [
+    customerId,
+    dispatch,
+    getNumber,
+    navigation,
+    orderDbData,
+    orderId,
+    selectedProducts,
+  ]);
 
   // Handle submit
   const handleSubmit = useCallback(async () => {
@@ -254,17 +264,6 @@ const CustomerOrderDraftDetailsScreen = ({
       return;
     }
 
-    const location = await getLocation();
-    if (!location) {
-      Toast.show({
-        type: 'error',
-        text1: 'Buyurtma bajarilmadi',
-        text2: 'Buyurtma bajarilishi uchun sizning manzilingiz olinishi kerak.',
-      });
-      setIsLoading(false);
-      return;
-    }
-
     try {
       const data: OrderAdd = {
         client_id: customerId,
@@ -277,9 +276,9 @@ const CustomerOrderDraftDetailsScreen = ({
         })),
         izoh: orderDbData.izoh,
         izoh_dostavka: orderDbData.izoh_dostavka,
-        alohida: orderDbData.alohida,
-        lat: location.latitude,
-        lon: location.longitude,
+        alohida: Boolean(orderDbData.alohida),
+        lat: orderDbData.lat,
+        lon: orderDbData.lon,
       };
 
       const res = await addData(data).unwrap();
@@ -289,6 +288,9 @@ const CustomerOrderDraftDetailsScreen = ({
           type: 'success',
           text1: res.message,
         });
+
+        const db = await getDBConnection();
+        await removeOrderDraftById(db, orderId);
 
         navigation.goBack();
       } else {
@@ -308,6 +310,7 @@ const CustomerOrderDraftDetailsScreen = ({
     getNumber,
     navigation,
     orderDbData,
+    orderId,
     selectedProducts,
   ]);
 

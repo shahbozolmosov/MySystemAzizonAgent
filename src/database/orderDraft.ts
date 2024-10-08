@@ -131,7 +131,7 @@ export const getOrderDraftById = async (
 
 export const removeOrderDraftById = async (
   db: SQLite.SQLiteDatabase,
-  orderId: number,
+  orderId: string,
 ) => {
   const query = `DELETE FROM OrderDrafts WHERE uid = ?;`;
 
