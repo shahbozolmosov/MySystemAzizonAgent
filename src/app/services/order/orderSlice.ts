@@ -46,7 +46,7 @@ const slice = createSlice({
     },
     // Clear
     clearOrderProduct: state => {
-      state.products = [];
+      Object.assign(state, initialState);
     },
   },
   extraReducers: builder => {

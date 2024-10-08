@@ -1,18 +1,15 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Button, Input} from '@rneui/themed';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import {
-  ICustomer,
-  useGetCustomerByIdQuery,
-} from '../../app/services/customer/customer';
+import {ICustomer} from '../../app/services/customer/customer';
 import {
   OrderAdd,
   useAddProductOrderMutation,
 } from '../../app/services/order/order';
-import {selectedOrderProducts} from '../../app/services/order/orderSlice';
+import {clearOrderProduct, selectedOrderProducts} from '../../app/services/order/orderSlice';
 import {useTypesSelector} from '../../app/store';
 import BasketProductCardList from '../../components/common/BasketProductCard/BasketProductCardList';
 import Container from '../../components/common/Container/Container';
@@ -23,10 +20,14 @@ import TotalCard, {
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import EmptyBasket from '../../components/errors/EmptyBasket/EmptyBasket';
 import IconButton from '../../components/ui/IconButton/IconButton';
+import {getCustomerById} from '../../database/customers';
+import {addOrderDraft} from '../../database/orderDraft';
+import {getDBConnection} from '../../database/sqlite';
+import {createOrdersDraftTable} from '../../database/tables/orderDraft.table';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack';
 import {handleError} from '../../utils/errorHandler';
 import {getLocation} from '../../utils/getLocation';
-import {handleApiResponseObj} from '../../utils/handleApiResponseObj';
+import { useDispatch } from 'react-redux';
 
 type CustomerOrderBasketScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -41,22 +42,34 @@ const CustomerOrderBasketScreen = ({
   const {customerId} = route.params;
 
   // State
+  const [customerData, setCustomerData] = useState<ICustomer | null>(null);
+
+  const [isLoadingDraft, setIsLoadingDraft] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [desc, setDesc] = useState('');
   const [descSupplier, setDescSupplier] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
 
+  // Dispatch
+  const dispatch = useDispatch();
+
   // Store
   const selectedProducts = useTypesSelector(selectedOrderProducts);
 
   // API
-  const customerRes = useGetCustomerByIdQuery(customerId);
   const [addData] = useAddProductOrderMutation();
 
-  // Customer
-  const customerData = useMemo<ICustomer | null>(() => {
-    return handleApiResponseObj<ICustomer>(customerRes);
-  }, [customerRes]);
+  useEffect(() => {
+    const initDB = async () => {
+      const db = await getDBConnection();
+      const customer = await getCustomerById(db, customerId);
+      if (customer) {
+        setCustomerData(customer);
+      }
+    };
+
+    initDB();
+  }, [customerId]);
 
   const getNumber = useCallback((value: string) => {
     if (value) {
@@ -112,6 +125,87 @@ const CustomerOrderBasketScreen = ({
   const toggleSwitch = useCallback(() => {
     setIsEnabled(previousState => !previousState);
   }, []);
+
+  // Handle submit
+  const handleSaveDraft = useCallback(async () => {
+    setIsLoadingDraft(true);
+
+    if (
+      selectedProducts.find(
+        item => !item.inputAmount || getNumber(item.inputAmount) < 0,
+      )
+    ) {
+      Toast.show({
+        type: 'error',
+        text1: 'Buyurtma bajarilmadi',
+        text2: "Mahsulot miqdori to'g'ri kiritilmagan",
+      });
+      setIsLoadingDraft(false);
+      return;
+    }
+
+    const location = await getLocation();
+    if (!location) {
+      Toast.show({
+        type: 'error',
+        text1: 'Buyurtma bajarilmadi',
+        text2: 'Buyurtma bajarilishi uchun sizning manzilingiz olinishi kerak.',
+      });
+      setIsLoadingDraft(false);
+      return;
+    }
+
+    try {
+      const data: OrderAdd = {
+        client_id: customerId,
+        product_list: selectedProducts.map(item => ({
+          product_id: item.id,
+          aritcle: item.article,
+          massa: getNumber(item.inputAmount) || 0,
+          price: item.price,
+          price_chegirma: item.real_price,
+        })),
+        izoh: desc,
+        izoh_dostavka: descSupplier,
+        alohida: isEnabled,
+        lat: location.latitude,
+        lon: location.longitude,
+      };
+
+      // DB
+      const db = await getDBConnection();
+      // await removeUserTable(db);
+      // await removeCustomersTable(db);
+      // await removeProductsTable(db);
+      // await removeOrdersTable(db);
+      // await removeOrdersDraftTable(db);
+      // return;
+
+      await createOrdersDraftTable(db);
+      const res = await addOrderDraft(db, data);
+
+      if (res === 'ok' || false) {
+        Toast.show({
+          type: 'success',
+          text1: 'Qoralamaga muvaffaqiyatli saqlandi',
+        });
+
+        dispatch(clearOrderProduct());
+        
+        navigation.goBack();
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: "Qoralamaga saqlab bo'lmadi",
+          text2: "Qaytadan urinib ko'ring",
+        });
+      }
+    } catch (err) {
+      console.log('❌ Order draft error', err);
+    } finally {
+      setIsLoadingDraft(false);
+    }
+  }, [customerId, desc, descSupplier, dispatch, getNumber, isEnabled, navigation, selectedProducts]);
 
   // Handle submit
   const handleSubmit = useCallback(async () => {
@@ -237,14 +331,18 @@ const CustomerOrderBasketScreen = ({
           <View style={styles.btnWrapper}>
             <Button
               color={'error'}
-              title={'Qoralamaga saqlash'}
+              title={`Qoralamaga saqlash (${selectedProducts.length})`}
               type="outline"
+              onPress={handleSaveDraft}
+              loading={isLoadingDraft}
+              disabled={isLoading}
             />
             <Button
               color={'secondary'}
               title={`Buyurtmani yuborish (${selectedProducts.length})`}
               onPress={handleSubmit}
               loading={isLoading}
+              disabled={isLoadingDraft}
             />
           </View>
         </>
