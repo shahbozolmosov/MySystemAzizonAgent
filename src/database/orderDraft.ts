@@ -1,10 +1,9 @@
 import SQLite from 'react-native-sqlite-storage';
-import {OrderAdd} from '../app/services/order/order';
-import {OrderDraft} from './tables/orderDraft.table';
+import {AddOrderDraft, OrderDraft} from './tables/orderDraft.table';
 
 export const addOrderDraft = async (
   db: SQLite.SQLiteDatabase,
-  order: OrderAdd,
+  order: AddOrderDraft,
 ): Promise<'ok' | null> => {
   const {client_id, product_list, izoh, izoh_dostavka, alohida, lat, lon} =
     order;

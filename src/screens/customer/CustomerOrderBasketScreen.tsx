@@ -27,7 +27,10 @@ import IconButton from '../../components/ui/IconButton/IconButton';
 import {getCustomerById} from '../../database/customers';
 import {addOrderDraft} from '../../database/orderDraft';
 import {getDBConnection} from '../../database/sqlite';
-import {createOrdersDraftTable} from '../../database/tables/orderDraft.table';
+import {
+  AddOrderDraft,
+  createOrdersDraftTable,
+} from '../../database/tables/orderDraft.table';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack';
 import {handleError} from '../../utils/errorHandler';
 import {getLocation} from '../../utils/getLocation';
@@ -109,7 +112,7 @@ const CustomerOrderBasketScreen = ({
 
     const discountVal = realPrice - discountPrice;
 
-    const percent = (discountVal / realPrice) * 100;
+    const percent = realPrice > 0 ? (discountVal / realPrice) * 100 : 0;
 
     return {
       amount: selectedProducts.length,
@@ -159,15 +162,9 @@ const CustomerOrderBasketScreen = ({
     }
 
     try {
-      const data: OrderAdd = {
+      const data: AddOrderDraft = {
         client_id: customerId,
-        product_list: selectedProducts.map(item => ({
-          product_id: item.id,
-          aritcle: item.article,
-          massa: getNumber(item.inputAmount) || 0,
-          price: item.price,
-          price_chegirma: item.real_price,
-        })),
+        product_list: selectedProducts,
         izoh: desc,
         izoh_dostavka: descSupplier,
         alohida: isEnabled,
@@ -177,10 +174,7 @@ const CustomerOrderBasketScreen = ({
 
       // DB
       const db = await getDBConnection();
-      // await removeUserTable(db);
-      // await removeCustomersTable(db);
-      // await removeProductsTable(db);
-      // await removeOrdersTable(db);
+
       // await removeOrdersDraftTable(db);
       // return;
 

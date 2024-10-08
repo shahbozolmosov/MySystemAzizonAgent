@@ -2,7 +2,7 @@ import SQLite from 'react-native-sqlite-storage';
 import {Product} from '../../app/services/product/product';
 
 interface OrderDraftProduct extends Product {
-  inputMass: number;
+  inputAmount: string;
 }
 
 export interface OrderDraft {
@@ -16,6 +16,16 @@ export interface OrderDraft {
   lon: number;
   created_at: string;
   updated_at: string;
+}
+
+export interface AddOrderDraft {
+  client_id: string;
+  product_list: OrderDraftProduct[];
+  izoh: string;
+  izoh_dostavka: string;
+  alohida: boolean;
+  lat: number;
+  lon: number;
 }
 
 export const createOrdersDraftTable = async (db: SQLite.SQLiteDatabase) => {
