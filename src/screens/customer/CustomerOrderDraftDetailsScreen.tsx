@@ -50,13 +50,13 @@ const CustomerOrderDraftDetailsScreen = ({
   const paymentData = useMemo<PaymentDetailsCardProps>(() => {
     if (data) {
       const productTotalPrice = data.product_list.reduce(
-        (a, b) => a + b.massa * b.price,
+        (a, b) => a + b.inputMass * b.price,
         0,
       );
 
       return {
         productCount: data.product_list.length,
-        productAmount: data.product_list.reduce((a, b) => a + b.massa, 0),
+        productAmount: data.product_list.reduce((a, b) => a + b.inputMass, 0),
         productTotalPrice,
         tasdiqlangan_chegirma: 0,
         tolov_summa: 0,

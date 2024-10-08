@@ -1,8 +1,19 @@
 import SQLite from 'react-native-sqlite-storage';
-import { OrderAdd } from '../../app/services/order/order';
+import {Product} from '../../app/services/product/product';
 
-export interface OrderDraft  extends OrderAdd {
+interface OrderDraftProduct extends Product {
+  inputMass: number;
+}
+
+export interface OrderDraft {
   uid: number;
+  client_id: string;
+  product_list: OrderDraftProduct[];
+  izoh: string;
+  izoh_dostavka: string;
+  alohida: boolean;
+  lat: number;
+  lon: number;
   created_at: string;
   updated_at: string;
 }
@@ -30,7 +41,6 @@ export const createOrdersDraftTable = async (db: SQLite.SQLiteDatabase) => {
     console.error('Error creating OrderDrafts table: ', error);
   }
 };
-
 
 export const removeOrdersDraftTable = async (db: SQLite.SQLiteDatabase) => {
   const query = `DROP TABLE IF EXISTS OrderDrafts;`;
