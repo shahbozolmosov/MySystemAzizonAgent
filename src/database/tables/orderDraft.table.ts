@@ -1,7 +1,7 @@
 import SQLite from 'react-native-sqlite-storage';
 import { OrderAdd } from '../../app/services/order/order';
 
-export interface IOrderDraft  extends OrderAdd {
+export interface OrderDraft  extends OrderAdd {
   uid: number;
   created_at: string;
   updated_at: string;

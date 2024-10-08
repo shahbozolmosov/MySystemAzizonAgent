@@ -1,17 +1,18 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useGetProductByIdQuery} from '../../app/services/order/order.ts';
 import Container from '../../components/common/Container/Container.tsx';
-import {IOrderCard} from '../../components/common/OrderCard/OrderCard.tsx';
+import OrderDraftProductCardList from '../../components/common/OrderDraftProductCard/OrderDraftProductCardList.tsx';
 import PaymentDetailsCard, {
   PaymentDetailsCardProps,
 } from '../../components/common/PaymentDetailsCard/PaymentDetailsCard.tsx';
-import ProductCardOfDetailsList from '../../components/common/ProductCardOfDetails/ProductCardOfDetailsList.tsx';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation.tsx';
 import SectionTitle from '../../components/ui/SectionTitle/SectionTitle.tsx';
+import {getOrderDraftById} from '../../database/orderDraft.ts';
+import {getDBConnection} from '../../database/sqlite.ts';
+import {OrderDraft} from '../../database/tables/orderDraft.table.ts';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack.tsx';
-import {handleApiResponseObj} from '../../utils/handleApiResponseObj.ts';
+import {OrderDraftProductCardProps} from '../../components/common/OrderDraftProductCard/OrderDraftProductCard.tsx';
 
 type CustomerOrderDraftDetailsScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -24,22 +25,41 @@ const CustomerOrderDraftDetailsScreen = ({
   // Route
   const {orderId} = route.params;
 
-  // API
-  const orderRes = useGetProductByIdQuery(orderId);
+  // State
+  const [data, setData] = useState<OrderDraft | null>(null);
 
-  // Order data
-  const data = useMemo<IOrderCard | null>(() => {
-    return handleApiResponseObj<IOrderCard>(orderRes);
-  }, [orderRes]);
+  useEffect(() => {
+    const initDB = async () => {
+      const db = await getDBConnection();
+
+      const order = await getOrderDraftById(db, orderId);
+
+      setData(order);
+    };
+
+    initDB();
+  }, [orderId]);
+
+  const productData = useMemo<OrderDraftProductCardProps[]>(() => {
+    if (data) {
+      // return data.product_list;
+    }
+    return [];
+  }, [data]);
 
   const paymentData = useMemo<PaymentDetailsCardProps>(() => {
     if (data) {
+      const productTotalPrice = data.product_list.reduce(
+        (a, b) => a + b.massa * b.price,
+        0,
+      );
+
       return {
-        productCount: data.mahsulot_soni,
-        productAmount: data.buyurtma_massa,
-        productTotalPrice: data.tasdiqlangan_summa,
-        tasdiqlangan_chegirma: data.tasdiqlangan_chegirma,
-        tolov_summa: data.tolov_summa,
+        productCount: data.product_list.length,
+        productAmount: data.product_list.reduce((a, b) => a + b.massa, 0),
+        productTotalPrice,
+        tasdiqlangan_chegirma: 0,
+        tolov_summa: 0,
       };
     }
 
@@ -51,7 +71,6 @@ const CustomerOrderDraftDetailsScreen = ({
       tolov_summa: 0,
     };
   }, [data]);
-  console.log('paymentData-0000000000', paymentData);
 
   return !data ? (
     <Container>
@@ -59,12 +78,12 @@ const CustomerOrderDraftDetailsScreen = ({
     </Container>
   ) : (
     <Container>
-      <CustomerHeaderOperation title={`#${data.id}`} />
+      <CustomerHeaderOperation title={`#${data.uid} - qoralama`} />
 
       <ScrollView>
         <View style={styles.container}>
           <SectionTitle title={'Mahsulotlar'} />
-          <ProductCardOfDetailsList list={data.product_list} />
+          <OrderDraftProductCardList list={productData} />
           <SectionTitle title={"To'lov"} />
           <PaymentDetailsCard {...paymentData} />
         </View>

@@ -3,9 +3,9 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {ICustomer} from '../../../app/services/customer/customer';
 import {getCustomerById} from '../../../database/customers';
 import {getDBConnection} from '../../../database/sqlite';
-import {IOrderDraft} from '../../../database/tables/orderDraft.table';
+import {OrderDraft} from '../../../database/tables/orderDraft.table';
 
-export interface IOrderDraftCard extends IOrderDraft {}
+export interface IOrderDraftCard extends OrderDraft {}
 
 export interface OrderCardProps extends IOrderDraftCard {
   onNavigate?: (orderId: string) => void;

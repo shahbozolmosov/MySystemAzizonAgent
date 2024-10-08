@@ -1,6 +1,6 @@
 import SQLite from 'react-native-sqlite-storage';
 import {OrderAdd} from '../app/services/order/order';
-import {IOrderDraft} from './tables/orderDraft.table';
+import {OrderDraft} from './tables/orderDraft.table';
 
 export const addOrderDraft = async (
   db: SQLite.SQLiteDatabase,
@@ -74,7 +74,7 @@ export const getOrderDraftsByClientId = async (
 
 export const getOrderDraftById = async (
   db: SQLite.SQLiteDatabase,
-  orderId: number,
+  orderId: string,
 ) => {
   const query = `SELECT * FROM OrderDrafts WHERE uid = ?;`;
 
@@ -121,7 +121,7 @@ export const removeAllOrderDraft = async (db: SQLite.SQLiteDatabase) => {
 export const updateOrderDraft = async (
   db: SQLite.SQLiteDatabase,
   uid: number,
-  updates: Partial<IOrderDraft>,
+  updates: Partial<OrderDraft>,
 ) => {
   const {client_id, product_list, izoh, izoh_dostavka, alohida, lat, lon} =
     updates;
