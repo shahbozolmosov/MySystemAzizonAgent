@@ -30,6 +30,8 @@ import {
 import {addMultipleProducts, getAllProducts} from '../../database/products.ts';
 import {addMultipleOrders, getAllOrders} from '../../database/order.ts';
 import {createOrdersTable} from '../../database/tables/orders.table.ts';
+import { createUserTable } from '../../database/tables/user.table.ts';
+import { createOrdersDraftTable } from '../../database/tables/orderDraft.table.ts';
 
 type StarterScreenProps = NativeStackScreenProps<RootStackParamList, 'Starter'>;
 
@@ -73,9 +75,11 @@ function StarterScreen({navigation}: StarterScreenProps) {
         try {
           const db = await getDBConnection();
           // Create tables
+          await createUserTable(db);
           await createCustomersTable(db);
           await createProductsTable(db);
           await createOrdersTable(db);
+          await createOrdersDraftTable(db);
 
           const allCustomersDB = await getAllCustomers(db);
           const allProductsDB = await getAllProducts(db);

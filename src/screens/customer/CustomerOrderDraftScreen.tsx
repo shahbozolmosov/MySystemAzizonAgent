@@ -1,8 +1,9 @@
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 import {Text} from '@rneui/themed';
 import React, {useEffect, useState} from 'react';
-import {OrderAdd} from '../../app/services/order/order.ts';
 import Container from '../../components/common/Container/Container';
+import {IOrderDraftCard} from '../../components/common/OrderDraftCard/OrderDraftCard.tsx';
+import OrderDraftCardList from '../../components/common/OrderDraftCard/OrderDraftCardList.tsx';
 import NoResult from '../../components/errors/NoResult/NoResult.tsx';
 import {getOrderDraftsByClientId} from '../../database/orderDraft.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
@@ -18,7 +19,7 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
   const {customerId} = route.params;
 
   // State
-  const [orderData, setOrderData] = useState<OrderAdd[]>([]);
+  const [orderData, setOrderData] = useState<IOrderDraftCard[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -51,8 +52,7 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
           desc="Hozircha sizda qoralamalar mavjud emas!"
         />
       ) : (
-        <Text>{JSON.stringify(orderData, null, 2)}</Text>
-        // <OrderCardList list={orderData} customerId={customerId} />
+        <OrderDraftCardList list={orderData} customerId={customerId} />
       )}
     </Container>
   );

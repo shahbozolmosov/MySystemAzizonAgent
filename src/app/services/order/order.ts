@@ -55,7 +55,7 @@ interface OrderGetByIdRes extends IApiRes {
 }
 
 // post
-interface OrderAddProduct {
+export interface OrderAddProduct {
   product_id: string;
   aritcle: string;
   massa: number;

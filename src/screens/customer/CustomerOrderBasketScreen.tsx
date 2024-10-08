@@ -4,12 +4,16 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
+import {useDispatch} from 'react-redux';
 import {ICustomer} from '../../app/services/customer/customer';
 import {
   OrderAdd,
   useAddProductOrderMutation,
 } from '../../app/services/order/order';
-import {clearOrderProduct, selectedOrderProducts} from '../../app/services/order/orderSlice';
+import {
+  clearOrderProduct,
+  selectedOrderProducts,
+} from '../../app/services/order/orderSlice';
 import {useTypesSelector} from '../../app/store';
 import BasketProductCardList from '../../components/common/BasketProductCard/BasketProductCardList';
 import Container from '../../components/common/Container/Container';
@@ -27,7 +31,6 @@ import {createOrdersDraftTable} from '../../database/tables/orderDraft.table';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack';
 import {handleError} from '../../utils/errorHandler';
 import {getLocation} from '../../utils/getLocation';
-import { useDispatch } from 'react-redux';
 
 type CustomerOrderBasketScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -191,7 +194,7 @@ const CustomerOrderBasketScreen = ({
         });
 
         dispatch(clearOrderProduct());
-        
+
         navigation.goBack();
       } else {
         Toast.show({
@@ -205,7 +208,16 @@ const CustomerOrderBasketScreen = ({
     } finally {
       setIsLoadingDraft(false);
     }
-  }, [customerId, desc, descSupplier, dispatch, getNumber, isEnabled, navigation, selectedProducts]);
+  }, [
+    customerId,
+    desc,
+    descSupplier,
+    dispatch,
+    getNumber,
+    isEnabled,
+    navigation,
+    selectedProducts,
+  ]);
 
   // Handle submit
   const handleSubmit = useCallback(async () => {

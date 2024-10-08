@@ -1,5 +1,6 @@
 import SQLite from 'react-native-sqlite-storage';
 import {OrderAdd} from '../app/services/order/order';
+import {IOrderDraft} from './tables/orderDraft.table';
 
 export const addOrderDraft = async (
   db: SQLite.SQLiteDatabase,
@@ -9,8 +10,8 @@ export const addOrderDraft = async (
     order;
 
   const query = `
-    INSERT INTO OrderDrafts (client_id, product_list, izoh, izoh_dostavka, alohida, lat, lon) 
-    VALUES (?, ?, ?, ?, ?, ?, ?);
+    INSERT INTO OrderDrafts (client_id, product_list, izoh, izoh_dostavka, alohida, lat, lon, created_at, updated_at) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'));
   `;
 
   try {
@@ -55,19 +56,19 @@ export const getOrderDraftsByClientId = async (
   const query = `SELECT * FROM OrderDrafts WHERE client_id = ?;`;
 
   try {
-    const results = await db.executeSql(query, [client_id]); // client_id parametri qo'shildi
+    const results = await db.executeSql(query, [client_id]);
     const orderDrafts = [];
 
     for (let i = 0; i < results[0].rows.length; i++) {
       const item = results[0].rows.item(i);
-      item.product_list = JSON.parse(item.product_list); // product_list JSON formatini qayta parse qilish
+      item.product_list = JSON.parse(item.product_list);
       orderDrafts.push(item);
     }
 
     return orderDrafts;
   } catch (error) {
     console.error('Error fetching OrderDrafts by client_id: ', error);
-    throw error; // Xatoni qaytarish
+    throw error;
   }
 };
 
@@ -114,5 +115,44 @@ export const removeAllOrderDraft = async (db: SQLite.SQLiteDatabase) => {
     console.log('All OrderDrafts deleted successfully');
   } catch (error) {
     console.log('Error deleting all OrderDrafts: ', error);
+  }
+};
+
+export const updateOrderDraft = async (
+  db: SQLite.SQLiteDatabase,
+  uid: number,
+  updates: Partial<IOrderDraft>,
+) => {
+  const {client_id, product_list, izoh, izoh_dostavka, alohida, lat, lon} =
+    updates;
+
+  const query = `
+    UPDATE OrderDrafts
+    SET
+      client_id = COALESCE(?, client_id),
+      product_list = COALESCE(?, product_list),
+      izoh = COALESCE(?, izoh),
+      izoh_dostavka = COALESCE(?, izoh_dostavka),
+      alohida = COALESCE(?, alohida),
+      lat = COALESCE(?, lat),
+      lon = COALESCE(?, lon),
+      updated_at = datetime('now') -- Yozuv yangilangan vaqti
+    WHERE uid = ?;
+  `;
+
+  try {
+    await db.executeSql(query, [
+      client_id,
+      JSON.stringify(product_list),
+      izoh,
+      izoh_dostavka,
+      alohida ? 1 : 0,
+      lat,
+      lon,
+      uid,
+    ]);
+    console.log('OrderDraft updated successfully');
+  } catch (error) {
+    console.error('Error updating OrderDraft: ', error);
   }
 };

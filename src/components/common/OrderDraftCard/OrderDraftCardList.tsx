@@ -3,17 +3,17 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
 import {FlatList} from 'react-native';
 import {CustomerTabStackParamList} from '../../../routes/customer/CustomerStack.tsx';
-import OrderCard, {IOrderCard} from './OrderCard';
+import OrderDraftCard, {IOrderDraftCard} from './OrderDraftCard.tsx';
 
-type OrderCardList = {
-  list: IOrderCard[];
+type OrderDraftCardListProps = {
+  list: IOrderDraftCard[];
   customerId: string;
 };
 
 type CustomerCardListNavigationProp =
   NativeStackNavigationProp<CustomerTabStackParamList>;
 
-const OrderCardList = ({list, customerId}: OrderCardList) => {
+const OrderDraftCardList = ({list, customerId}: OrderDraftCardListProps) => {
   const navigation = useNavigation<CustomerCardListNavigationProp>();
 
   const handleNavigate = useCallback(
@@ -24,8 +24,8 @@ const OrderCardList = ({list, customerId}: OrderCardList) => {
   );
 
   const renderItem = useCallback(
-    ({item}: {item: IOrderCard}) => {
-      return <OrderCard {...item} onNavigate={handleNavigate} />;
+    ({item}: {item: IOrderDraftCard}) => {
+      return <OrderDraftCard {...item} onNavigate={handleNavigate} />;
     },
     [handleNavigate],
   );
@@ -34,9 +34,9 @@ const OrderCardList = ({list, customerId}: OrderCardList) => {
     <FlatList
       data={list}
       renderItem={renderItem}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.uid.toString()}
     />
   );
 };
 
-export default React.memo(OrderCardList);
+export default React.memo(OrderDraftCardList);

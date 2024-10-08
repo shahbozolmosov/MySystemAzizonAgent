@@ -1,4 +1,11 @@
 import SQLite from 'react-native-sqlite-storage';
+import { OrderAdd } from '../../app/services/order/order';
+
+export interface IOrderDraft  extends OrderAdd {
+  uid: number;
+  created_at: string;
+  updated_at: string;
+}
 
 export const createOrdersDraftTable = async (db: SQLite.SQLiteDatabase) => {
   const query = `
@@ -10,7 +17,9 @@ export const createOrdersDraftTable = async (db: SQLite.SQLiteDatabase) => {
       izoh_dostavka TEXT,
       alohida BOOLEAN NOT NULL DEFAULT FALSE,
       lat REAL,
-      lon REAL
+      lon REAL,
+      created_at TEXT DEFAULT (datetime('now')), -- Yozuv yaratish vaqti
+      updated_at TEXT DEFAULT (datetime('now'))  -- Yozuvni yangilash vaqti
     );
   `;
 
@@ -21,6 +30,7 @@ export const createOrdersDraftTable = async (db: SQLite.SQLiteDatabase) => {
     console.error('Error creating OrderDrafts table: ', error);
   }
 };
+
 
 export const removeOrdersDraftTable = async (db: SQLite.SQLiteDatabase) => {
   const query = `DROP TABLE IF EXISTS OrderDrafts;`;
