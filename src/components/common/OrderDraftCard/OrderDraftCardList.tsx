@@ -18,7 +18,7 @@ const OrderDraftCardList = ({list, customerId}: OrderDraftCardListProps) => {
 
   const handleNavigate = useCallback(
     (orderId: string) => {
-      navigation.push('CustomerOrderDetails', {customerId, orderId});
+      navigation.push('CustomerOrderDraftDetails', {customerId, orderId});
     },
     [customerId, navigation],
   );

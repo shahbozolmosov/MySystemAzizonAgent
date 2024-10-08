@@ -5,9 +5,10 @@ import {
 import React from 'react';
 import CustomerOrderAddScreen from '../../screens/customer/CustomerOrderAddScreen';
 import CustomerOrderBasketScreen from '../../screens/customer/CustomerOrderBasketScreen';
+import CustomerOrderDetailsScreen from '../../screens/customer/CustomerOrderDetailsScreen.tsx';
+import CustomerOrderDraftDetailsScreen from '../../screens/customer/CustomerOrderDraftDetailsScreen.tsx';
 import CustomerOrderHistoryTabStack from './CustomerOrderHistoryTabStack';
 import {CustomerTabStackParamList} from './CustomerStack';
-import CustomerOrderDetailsScreen from '../../screens/customer/CustomerOrderDetailsScreen.tsx';
 
 type CustomerOrderStackProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -40,6 +41,11 @@ const CustomerOrderStackScreen = ({route}: CustomerOrderStackProps) => {
       <CustomerOrderStack.Screen
         name="CustomerOrderDetails"
         component={CustomerOrderDetailsScreen}
+        initialParams={{customerId}}
+      />
+      <CustomerOrderStack.Screen
+        name="CustomerOrderDraftDetails"
+        component={CustomerOrderDraftDetailsScreen}
         initialParams={{customerId}}
       />
     </CustomerOrderStack.Navigator>

@@ -13,12 +13,14 @@ import SectionTitle from '../../components/ui/SectionTitle/SectionTitle.tsx';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack.tsx';
 import {handleApiResponseObj} from '../../utils/handleApiResponseObj.ts';
 
-type CustomerOrderDetailsScreen = NativeStackScreenProps<
+type CustomerOrderDraftDetailsScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
-  'CustomerOrderDetails'
+  'CustomerOrderDraftDetails'
 >;
 
-const CustomerOrderDetailsScreen = ({route}: CustomerOrderDetailsScreen) => {
+const CustomerOrderDraftDetailsScreen = ({
+  route,
+}: CustomerOrderDraftDetailsScreenProps) => {
   // Route
   const {orderId} = route.params;
 
@@ -78,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(CustomerOrderDetailsScreen);
+export default React.memo(CustomerOrderDraftDetailsScreen);
