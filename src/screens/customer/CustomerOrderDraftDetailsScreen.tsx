@@ -18,6 +18,7 @@ import {getOrderDraftById} from '../../database/orderDraft.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
 import {OrderDraft} from '../../database/tables/orderDraft.table.ts';
 import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack.tsx';
+import OrderDraftProductAddCard from '../../components/common/OrderDraftProductCard/OrderDraftProductAddCard.tsx';
 
 type CustomerOrderDraftDetailsScreenProps = NativeStackScreenProps<
   CustomerTabStackParamList,
@@ -105,6 +106,9 @@ const CustomerOrderDraftDetailsScreen = ({
             list={selectedProducts}
             orderDraftId={orderId}
           />
+
+          {/* Add product btn */}
+          <OrderDraftProductAddCard onPress={() => {}} />
 
           {/* Payment */}
           <SectionTitle title={"To'lov"} />
