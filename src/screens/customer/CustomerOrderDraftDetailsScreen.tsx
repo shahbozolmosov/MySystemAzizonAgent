@@ -71,14 +71,14 @@ const CustomerOrderDraftDetailsScreen = ({
 
   const paymentData = useMemo<PaymentDetailsCardProps>(() => {
     if (data) {
-      const productTotalPrice = data.product_list.reduce(
+      const productTotalPrice = selectedProducts.reduce(
         (a, b) => a + getNumber(b.inputAmount) * b.price,
         0,
       );
 
       return {
-        productCount: data.product_list.length,
-        productAmount: data.product_list.reduce(
+        productCount: selectedProducts.length,
+        productAmount: selectedProducts.reduce(
           (a, b) => a + getNumber(b.inputAmount),
           0,
         ),
@@ -95,7 +95,7 @@ const CustomerOrderDraftDetailsScreen = ({
       tasdiqlangan_chegirma: 0,
       tolov_summa: 0,
     };
-  }, [data, getNumber]);
+  }, [data, getNumber, selectedProducts]);
 
   const handleNavigate = useCallback(() => {
     navigation.push('CustomerOrderDraftAddProduct', {
