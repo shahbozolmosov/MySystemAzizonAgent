@@ -4,7 +4,7 @@ import {OrderAdd} from '../app/services/order/order';
 export const addOrderDraft = async (
   db: SQLite.SQLiteDatabase,
   order: OrderAdd,
-) => {
+): Promise<'ok' | null> => {
   const {client_id, product_list, izoh, izoh_dostavka, alohida, lat, lon} =
     order;
 
@@ -24,8 +24,10 @@ export const addOrderDraft = async (
       lon,
     ]);
     console.log('OrderDraft added successfully');
+    return 'ok';
   } catch (error) {
     console.error('Error adding OrderDraft: ', error);
+    return null;
   }
 };
 
