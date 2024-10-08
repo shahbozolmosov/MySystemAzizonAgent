@@ -131,8 +131,8 @@ export const selectedOrderDraftProducts = (
 export const selectedOrderDraftProductsById = (
   state: RootState,
   id: string,
-): OrderDraftProduct => {
-  return state.productOrder.draftProducts.find(
+): OrderDraftProduct | undefined => {
+  return state.productOrder.draftProducts?.find(
     (item: OrderDraftProduct) => item.id === id,
   );
 };

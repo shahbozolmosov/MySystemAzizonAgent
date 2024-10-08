@@ -18,6 +18,7 @@ const OrderProductCardList = ({list}: OrderProductCardListProps) => {
       data={list}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
+      keyboardDismissMode="on-drag"
     />
   );
 };

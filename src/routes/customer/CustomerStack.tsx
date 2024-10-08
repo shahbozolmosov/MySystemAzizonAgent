@@ -26,6 +26,7 @@ export type CustomerTabStackParamList = {
   CustomerOrderBasket: {customerId: string};
   CustomerOrderDetails: {customerId: string; orderId: string};
   CustomerOrderDraftDetails: {customerId: string; orderId: string};
+  CustomerOrderDraftAddProduct: {customerId: string; orderId: string};
 
   CustomerVisit: {customerId: string};
   CustomerReport: {customerId: string};

@@ -26,10 +26,11 @@ import Toast from 'react-native-toast-message';
 export interface IOrderDraftProductCard extends Product {}
 interface OrderDraftProductCardProps extends IOrderDraftProductCard {
   orderDraftId: string;
+  deleteBtn?: boolean;
 }
 
 const OrderDraftProductCard = (props: OrderDraftProductCardProps) => {
-  const {orderDraftId, id, name, article, price} = props;
+  const {orderDraftId, id, name, article, price, deleteBtn = true} = props;
   const dispatch = useDispatch();
 
   const product = useTypesSelector(state =>
@@ -47,7 +48,6 @@ const OrderDraftProductCard = (props: OrderDraftProductCardProps) => {
           setOrderDraftProduct({
             ...props,
             inputAmount: numericValue,
-            // inputAmount: parseFloat('2.3'),
           }),
         );
       } else {
@@ -70,8 +70,12 @@ const OrderDraftProductCard = (props: OrderDraftProductCardProps) => {
   }, [product]);
 
   const handleRemove = useCallback(async () => {
+    if (!orderDraftId) {
+      return;
+    }
+
     const db = await getDBConnection();
-    const res = await removeProductFromOrderDraft(db, orderDraftId, id);
+    const res = await removeProductFromOrderDraft(db, orderDraftId || '', id);
 
     if (res === 'ok') {
       dispatch(removeOrderDraftProduct(id));
@@ -129,9 +133,11 @@ const OrderDraftProductCard = (props: OrderDraftProductCardProps) => {
           onChangeText={handleChange}
         />
       </View>
-      <TouchableOpacity style={styles.removeBtn} onPress={handleOpenDialog}>
-        <Icon name="trash" size={16} color={'#1e232c'} />
-      </TouchableOpacity>
+      {deleteBtn && (
+        <TouchableOpacity style={styles.removeBtn} onPress={handleOpenDialog}>
+          <Icon name="trash" size={16} color={'#1e232c'} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -167,6 +173,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'flex-end',
     justifyContent: 'space-between',
+    paddingTop: 10
   },
   title: {
     fontFamily: 'Roboto-Medium',

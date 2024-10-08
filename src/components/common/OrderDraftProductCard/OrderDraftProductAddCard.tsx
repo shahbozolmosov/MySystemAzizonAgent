@@ -23,13 +23,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E8ECF4',
     paddingHorizontal: 14,
     paddingVertical: 18,
   },
   icon: {
+    marginLeft: 8,
     marginRight: 14,
     color: '#8391A1',
   },

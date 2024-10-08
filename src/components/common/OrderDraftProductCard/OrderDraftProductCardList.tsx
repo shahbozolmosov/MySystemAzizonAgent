@@ -7,18 +7,24 @@ import OrderDraftProductCard, {
 interface OrderDraftProductCardListProps {
   list: IOrderDraftProductCard[];
   orderDraftId: string;
+  deleteBtn?: boolean;
 }
 
 const OrderDraftProductCardList = ({
   list,
   orderDraftId,
+  deleteBtn,
 }: OrderDraftProductCardListProps) => {
   // Render function for each item
   const renderItem = useCallback(
     ({item}: {item: IOrderDraftProductCard}) => (
-      <OrderDraftProductCard {...item} orderDraftId={orderDraftId} />
+      <OrderDraftProductCard
+        {...item}
+        orderDraftId={orderDraftId}
+        deleteBtn={deleteBtn}
+      />
     ),
-    [orderDraftId],
+    [deleteBtn, orderDraftId],
   );
 
   return (
@@ -26,6 +32,7 @@ const OrderDraftProductCardList = ({
       data={list}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
+      keyboardDismissMode="on-drag"
     />
   );
 };

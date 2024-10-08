@@ -27,9 +27,10 @@ type CustomerOrderDraftDetailsScreenProps = NativeStackScreenProps<
 
 const CustomerOrderDraftDetailsScreen = ({
   route,
+  navigation,
 }: CustomerOrderDraftDetailsScreenProps) => {
   // Route
-  const {orderId} = route.params;
+  const {orderId, customerId} = route.params;
 
   // State
   const [data, setData] = useState<OrderDraft | null>(null);
@@ -47,7 +48,13 @@ const CustomerOrderDraftDetailsScreen = ({
       const order = await getOrderDraftById(db, orderId);
 
       if (order) {
-        dispatch(setOrderDraftProductMultiple(order.products_list));
+        if (
+          order.products_list &&
+          Array.isArray(order.products_list) &&
+          order.products_list.length > 0
+        ) {
+          dispatch(setOrderDraftProductMultiple(order.products_list));
+        }
         setData(order);
       }
     };
@@ -90,6 +97,13 @@ const CustomerOrderDraftDetailsScreen = ({
     };
   }, [data, getNumber]);
 
+  const handleNavigate = useCallback(() => {
+    navigation.push('CustomerOrderDraftAddProduct', {
+      customerId,
+      orderId,
+    });
+  }, [customerId, navigation, orderId]);
+
   return !data ? (
     <Container>
       <Text>404 | Not found</Text>
@@ -106,9 +120,8 @@ const CustomerOrderDraftDetailsScreen = ({
             list={selectedProducts}
             orderDraftId={orderId}
           />
-
           {/* Add product btn */}
-          <OrderDraftProductAddCard onPress={() => {}} />
+          <OrderDraftProductAddCard onPress={handleNavigate} />
 
           {/* Payment */}
           <SectionTitle title={"To'lov"} />
