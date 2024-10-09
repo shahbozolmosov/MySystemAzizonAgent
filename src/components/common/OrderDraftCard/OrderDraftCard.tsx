@@ -38,9 +38,23 @@ const OrderDraftCard = ({
     initDB();
   }, [client_id]);
 
+  const getNumber = useCallback((value: string) => {
+    if (value) {
+      return parseFloat(value);
+    }
+    return 0;
+  }, []);
+
   const totalPrice = useMemo<number>(() => {
-    return product_list.reduce((a, b) => a + b.price * b.massa, 0);
-  }, [product_list]);
+    return product_list.reduce(
+      (a, b) => a + b.price * getNumber(b.inputAmount),
+      0,
+    );
+  }, [getNumber, product_list]);
+
+  const totalAmount = useMemo<number>(() => {
+    return product_list.reduce((a, b) => a + getNumber(b.inputAmount), 0);
+  }, [getNumber, product_list]);
 
   const handleNavigate = useCallback(() => {
     if (onNavigate) {
@@ -66,6 +80,12 @@ const OrderDraftCard = ({
             Jami soni:{' '}
             <Text style={styles.fontBold}>{product_list.length}</Text>
           </Text>
+          <Text style={styles.bodyItemTitle}>
+            Jami massa:{' '}
+            <Text style={styles.fontBold}>{totalAmount.toLocaleString()} kg</Text>
+          </Text>
+        </View>
+        <View style={styles.bodyItem}>
           <Text style={styles.bodyItemTitle}>
             Taxminiy summa:{' '}
             <Text style={styles.fontBold}>{totalPrice.toLocaleString()}</Text>
