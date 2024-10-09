@@ -59,8 +59,8 @@ const TabNavigation = () => {
         tabBarStyle: {
           position: 'absolute',
           // backgroundColor: 'transparent',
-          minHeight: 64,
-          paddingBottom: 10,
+          minHeight: 84,
+          paddingBottom: 30,
         },
       }}>
       <Tab.Screen
