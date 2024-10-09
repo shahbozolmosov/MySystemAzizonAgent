@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from '@rneui/themed';
-import React from 'react';
+import React, { Suspense } from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {StatusBar} from 'react-native';
@@ -11,6 +11,7 @@ import AuthProvider from './providers/AuthProvider';
 import RootNavigator from './routes/RootNavigator';
 import {theme} from './themes/theme';
 import DatabaseProvider from './providers/DatabaseProvider.tsx';
+import AppLoader from './components/common/AppLoader/AppLoader.tsx';
 
 const App: React.FC = () => {
   return (
@@ -26,7 +27,9 @@ const App: React.FC = () => {
                 barStyle={'dark-content'}
               />
               <NavigationContainer>
-                <RootNavigator />
+                <Suspense fallback={<AppLoader />}>
+                  <RootNavigator />
+                </Suspense>
               </NavigationContainer>
               <Toast />
             </ThemeProvider>

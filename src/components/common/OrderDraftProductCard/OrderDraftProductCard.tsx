@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
 import ProductImage from '../../../../assets/product.jpg';
@@ -18,10 +19,7 @@ import {
 } from '../../../app/services/order/orderSlice';
 import {Product} from '../../../app/services/product/product';
 import {useTypesSelector} from '../../../app/store';
-import {removeProductFromOrderDraft} from '../../../database/orderDraft';
-import {getDBConnection} from '../../../database/sqlite';
 import {formatComNum} from '../../../utils/formatComNum';
-import Toast from 'react-native-toast-message';
 
 export interface IOrderDraftProductCard extends Product {}
 interface OrderDraftProductCardProps extends IOrderDraftProductCard {
@@ -74,21 +72,11 @@ const OrderDraftProductCard = (props: OrderDraftProductCardProps) => {
       return;
     }
 
-    const db = await getDBConnection();
-    const res = await removeProductFromOrderDraft(db, orderDraftId || '', id);
-
-    if (res === 'ok') {
-      dispatch(removeOrderDraftProduct(id));
-      Toast.show({
-        type: 'success',
-        text1: "Mahsulot muvaffaqiyatli o'chirildi!",
-      });
-    } else {
-      Toast.show({
-        type: 'error',
-        text1: "Mahsulot o'chirilmadi!",
-      });
-    }
+    dispatch(removeOrderDraftProduct(id));
+    Toast.show({
+      type: 'success',
+      text1: "Mahsulot muvaffaqiyatli o'chirildi!",
+    });
   }, [dispatch, id, orderDraftId]);
 
   const handleOpenDialog = useCallback(() => {
@@ -173,7 +161,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    paddingTop: 10
+    paddingTop: 10,
   },
   title: {
     fontFamily: 'Roboto-Medium',
