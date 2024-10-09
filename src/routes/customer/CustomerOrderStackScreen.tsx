@@ -2,24 +2,14 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-import React, {lazy} from 'react';
+import React from 'react';
+import CustomerOrderAddScreen from '../../screens/customer/CustomerOrderAddScreen';
+import CustomerOrderBasketScreen from '../../screens/customer/CustomerOrderBasketScreen';
+import CustomerOrderDetailsScreen from '../../screens/customer/CustomerOrderDetailsScreen.tsx';
 import CustomerOrderDraftAddProductScreen from '../../screens/customer/CustomerOrderDraftAddProductScreen.tsx';
+import CustomerOrderDraftDetailsScreen from '../../screens/customer/CustomerOrderDraftDetailsScreen.tsx';
+import CustomerOrderHistoryTabStack from './CustomerOrderHistoryTabStack';
 import {CustomerTabStackParamList} from './CustomerStack';
-const CustomerOrderAddScreen = lazy(
-  () => import('../../screens/customer/CustomerOrderAddScreen'),
-);
-const CustomerOrderBasketScreen = lazy(
-  () => import('../../screens/customer/CustomerOrderBasketScreen'),
-);
-const CustomerOrderDetailsScreen = lazy(
-  () => import('../../screens/customer/CustomerOrderDetailsScreen.tsx'),
-);
-const CustomerOrderDraftDetailsScreen = lazy(
-  () => import('../../screens/customer/CustomerOrderDraftDetailsScreen.tsx'),
-);
-const CustomerOrderHistoryTabStack = lazy(
-  () => import('./CustomerOrderHistoryTabStack'),
-);
 
 type CustomerOrderStackProps = NativeStackScreenProps<
   CustomerTabStackParamList,
