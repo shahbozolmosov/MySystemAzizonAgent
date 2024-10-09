@@ -29,7 +29,18 @@ const SyncBtnCustomer = ({loading, setLoading}: SyncBtnCustomerProps) => {
   });
 
   const customerData = useMemo<ICustomer[]>(() => {
-    return handleApiResponse<ICustomer[]>(customerRes);
+    if (!customerRes.isLoading && !customerRes.isFetching) {
+      if (customerRes.isError) {
+        Toast.show({
+          type: 'error',
+          text1: 'Ulanishda xatolik',
+          text2: "Internetga ulaning va qaytadan urinib ko'ring",
+        });
+      } else {
+        return handleApiResponse<ICustomer[]>(customerRes);
+      }
+    }
+    return []
   }, [customerRes]);
 
   const handleSyncCustomer = useCallback(async () => {
@@ -38,7 +49,7 @@ const SyncBtnCustomer = ({loading, setLoading}: SyncBtnCustomerProps) => {
     if (!customerData.length) {
       return;
     }
-    
+
     setLoading(true);
 
     try {

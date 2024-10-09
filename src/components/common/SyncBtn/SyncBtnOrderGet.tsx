@@ -29,7 +29,18 @@ const SyncBtnOrderGet = ({loading, setLoading}: SyncBtnOrderGetProps) => {
   );
 
   const orderData = useMemo<Order[]>(() => {
-    return handleApiResponse<Order[]>(orderRes);
+    if (!orderRes.isLoading && !orderRes.isFetching) {
+      if (orderRes.isError) {
+        Toast.show({
+          type: 'error',
+          text1: 'Ulanishda xatolik',
+          text2: "Internetga ulaning va qaytadan urinib ko'ring",
+        });
+      } else {
+        return handleApiResponse<Order[]>(orderRes);
+      }
+    }
+    return [];
   }, [orderRes]);
 
   const handleSync = useCallback(async () => {

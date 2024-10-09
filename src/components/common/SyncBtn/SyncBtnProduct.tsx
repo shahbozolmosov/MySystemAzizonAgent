@@ -32,7 +32,18 @@ const SyncBtnProduct = ({loading, setLoading}: SyncBtnProductProps) => {
   );
 
   const productData = useMemo<Product[]>(() => {
-    return handleApiResponse<Product[]>(productRes);
+    if (!productRes.isLoading && !productRes.isFetching) {
+      if (productRes.isError) {
+        Toast.show({
+          type: 'error',
+          text1: 'Ulanishda xatolik',
+          text2: "Internetga ulaning va qaytadan urinib ko'ring",
+        });
+      } else {
+        return handleApiResponse<Product[]>(productRes);
+      }
+    }
+    return [];
   }, [productRes]);
 
   const handleSync = useCallback(async () => {
