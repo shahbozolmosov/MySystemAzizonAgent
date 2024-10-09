@@ -79,7 +79,9 @@ const CustomerOrderDraftDetailsScreen = ({
       }
     };
 
+    // if (isFocused) {
     initDB();
+    // }
   }, [dispatch, orderId]);
 
   useEffect(() => {

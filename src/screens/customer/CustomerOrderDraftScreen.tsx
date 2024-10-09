@@ -8,6 +8,7 @@ import NoResult from '../../components/errors/NoResult/NoResult.tsx';
 import {getOrderDraftsByClientId} from '../../database/orderDraft.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
+import {useIsFocused} from '@react-navigation/native';
 
 type CustomerOrderDraftScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -21,6 +22,8 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
   // State
   const [orderData, setOrderData] = useState<IOrderDraftCard[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const initDB = async () => {
@@ -39,8 +42,10 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
       }
     };
 
-    initDB();
-  }, [customerId]);
+    if (isFocused) {
+      initDB();
+    }
+  }, [customerId, isFocused]);
 
   return (
     <Container>
