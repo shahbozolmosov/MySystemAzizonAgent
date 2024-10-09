@@ -1,5 +1,5 @@
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
-import {Text} from '@rneui/themed';
+import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import Container from '../../components/common/Container/Container';
 import {IOrderDraftCard} from '../../components/common/OrderDraftCard/OrderDraftCard.tsx';
@@ -8,7 +8,6 @@ import NoResult from '../../components/errors/NoResult/NoResult.tsx';
 import {getOrderDraftsByClientId} from '../../database/orderDraft.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
-import {useIsFocused} from '@react-navigation/native';
 
 type CustomerOrderDraftScreenProps = MaterialTopTabScreenProps<
   CustomerOrderHistoryTabStackParamList,
@@ -21,13 +20,11 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
 
   // State
   const [orderData, setOrderData] = useState<IOrderDraftCard[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
     const initDB = async () => {
-      setIsLoading(true);
       try {
         const db = await getDBConnection();
         const data = await getOrderDraftsByClientId(db, customerId);
@@ -37,8 +34,6 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
         }
       } catch (err) {
         console.error('Failed to initialize database', err);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -49,9 +44,7 @@ const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
 
   return (
     <Container>
-      {isLoading ? (
-        <Text>Loading...</Text>
-      ) : orderData.length === 0 ? (
+      {orderData.length === 0 ? (
         <NoResult
           title="Qoralamalar topilmadi"
           desc="Hozircha sizda qoralamalar mavjud emas!"
