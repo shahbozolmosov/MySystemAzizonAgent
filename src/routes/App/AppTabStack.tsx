@@ -1,11 +1,10 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useCallback} from 'react';
-import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
-import HomeScreen from '../../screens/main/HomeScreen';
 import AppHeader from '../../components/common/AppHeader/AppHeader.tsx';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel.tsx';
+import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
+import HomeScreen from '../../screens/main/HomeScreen';
 import {TabBarLabelProps} from '../../types/types.ts';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 export type AppTabStackParamList = {
     Home: undefined;
