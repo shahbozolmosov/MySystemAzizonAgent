@@ -13,6 +13,7 @@ export type AppDrawerStackParamList = {
     CreateCustomer: undefined;
     // Order
     AppOrderHistoryStack: undefined;
+    AppOrderDetails: {orderId: string};
 
     CustomerReport: undefined;
     CustomerAdd: undefined;

@@ -206,10 +206,10 @@ export const getAllOrders = async (
     statuses: string[],
 ) => {
     const placeholders = statuses.map(() => '?').join(',');
-    const query = `SELECT * FROM Orders WHERE status IN(${placeholders});`;
+    const query = `SELECT * FROM Orders WHERE status IN (${placeholders});`;
 
     try {
-        const results = await db.executeSql(query);
+        const results = await db.executeSql(query, [...statuses]);
         const orders = [];
         for (let i = 0; i < results[0].rows.length; i++) {
             const order = results[0].rows.item(i);
