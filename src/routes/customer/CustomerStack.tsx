@@ -11,6 +11,7 @@ import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
 import {ITabBarIconProps} from '../../types/types';
 import CustomerOrderStackScreen from './CustomerOrderStackScreen';
 import {RootStackParamList} from '../RootNavigator';
+import CustomerDrawerContent from '../../components/common/CustomerDrawerContent/CustomerDrawerContent';
 
 export type CustomerStackParamList = {
   Home: {
@@ -119,6 +120,7 @@ const Drawer = createDrawerNavigator();
 const CustomerStack = () => {
   const route = useRoute<TabNavigationRouteProp>();
   const {customerId} = route.params;
+  const drawerContent = useCallback(() => <CustomerDrawerContent />, []);
 
   return (
     <Drawer.Navigator
@@ -126,7 +128,9 @@ const CustomerStack = () => {
       screenOptions={{
         headerShown: false,
         overlayColor: 'rgba(30, 35, 44, 0.17)',
-      }}>
+      }}
+      drawerContent={drawerContent}
+      >
       <Drawer.Screen
         name="Home"
         component={TabNavigation}
