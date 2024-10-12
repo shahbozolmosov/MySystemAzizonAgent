@@ -7,6 +7,7 @@ import AppOrderHistoryDelivered from '../../screens/main/order/AppOrderHistoryDe
 import AppOrderHistoryDraft from '../../screens/main/order/AppOrderHistoryDraft';
 import AppOrderHistoryProcess from '../../screens/main/order/AppOrderHistoryProcess';
 import {TabBarLabelProps} from '../../types/types';
+import { SafeAreaView } from 'react-native';
 
 export type AppOrderHistoryStackRootList = {
     Process: undefined;
@@ -35,7 +36,7 @@ const AppOrderHistoryStackScreen = () => {
         [],
     );
     return (
-        <>
+        <SafeAreaView>
             <CustomerHeaderOperation
                 title="Umumiy buyurtmalar"
                 customElements={
@@ -70,7 +71,7 @@ const AppOrderHistoryStackScreen = () => {
                     component={AppOrderHistoryDraft}
                 />
             </Tab.Navigator>
-        </>
+        </SafeAreaView>
     );
 };
 

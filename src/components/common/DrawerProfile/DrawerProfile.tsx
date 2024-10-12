@@ -59,7 +59,8 @@ const DrawerProfile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
     backgroundColor: '#f4f4f4',
     flexDirection: 'row',
     gap: 20,

@@ -7,33 +7,33 @@ import {getAllCustomers} from '../../database/customers.ts';
 import {getDBConnection} from '../../database/sqlite.ts';
 
 function HomeScreen() {
-  // State
-  const [customerData, setCustomerData] = useState<ICustomerCard[]>([]);
+    // State
+    const [customerData, setCustomerData] = useState<ICustomerCard[]>([]);
 
-  useEffect(() => {
-    const initDB = async () => {
-      try {
-        const db = await getDBConnection();
-        const allCustomer = await getAllCustomers(db);
+    useEffect(() => {
+        const initDB = async () => {
+            try {
+                const db = await getDBConnection();
+                const allCustomer = await getAllCustomers(db);
 
-        if (allCustomer) {
-          setCustomerData(allCustomer);
-        }
-      } catch (err) {
-        console.error('Failed to initialize database', err);
-      }
-    };
+                if (allCustomer) {
+                    setCustomerData(allCustomer);
+                }
+            } catch (err) {
+                console.error('Failed to initialize database', err);
+            }
+        };
 
-    initDB();
-  }, []);
+        initDB();
+    }, []);
 
-  return (
-    <Container>
-      <CustomerCardList list={customerData} />
+    return (
+        <Container safeArea={false}>
+            <CustomerCardList list={customerData} />
 
-      <SyncBtn />
-    </Container>
-  );
+            <SyncBtn />
+        </Container>
+    );
 }
 
 export default React.memo(HomeScreen);
