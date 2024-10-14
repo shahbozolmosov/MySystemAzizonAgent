@@ -22,7 +22,7 @@ const AppRootDrawerContent = () => {
             <DrawerItemBtn
                 label="Buyurtmalar"
                 icon="inbox"
-                onPress={() => navigation.navigate('AppOrderHistoryStack')}
+                onPress={() => navigation.navigate('AppOrderStack')}
             />
             <DrawerItemBtn
                 label="Mijozlar hisoboti"

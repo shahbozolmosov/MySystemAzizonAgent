@@ -4,7 +4,7 @@ import AppRootDrawerContent from '../../components/common/AppRootDrawerContent/A
 import CustomerAddScreen from '../../screens/customer/CustomerAddScreen.tsx';
 import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
 import ProfileScreen from '../../screens/main/ProfileScreen';
-import AppOrderHistoryStackScreen from './AppOrderHistoryStackScreen.tsx';
+import AppOrderStackScreen from './AppOrderStackScreen.tsx';
 import AppTabStack from './AppTabStack';
 
 export type AppDrawerStackParamList = {
@@ -13,7 +13,9 @@ export type AppDrawerStackParamList = {
     CreateCustomer: undefined;
     // Order
     AppOrderHistoryStack: undefined;
+    AppOrderStack: undefined;
     AppOrderDetails: {orderId: string};
+    AppOrderDraftDetails: {customerId: string; orderId: string};
 
     CustomerReport: undefined;
     CustomerAdd: undefined;
@@ -50,8 +52,8 @@ const AppRootStack = () => {
             />
             <Drawer.Screen name={'CustomerAdd'} component={CustomerAddScreen} />
             <Drawer.Screen
-                name="AppOrderHistoryStack"
-                component={AppOrderHistoryStackScreen}
+                name="AppOrderStack"
+                component={AppOrderStackScreen}
             />
             <Drawer.Screen
                 name="CustomerReport"
