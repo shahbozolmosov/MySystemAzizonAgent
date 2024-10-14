@@ -19,15 +19,15 @@ import SectionTitle from '../../../components/ui/SectionTitle/SectionTitle.tsx';
 import OrderDraftProductCardList from '../../../components/common/OrderDraftProductCard/OrderDraftProductCardList.tsx';
 import OrderDraftProductAddCard from '../../../components/common/OrderDraftProductCard/OrderDraftProductAddCard.tsx';
 
-type AppOrderDraftDetailsScreenProps = NativeStackScreenProps<
+type AppOrderHistoryDraftDetailsScreenProps = NativeStackScreenProps<
     AppDrawerStackParamList,
     'AppOrderDraftDetails'
 >;
 
-const CustomerOrderDraftDetailsScreen = ({
+const AppOrderHistoryDraftDetailsScreen = ({
     route,
     navigation,
-}: AppOrderDraftDetailsScreenProps) => {
+}: AppOrderHistoryDraftDetailsScreenProps) => {
     // Route
     const {orderId, customerId} = route.params;
 
@@ -354,4 +354,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default React.memo(CustomerOrderDraftDetailsScreen);
+export default React.memo(AppOrderHistoryDraftDetailsScreen);

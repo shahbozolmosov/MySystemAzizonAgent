@@ -3,7 +3,7 @@ import {
     NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import React from 'react';
-import AppOrderDraftDetailsScreen from '../../screens/main/order/AppOrderDraftDetailsScreen';
+import AppOrderHistoryDraftDetailsScreen from '../../screens/main/order/AppOrderHistoryDraftDetailsScreen';
 import AppOrderHistoryStackScreen from './AppOrderHistoryStackScreen';
 import {AppDrawerStackParamList} from './AppRootStack';
 import AppOrderHistoryDraftAddProductScreen from '../../screens/main/order/AppOrderHistoryDraftAddProductScreen';
@@ -27,7 +27,7 @@ const AppOrderStackScreen = ({}: AppOrderStackScreenProps) => {
             />
             <CustomerOrderStack.Screen
                 name="AppOrderDraftDetails"
-                component={AppOrderDraftDetailsScreen}
+                component={AppOrderHistoryDraftDetailsScreen}
             />
             <CustomerOrderStack.Screen
                 name="AppOrderDraftAddProduct"
