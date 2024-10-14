@@ -10,50 +10,50 @@ import {getDBConnection} from '../../database/sqlite.ts';
 import {CustomerOrderHistoryTabStackParamList} from '../../routes/customer/CustomerOrderHistoryTabStack';
 
 type CustomerOrderDraftScreenProps = MaterialTopTabScreenProps<
-  CustomerOrderHistoryTabStackParamList,
-  'OrderDraft'
+    CustomerOrderHistoryTabStackParamList,
+    'OrderDraft'
 >;
 
 const CustomerOrderDraftScreen = ({route}: CustomerOrderDraftScreenProps) => {
-  // Route
-  const {customerId} = route.params;
+    // Route
+    const {customerId} = route.params;
 
-  // State
-  const [orderData, setOrderData] = useState<IOrderDraftCard[]>([]);
+    // State
+    const [orderData, setOrderData] = useState<IOrderDraftCard[]>([]);
 
-  const isFocused = useIsFocused();
+    const isFocused = useIsFocused();
 
-  useEffect(() => {
-    const initDB = async () => {
-      try {
-        const db = await getDBConnection();
-        const data = await getOrderDraftsByClientId(db, customerId);
+    useEffect(() => {
+        const initDB = async () => {
+            try {
+                const db = await getDBConnection();
+                const data = await getOrderDraftsByClientId(db, customerId);
 
-        if (data) {
-          setOrderData(data);
+                if (data) {
+                    setOrderData(data);
+                }
+            } catch (err) {
+                console.error('Failed to initialize database', err);
+            }
+        };
+
+        if (isFocused) {
+            initDB();
         }
-      } catch (err) {
-        console.error('Failed to initialize database', err);
-      }
-    };
+    }, [customerId, isFocused]);
 
-    if (isFocused) {
-      initDB();
-    }
-  }, [customerId, isFocused]);
-
-  return (
-    <Container>
-      {orderData.length === 0 ? (
-        <NoResult
-          title="Qoralamalar topilmadi"
-          desc="Hozircha sizda qoralamalar mavjud emas!"
-        />
-      ) : (
-        <OrderDraftCardList list={orderData} customerId={customerId} />
-      )}
-    </Container>
-  );
+    return (
+        <Container>
+            {orderData.length === 0 ? (
+                <NoResult
+                    title="Qoralamalar topilmadi"
+                    desc="Hozircha sizda qoralamalar mavjud emas!"
+                />
+            ) : (
+                <OrderDraftCardList list={orderData} />
+            )}
+        </Container>
+    );
 };
 
 export default React.memo(CustomerOrderDraftScreen);
