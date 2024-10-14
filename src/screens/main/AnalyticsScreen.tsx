@@ -1,15 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
 import Container from '../../components/common/Container/Container';
+import DashboardCardList from '../../components/common/DashboardCard/DashboardCardList';
 
 const AnalyticsScreen = () => {
-  return (
-    <Container>
-      <Text>AnalyticsScreen</Text>
-    </Container>
-  );
+    return (
+        <Container paddingHorizontal={14}>
+            <DashboardCardList />
+        </Container>
+    );
 };
-
-const styles = StyleSheet.create({});
 
 export default AnalyticsScreen;
