@@ -1,27 +1,31 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
-import Icon from '../../../../assets/icons/users-icon.png';
+import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
+import {DashboardItem} from '../../../app/services/dashboard/dashboard';
 
-const widowWidth = Dimensions.get('window').width;
+export interface DashboardCardProps extends DashboardItem {
+    icon: ImageSourcePropType;
+}
 
-const DashboardCard = () => {
+const DashboardCard = ({name, value, icon}: DashboardCardProps) => {
+    console.log('🚀 ~ DashboardCard ~ name:', name);
     return (
         <View style={styles.container}>
             <View style={styles.body}>
-                <Text style={styles.title}>Total User</Text>
-                <Text style={styles.amount}>40,689</Text>
+                <Text style={styles.title}>{name}</Text>
+                <Text style={styles.amount}>{value}</Text>
             </View>
-            <Image style={styles.image} source={Icon} />
+            <Image style={styles.image} source={icon} />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: widowWidth / 2 - 22,
+        // width: widowWidth / 2 - 22,
+        // width: widowWidth - (8 + 12),
         flexDirection: 'row',
-        gap: 10,
         justifyContent: 'space-between',
+        gap: 10,
         padding: 16,
         marginBottom: 10,
         borderRadius: 14,
@@ -34,7 +38,9 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         backgroundColor: '#ffff',
     },
-    body: {},
+    body: {
+        flexGrow: 1,
+    },
     title: {
         marginBottom: 14,
         fontFamily: 'Roboto-Medium',

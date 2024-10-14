@@ -5,54 +5,59 @@ import {ProductAllParam} from '../app/services/product/product.ts';
 export const baseUrl = 'https://azizon-system.uz/api-demo';
 
 export const authUrls = {
-  login: '/user/login.php',
+    login: '/user/login.php',
 };
 
 export const userUrls = {
-  show: '/user/get-user.php',
+    show: '/user/get-user.php',
 };
 
 export const allUrls = {
-  // Customer
-  customerGetAll: '/agent/get-clients.php',
-  customerGetById: (id: string) => `/agent/get-clients.php?id=${id}`,
-  customerGetCategory: '/agent/get-client-category.php',
-  customerAdd: '/agent/add-client.php',
+    // Dashboard
+    dashboardGet: (date: TDate) =>
+        `/agent/get-index-data.php?sana1=${date.start}&sana2=${date.end}`,
 
-  // Supplier
-  supplierGetAll: '/agent/get-dostavka.php',
+    // Customer
+    customerGetAll: '/agent/get-clients.php',
+    customerGetById: (id: string) => `/agent/get-clients.php?id=${id}`,
+    customerGetCategory: '/agent/get-client-category.php',
+    customerAdd: '/agent/add-client.php',
 
-  // Region
-  regionGetAll: '/agent/get-viloyat.php',
-  districtGetByRegion: (regionId: string) =>
-    `/agent/get-tuman.php?viloyat_id=${regionId}`,
+    // Supplier
+    supplierGetAll: '/agent/get-dostavka.php',
 
-  // Product
-  productsGetAll: ({customerId=''}:ProductAllParam) =>`/agent/get-products.php?customerId=${customerId}`,
+    // Region
+    regionGetAll: '/agent/get-viloyat.php',
+    districtGetByRegion: (regionId: string) =>
+        `/agent/get-tuman.php?viloyat_id=${regionId}`,
 
-  // Category
-  categoryGetAll: '/agent/get-category.php',
+    // Product
+    productsGetAll: ({customerId = ''}: ProductAllParam) =>
+        `/agent/get-products.php?customerId=${customerId}`,
 
-  // Order
-  orderGetAll: ({customerId = '', status = ''}: OrderAllParams) =>
-    `/agent/get-my-orders.php?client_id=${customerId}&status=${status}`,
-  orderGetById: (id: string) => `/agent/get-my-orders.php?id=${id}`,
-  orderGetByDate: (date: TDate) =>
-    `/agent/get-my-orders.php?sana1=${date.end}&sana2=${date.end}`,
+    // Category
+    categoryGetAll: '/agent/get-category.php',
 
-  orderAdd: '/agent/add-sale-order.php',
-  orderItemUpdate: (orderId: string) =>
-    `/agent/edit-sale-order.php?order_id=${orderId}`,
-  orderDelete: (orderId: string) => `agent/get-my-orders.php?id=${orderId}`,
-  orderItemDelete: (orderItemId: string) =>
-    `/agent/get-my-orders.php?order_item_id=${orderItemId}`,
+    // Order
+    orderGetAll: ({customerId = '', status = ''}: OrderAllParams) =>
+        `/agent/get-my-orders.php?client_id=${customerId}&status=${status}`,
+    orderGetById: (id: string) => `/agent/get-my-orders.php?id=${id}`,
+    orderGetByDate: (date: TDate) =>
+        `/agent/get-my-orders.php?sana1=${date.end}&sana2=${date.end}`,
 
-  // Day customer
-  dayCustomerGet: (dayId: string) => `/agent/get-clients.php?day_id=${dayId}`,
-  customerAddToDayAdd: 'agent/add-client-days.php',
-  dayAddToCustomerAdd: '/agent/add-days-client.php',
-  dayCustomerDelete: '/agent/remove-client-day.php',
+    orderAdd: '/agent/add-sale-order.php',
+    orderItemUpdate: (orderId: string) =>
+        `/agent/edit-sale-order.php?order_id=${orderId}`,
+    orderDelete: (orderId: string) => `agent/get-my-orders.php?id=${orderId}`,
+    orderItemDelete: (orderItemId: string) =>
+        `/agent/get-my-orders.php?order_item_id=${orderItemId}`,
 
-  // Visit
-  visitAdd: '/agent/add-tashrif.php',
+    // Day customer
+    dayCustomerGet: (dayId: string) => `/agent/get-clients.php?day_id=${dayId}`,
+    customerAddToDayAdd: 'agent/add-client-days.php',
+    dayAddToCustomerAdd: '/agent/add-days-client.php',
+    dayCustomerDelete: '/agent/remove-client-day.php',
+
+    // Visit
+    visitAdd: '/agent/add-tashrif.php',
 };

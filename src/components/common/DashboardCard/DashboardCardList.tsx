@@ -1,21 +1,23 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import DashboardCard from './DashboardCard';
+import DashboardCard, {DashboardCardProps} from './DashboardCard';
 
-const DashboardCardList = () => {
+type DashboardCardListProps = {
+    list: DashboardCardProps[];
+};
+
+const DashboardCardList = ({list}: DashboardCardListProps) => {
     return (
         <View style={styles.list}>
-            <DashboardCard />
-            <DashboardCard />
-            <DashboardCard />
+            {list.map(item => (
+                <DashboardCard {...item} />
+            ))}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     list: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
         gap: 16,
     },
 });

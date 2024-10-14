@@ -1,5 +1,6 @@
 import {allUrls} from '../../../constants/api';
 import {IApiRes} from '../../../types/api';
+import {TDate} from '../../../types/types.ts';
 import {apiSlice} from '../apiSlice.ts';
 
 // Show
@@ -21,8 +22,8 @@ export const dashboardApi = apiSlice
     .injectEndpoints({
         endpoints: build => ({
             // Show
-            getDashboard: build.query<DashboardRes, void>({
-                query: () => allUrls.dashboardGet,
+            getDashboard: build.query<DashboardRes, TDate>({
+                query: (date) => allUrls.dashboardGet(date),
                 providesTags: [DASHBOARD_TAG],
             }),
             // Update
