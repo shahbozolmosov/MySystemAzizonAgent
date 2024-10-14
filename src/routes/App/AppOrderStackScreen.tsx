@@ -6,6 +6,7 @@ import React from 'react';
 import AppOrderDraftDetailsScreen from '../../screens/main/order/AppOrderDraftDetailsScreen';
 import AppOrderHistoryStackScreen from './AppOrderHistoryStackScreen';
 import {AppDrawerStackParamList} from './AppRootStack';
+import AppOrderHistoryDraftAddProductScreen from '../../screens/main/order/AppOrderHistoryDraftAddProductScreen';
 
 type AppOrderStackScreenProps = NativeStackScreenProps<
     AppDrawerStackParamList,
@@ -27,6 +28,10 @@ const AppOrderStackScreen = ({}: AppOrderStackScreenProps) => {
             <CustomerOrderStack.Screen
                 name="AppOrderDraftDetails"
                 component={AppOrderDraftDetailsScreen}
+            />
+            <CustomerOrderStack.Screen
+                name="AppOrderDraftAddProduct"
+                component={AppOrderHistoryDraftAddProductScreen}
             />
         </CustomerOrderStack.Navigator>
     );

@@ -16,7 +16,7 @@ type AppOrderHistoryDraftAddProductScreenProps = NativeStackScreenProps<
     'AppOrderDraftAddProduct'
 >;
 
-const CustomerOrderDraftAddProductScreen = ({
+const AppOrderHistoryDraftAddProductScreen = ({
     route,
 }: AppOrderHistoryDraftAddProductScreenProps) => {
     // Route
@@ -89,4 +89,4 @@ const CustomerOrderDraftAddProductScreen = ({
     );
 };
 
-export default React.memo(CustomerOrderDraftAddProductScreen);
+export default React.memo(AppOrderHistoryDraftAddProductScreen);
