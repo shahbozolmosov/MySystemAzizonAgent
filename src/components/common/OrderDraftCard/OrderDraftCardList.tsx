@@ -6,37 +6,36 @@ import {CustomerTabStackParamList} from '../../../routes/customer/CustomerStack.
 import OrderDraftCard, {IOrderDraftCard} from './OrderDraftCard.tsx';
 
 type OrderDraftCardListProps = {
-  list: IOrderDraftCard[];
-  customerId: string;
+    list: IOrderDraftCard[];
 };
 
 type CustomerCardListNavigationProp =
-  NativeStackNavigationProp<CustomerTabStackParamList>;
+    NativeStackNavigationProp<CustomerTabStackParamList>;
 
-const OrderDraftCardList = ({list, customerId}: OrderDraftCardListProps) => {
-  const navigation = useNavigation<CustomerCardListNavigationProp>();
+const OrderDraftCardList = ({list}: OrderDraftCardListProps) => {
+    const navigation = useNavigation<CustomerCardListNavigationProp>();
 
-  const handleNavigate = useCallback(
-    (orderId: string) => {
-      navigation.push('CustomerOrderDraftDetails', {customerId, orderId});
-    },
-    [customerId, navigation],
-  );
+    const handleNavigate = useCallback(
+        (orderId: string, customerId: string) => {
+            navigation.push('CustomerOrderDraftDetails', {customerId, orderId});
+        },
+        [navigation],
+    );
 
-  const renderItem = useCallback(
-    ({item}: {item: IOrderDraftCard}) => {
-      return <OrderDraftCard {...item} onNavigate={handleNavigate} />;
-    },
-    [handleNavigate],
-  );
+    const renderItem = useCallback(
+        ({item}: {item: IOrderDraftCard}) => {
+            return <OrderDraftCard {...item} onNavigate={handleNavigate} />;
+        },
+        [handleNavigate],
+    );
 
-  return (
-    <FlatList
-      data={list}
-      renderItem={renderItem}
-      keyExtractor={item => item.uid.toString()}
-    />
-  );
+    return (
+        <FlatList
+            data={list}
+            renderItem={renderItem}
+            keyExtractor={item => item.uid.toString()}
+        />
+    );
 };
 
 export default React.memo(OrderDraftCardList);
