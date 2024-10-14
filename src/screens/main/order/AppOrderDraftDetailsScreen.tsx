@@ -136,11 +136,11 @@ const CustomerOrderDraftDetailsScreen = ({
     }, [orderDbData, getNumber, selectedProducts]);
 
     const handleNavigate = useCallback(() => {
-        // navigation.push('CustomerOrderDraftAddProduct', {
-        //     customerId,
-        //     orderId,
-        // });
-    }, []);
+        navigation.push('AppOrderDraftAddProduct', {
+            customerId,
+            orderId,
+        });
+    }, [customerId, navigation, orderId]);
 
     // Handle submit
     const handleSaveDraft = useCallback(async () => {

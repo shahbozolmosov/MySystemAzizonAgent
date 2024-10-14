@@ -1,24 +1,24 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Text} from '@rneui/themed';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Product} from '../../app/services/product/product.ts';
-import Container from '../../components/common/Container/Container.tsx';
-import OrderDraftProductCardList from '../../components/common/OrderDraftProductCard/OrderDraftProductCardList.tsx';
-import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation.tsx';
-import NoResult from '../../components/errors/NoResult/NoResult.tsx';
-import IconButton from '../../components/ui/IconButton/IconButton.tsx';
-import {getAllProducts} from '../../database/products.ts';
-import {getDBConnection} from '../../database/sqlite.ts';
-import {CustomerTabStackParamList} from '../../routes/customer/CustomerStack.tsx';
+import {Product} from '../../../app/services/product/product';
+import Container from '../../../components/common/Container/Container';
+import OrderDraftProductCardList from '../../../components/common/OrderDraftProductCard/OrderDraftProductCardList';
+import CustomerHeaderOperation from '../../../components/customer/CustomerOperation/CustomerHeaderOperation';
+import NoResult from '../../../components/errors/NoResult/NoResult';
+import IconButton from '../../../components/ui/IconButton/IconButton';
+import {getAllProducts} from '../../../database/products';
+import {getDBConnection} from '../../../database/sqlite';
+import {AppDrawerStackParamList} from '../../../routes/App/AppRootStack';
 
-type CustomerOrderDraftAddProductScreenProps = NativeStackScreenProps<
-    CustomerTabStackParamList,
-    'CustomerOrderDraftAddProduct'
+type AppOrderHistoryDraftAddProductScreenProps = NativeStackScreenProps<
+    AppDrawerStackParamList,
+    'AppOrderDraftAddProduct'
 >;
 
 const CustomerOrderDraftAddProductScreen = ({
     route,
-}: CustomerOrderDraftAddProductScreenProps) => {
+}: AppOrderHistoryDraftAddProductScreenProps) => {
     // Route
     const {orderId} = route.params;
 
