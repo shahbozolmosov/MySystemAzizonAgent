@@ -6,46 +6,47 @@ import {RootStackParamList} from '../../../routes/RootNavigator';
 import CustomerCard, {ICustomerCard} from './CustomerCard';
 
 type CustomerCardListProps = {
-  list: ICustomerCard[];
+    list: ICustomerCard[];
 };
 
 type CustomerCardListNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'AppRootStack'
+    RootStackParamList,
+    'AppRootStack'
 >;
 const CustomerCardList = ({list}: CustomerCardListProps) => {
-  const navigation = useNavigation<CustomerCardListNavigationProp>();
+    const navigation = useNavigation<CustomerCardListNavigationProp>();
 
-  const handleNavigate = useCallback(
-    (customerId: string) => {
-      navigation.push('CustomerStack', {customerId});
-    },
-    [navigation],
-  );
+    const handleNavigate = useCallback(
+        (customerId: string) => {
+            navigation.push('CustomerStack', {customerId});
+        },
+        [navigation],
+    );
 
-  const renderItem = useCallback(
-    ({item}: {item: ICustomerCard}) => {
-      return <CustomerCard {...item} onNavigate={handleNavigate} />;
-    },
-    [handleNavigate],
-  );
+    const renderItem = useCallback(
+        ({item}: {item: ICustomerCard}) => {
+            return <CustomerCard {...item} onNavigate={handleNavigate} />;
+        },
+        [handleNavigate],
+    );
 
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={list}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={list}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                showsVerticalScrollIndicator={false}
+            />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 10,
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#ffff',
+    },
 });
 
 export default React.memo(CustomerCardList);
