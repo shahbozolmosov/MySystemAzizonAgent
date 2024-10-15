@@ -45,11 +45,6 @@ const AppTabStack = () => {
                         elevation: 0,
                     },
                     tabBarLabel: props => tabBarLabel(props, TabRoute),
-                    tabBarIndicatorStyle: {
-                        // height: 4,
-                        // backgroundColor: '#1e232c',
-                        borderRadius: 16,
-                    },
                     tabBarPressColor: 'transparent',
                 })}>
                 <Tab.Screen name="Home" component={HomeScreen} />

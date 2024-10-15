@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Container from '../../components/common/Container/Container';
+import Container from '../../components/common/Container/Container.tsx';
 import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
 import {ICustomerCard} from '../../components/customer/CustomerCard/CustomerCard.tsx';
 import CustomerCardList from '../../components/customer/CustomerCard/CustomerCardList';
