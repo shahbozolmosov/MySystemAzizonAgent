@@ -19,6 +19,8 @@ import UsersIcon from '../../../assets/icons/users-icon.png';
 import NoResult from '../../components/errors/NoResult/NoResult';
 import {TDate} from '../../types/types';
 import MainDateRangePicker from '../../components/ui/MainDateRangePicker/MainDateRangePicker';
+import {useNetIsConnected} from '../../hook/useNetIsConnected';
+import NoInternet from '../../components/errors/NoInternet/NoInternet';
 
 const AnalyticsScreen = () => {
     // State
@@ -26,6 +28,8 @@ const AnalyticsScreen = () => {
         start: '01.09.2024',
         end: '30.09.2024',
     });
+
+    const isConnected = useNetIsConnected();
 
     const isFocused = useIsFocused();
 
@@ -81,6 +85,11 @@ const AnalyticsScreen = () => {
             <MainDateRangePicker setValue={handleChangeDate} />
             {dashboardRes.isLoading || dashboardRes.isFetching ? (
                 <Text>Yuklanmoqda...</Text>
+            ) : !isConnected ? (
+                <NoInternet
+                    refetch={dashboardRes.refetch}
+                    desc="Ma'lumotlarni ko'rishingiz uchun internetga ulangan bo'lishingiz kerak"
+                />
             ) : !totalData ? (
                 <NoResult
                     title="Ma'lumot topilmadi"
