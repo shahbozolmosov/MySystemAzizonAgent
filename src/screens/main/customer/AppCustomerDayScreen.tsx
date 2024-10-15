@@ -4,8 +4,18 @@ import {ICustomerCard} from '../../../components/customer/CustomerCard/CustomerC
 import CustomerCardList from '../../../components/customer/CustomerCard/CustomerCardList';
 import {getAllCustomers} from '../../../database/customers.ts';
 import {getDBConnection} from '../../../database/sqlite.ts';
+import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
+import {AppTabStackParamList} from '../../../routes/App/AppTabStack.tsx';
 
-function HomeScreen() {
+type AppCustomerDayScreenProps = MaterialTopTabScreenProps<
+    AppTabStackParamList,
+    'AppCustomerDay'
+>;
+
+function AppCustomerDayScreen({route}: AppCustomerDayScreenProps) {
+    // Params
+    const {dayId} = route.params;
+
     // State
     const [customerData, setCustomerData] = useState<ICustomerCard[]>([]);
 
@@ -33,4 +43,4 @@ function HomeScreen() {
     );
 }
 
-export default React.memo(HomeScreen);
+export default React.memo(AppCustomerDayScreen);
