@@ -9,60 +9,61 @@ import {useTypesSelector} from '../app/store.ts';
 import AppNetworkErr from '../components/common/AppNetworkErr/AppNetworkErr.tsx';
 
 interface IAuthProviderProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 const AuthProvider = ({children}: IAuthProviderProps) => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  // State
-  const [isConnected, setIsConnected] = useState<boolean | null>(null);
-  const [tokenLoading, setTokenLoading] = useState<boolean>(true);
+    // State
+    const [isConnected, setIsConnected] = useState<boolean | null>(null);
+    const [tokenLoading, setTokenLoading] = useState<boolean>(true);
 
-  const token = useTypesSelector(selectedToken);
+    const token = useTypesSelector(selectedToken);
 
-  useEffect(() => {
-    // Tarmoq holatini tekshirish
-    const unsubscribe = NetInfo.addEventListener(state => {
-      setIsConnected(state.isConnected);
-    });
+    useEffect(() => {
+        const unsubscribe = NetInfo.addEventListener(state => {
+            setIsConnected(state.isConnected);
+        });
 
-    // Unsubscribe qilish
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
-  useEffect(() => {
-    setTokenLoading(true);
-    const fetchToken = async () => {
-      const savedToken = await getToken();
-      dispatch(setToken(savedToken));
-      setTokenLoading(false);
-    };
+    useEffect(() => {
+        setTokenLoading(true);
+        const fetchToken = async () => {
+            const savedToken = await getToken();
+            dispatch(setToken(savedToken));
+            setTokenLoading(false);
+        };
 
-    fetchToken();
-  }, [dispatch]);
+        fetchToken();
+    }, [dispatch]);
 
-  const {isLoading, isFetching, isError, refetch} = useGetUserQuery(undefined, {
-    skip: !token || (token && !isConnected),
-  });
+    const {isLoading, isFetching, isError, refetch} = useGetUserQuery(
+        undefined,
+        {
+            skip: !token || (token && !isConnected),
+        },
+    );
 
-  const handleRefetch = useCallback(() => {
-    if (token) {
-      refetch();
+    const handleRefetch = useCallback(() => {
+        if (token) {
+            refetch();
+        }
+    }, [refetch, token]);
+
+    if (tokenLoading || isLoading || isFetching) {
+        return <AppLoader />;
     }
-  }, [refetch, token]);
 
-  if (tokenLoading || isLoading || isFetching) {
-    return <AppLoader />;
-  }
+    if (isError && isConnected) {
+        return <AppNetworkErr onRefetch={handleRefetch} />;
+    }
 
-  if (isError && isConnected) {
-    return <AppNetworkErr onRefetch={handleRefetch} />;
-  }
-
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 export default AuthProvider;
