@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {ImageRequireSource} from 'react-native';
 import {
     DashboardItem,
@@ -18,6 +18,7 @@ import SalesIcon from '../../../assets/icons/sales-icon.png';
 import UsersIcon from '../../../assets/icons/users-icon.png';
 import NoResult from '../../components/errors/NoResult/NoResult';
 import {TDate} from '../../types/types';
+import MainDateRangePicker from '../../components/ui/MainDateRangePicker/MainDateRangePicker';
 
 const AnalyticsScreen = () => {
     // State
@@ -71,20 +72,23 @@ const AnalyticsScreen = () => {
         }
     }, [dashboardRes]);
 
-    return dashboardRes.isLoading || dashboardRes.isFetching ? (
+    const handleChangeDate = useCallback((value: TDate) => {
+        setDate(value);
+    }, []);
+
+    return (
         <Container>
-            <Text>Yuklanmoqda...</Text>
-        </Container>
-    ) : !totalData ? (
-        <Container>
-            <NoResult
-                title="Ma'lumot topilmadi"
-                desc="Hozircha sizda jami ma'lumotlar topilmadi"
-            />
-        </Container>
-    ) : (
-        <Container>
-            <DashboardCardList list={totalData} />
+            <MainDateRangePicker setValue={handleChangeDate} />
+            {dashboardRes.isLoading || dashboardRes.isFetching ? (
+                <Text>Yuklanmoqda...</Text>
+            ) : !totalData ? (
+                <NoResult
+                    title="Ma'lumot topilmadi"
+                    desc="Hozircha sizda jami ma'lumotlar topilmadi"
+                />
+            ) : (
+                <DashboardCardList list={totalData} />
+            )}
         </Container>
     );
 };
