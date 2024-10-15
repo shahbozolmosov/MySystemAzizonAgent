@@ -7,7 +7,6 @@ export interface DashboardCardProps extends DashboardItem {
 }
 
 const DashboardCard = ({name, value, icon}: DashboardCardProps) => {
-    console.log('🚀 ~ DashboardCard ~ name:', name);
     return (
         <View style={styles.container}>
             <View style={styles.body}>

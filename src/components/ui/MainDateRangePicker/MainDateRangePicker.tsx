@@ -52,7 +52,7 @@ const MainDateRangePicker = ({setValue}: MainDateRangePickerProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
-                <Text style={styles.label}>Start Date</Text>
+                <Text style={styles.label}>Sana 1</Text>
                 <TouchableOpacity
                     onPress={() => setShowStartPicker(true)}
                     style={styles.input}>
@@ -72,7 +72,7 @@ const MainDateRangePicker = ({setValue}: MainDateRangePickerProps) => {
             )}
 
             <View style={styles.inputContainer}>
-                <Text style={styles.label}>End Date</Text>
+                <Text style={styles.label}>Sana 2</Text>
                 <TouchableOpacity
                     onPress={() => setShowEndPicker(true)}
                     style={styles.input}>
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20,
     },
     inputContainer: {
         flex: 1,
@@ -109,18 +108,20 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         fontFamily: 'Roboto-Light',
         fontSize: 12,
+        fontWeight: '300',
     },
     input: {
         borderWidth: 1,
         borderColor: '#ccc',
-        padding: 10,
-        borderRadius: 4,
+        padding: 6,
+        borderRadius: 6,
         textAlign: 'center',
     },
     inputText: {
         fontFamily: 'Roboto-Regular',
-        fontWeight: '400',
         fontSize: 16,
+        fontWeight: '400',
+        textAlign: 'center',
     },
 });
 
