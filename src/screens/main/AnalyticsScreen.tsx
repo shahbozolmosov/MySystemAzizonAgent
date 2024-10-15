@@ -47,13 +47,11 @@ const AnalyticsScreen = () => {
                     icon = OrderIcon;
                     break;
                 case 'orders':
-                    icon = OrderIcon;
+                    icon = SalesIcon;
                     break;
                 case 'default':
                     icon = PaymentIcon;
                     break;
-                default:
-                    icon = SalesIcon;
             }
             return {
                 ...item,
