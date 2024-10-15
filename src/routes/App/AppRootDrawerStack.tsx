@@ -3,9 +3,9 @@ import React, {useCallback} from 'react';
 import AppRootDrawerContent from '../../components/common/AppRootDrawerContent/AppRootDrawerContent.tsx';
 import CustomerAddScreen from '../../screens/customer/CustomerAddScreen.tsx';
 import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
-import ProfileScreen from '../../screens/main/ProfileScreen';
-import AppOrderStackScreen from './AppOrderStackScreen.tsx';
-import AppTabStack from './AppTabStack';
+import ProfileScreen from '../../screens/main/ProfileScreen'; 
+import AppTabStack from './AppTabStack'; 
+import AppOrderNativeStack from './Order/AppOrderNativeStack.tsx';
 
 export type AppRootDrawerStackParamList = {
     AppTabStack: undefined;
@@ -54,7 +54,7 @@ const AppRootDrawerStack = () => {
             <Drawer.Screen name={'CustomerAdd'} component={CustomerAddScreen} />
             <Drawer.Screen
                 name="AppOrderStack"
-                component={AppOrderStackScreen}
+                component={AppOrderNativeStack}
             />
             <Drawer.Screen
                 name="CustomerReport"

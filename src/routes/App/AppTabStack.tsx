@@ -3,9 +3,9 @@ import React, {useCallback} from 'react';
 import AppHeader from '../../components/common/AppHeader/AppHeader.tsx';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel.tsx';
 import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
-import {TabBarLabelProps} from '../../types/types.ts';
-import AppCustomerDayTabStack from './AppCustomerDayTabStack.tsx';
+import {TabBarLabelProps} from '../../types/types.ts'; 
 import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
+import AppCustomerDayTabStack from './Customer/AppCustomerDayTabStack.tsx';
 
 export type AppTabStackParamList = {
     // App customer

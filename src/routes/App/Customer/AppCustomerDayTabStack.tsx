@@ -1,7 +1,7 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
-import AppCustomerDayScreen from '../../screens/main/customer/AppCustomerDayScreen';
-import {AppTabStackParamList} from './AppTabStack';
+import React from 'react'; 
+import AppCustomerDayScreen from '../../../screens/main/customer/AppCustomerDayScreen';
+import { AppTabStackParamList } from '../AppTabStack';
 
 const Tab = createMaterialTopTabNavigator<AppTabStackParamList>();
 

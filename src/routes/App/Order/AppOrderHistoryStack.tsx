@@ -1,22 +1,22 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useCallback} from 'react';
-import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
-import IconButton from '../../components/ui/IconButton/IconButton';
-import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
-import AppOrderHistoryDelivered from '../../screens/main/order/AppOrderHistoryDelivered';
-import AppOrderHistoryDraft from '../../screens/main/order/AppOrderHistoryDraft';
-import AppOrderHistoryProcess from '../../screens/main/order/AppOrderHistoryProcess';
-import {TabBarLabelProps} from '../../types/types';
+import CustomerHeaderOperation from '../../../components/customer/CustomerOperation/CustomerHeaderOperation';
+import IconButton from '../../../components/ui/IconButton/IconButton';
+import TabBarLabel from '../../../components/ui/TabBar/TabBarLabel';
+import AppOrderHistoryDelivered from '../../../screens/main/order/AppOrderHistoryDelivered';
+import AppOrderHistoryDraft from '../../../screens/main/order/AppOrderHistoryDraft';
+import AppOrderHistoryProcess from '../../../screens/main/order/AppOrderHistoryProcess';
+import {TabBarLabelProps} from '../../../types/types';
 
-export type AppOrderHistoryStackRootList = {
+export type AppOrderHistoryStackParamList = {
     Process: undefined;
     Delivered: undefined;
     OrderDraft: undefined;
 };
 
-const Tab = createMaterialTopTabNavigator<AppOrderHistoryStackRootList>();
+const Tab = createMaterialTopTabNavigator<AppOrderHistoryStackParamList>();
 
-const AppOrderHistoryStackScreen = () => {
+const AppOrderHistoryStack = () => {
     const tabBarLabel = useCallback(
         (props: TabBarLabelProps, tabRoute: {name: string}) => {
             let label = 'Jarayonda';
@@ -74,4 +74,4 @@ const AppOrderHistoryStackScreen = () => {
     );
 };
 
-export default AppOrderHistoryStackScreen;
+export default React.memo(AppOrderHistoryStack);
