@@ -1,8 +1,13 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
+// type NavigationProp = 
+
 const CustomerCardAdd = () => {
+    const navigation = useNavigation();
+    
     return (
         <TouchableOpacity style={styles.btn}>
             <Icon style={styles.icon} size={24} name="plus" />

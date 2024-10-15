@@ -7,7 +7,7 @@ import ProfileScreen from '../../screens/main/ProfileScreen';
 import AppOrderStackScreen from './AppOrderStackScreen.tsx';
 import AppTabStack from './AppTabStack';
 
-export type AppDrawerStackParamList = {
+export type AppRootDrawerStackParamList = {
     AppTabStack: undefined;
     Profile: undefined;
     CreateCustomer: undefined;
@@ -22,9 +22,9 @@ export type AppDrawerStackParamList = {
     CustomerAdd: undefined;
 };
 
-const Drawer = createDrawerNavigator<AppDrawerStackParamList>();
+const Drawer = createDrawerNavigator<AppRootDrawerStackParamList>();
 
-const AppRootStack = () => {
+const AppRootDrawerStack = () => {
     const drawerContent = useCallback(() => <AppRootDrawerContent />, []);
 
     return (
@@ -64,4 +64,4 @@ const AppRootStack = () => {
     );
 };
 
-export default React.memo(AppRootStack);
+export default React.memo(AppRootDrawerStack);
