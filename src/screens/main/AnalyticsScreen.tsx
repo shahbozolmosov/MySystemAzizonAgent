@@ -84,7 +84,7 @@ const AnalyticsScreen = () => {
         <Container>
             <MainDateRangePicker setValue={handleChangeDate} />
 
-            {dashboardRes.isLoading || dashboardRes.isFetching || true? (
+            {dashboardRes.isLoading || dashboardRes.isFetching ? (
                 <MainLoader />
             ) : !isConnected ? (
                 <NoInternet
