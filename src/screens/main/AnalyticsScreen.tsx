@@ -35,7 +35,7 @@ const AnalyticsScreen = () => {
 
     // APi
     const dashboardRes = useGetDashboardQuery(date, {
-        skip: !isFocused,
+        skip: !isFocused || !isConnected,
     });
 
     // Memo
