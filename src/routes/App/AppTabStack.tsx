@@ -11,6 +11,7 @@ export type AppTabStackParamList = {
     // App customer
     AppCustomerDayTabStack: undefined;
     AppCustomerDay: {dayId: string};
+    AppCustomerDayAdd: {dayId: string};
 
     Analytics: undefined;
 };

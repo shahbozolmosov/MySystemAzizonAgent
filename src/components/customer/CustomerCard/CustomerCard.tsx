@@ -18,11 +18,9 @@ const CustomerCard = ({
 }: ICustomerCardProps) => {
     const arrFio = fio?.split(' ');
     let firstName = '';
-    let lastName = '';
 
     if (fio) {
         firstName = arrFio[0];
-        lastName = arrFio[1];
     }
 
     const handleNavigate = useCallback(() => {

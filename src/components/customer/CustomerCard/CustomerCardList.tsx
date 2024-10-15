@@ -4,6 +4,7 @@ import React, {useCallback} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import CustomerCard, {ICustomerCard} from './CustomerCard';
+import CustomerCardAdd from './CustomerCardAdd';
 
 type CustomerCardListProps = {
     list: ICustomerCard[];
@@ -37,6 +38,7 @@ const CustomerCardList = ({list}: CustomerCardListProps) => {
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 showsVerticalScrollIndicator={false}
+                ListHeaderComponent={<CustomerCardAdd />}
             />
         </View>
     );
