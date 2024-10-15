@@ -3,11 +3,15 @@ import React, {useCallback} from 'react';
 import AppHeader from '../../components/common/AppHeader/AppHeader.tsx';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel.tsx';
 import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
-import HomeScreen from '../../screens/main/HomeScreen';
 import {TabBarLabelProps} from '../../types/types.ts';
+import AppCustomerDayTabStack from './AppCustomerDayTabStack.tsx';
+import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
 
 export type AppTabStackParamList = {
-    Home: undefined;
+    // App customer
+    AppCustomerDayTabStack: undefined;
+    AppCustomerDay: {dayId: string};
+
     Analytics: undefined;
 };
 
@@ -39,7 +43,7 @@ const AppTabStack = () => {
         <>
             <AppHeader />
             <Tab.Navigator
-                initialRouteName="Home"
+                initialRouteName="AppCustomerDayTabStack"
                 screenOptions={({route: TabRoute}) => ({
                     tabBarStyle: {
                         elevation: 0,
@@ -47,9 +51,13 @@ const AppTabStack = () => {
                     tabBarLabel: props => tabBarLabel(props, TabRoute),
                     tabBarPressColor: 'transparent',
                 })}>
-                <Tab.Screen name="Home" component={HomeScreen} />
+                <Tab.Screen
+                    name="AppCustomerDayTabStack"
+                    component={AppCustomerDayTabStack}
+                />
                 <Tab.Screen name="Analytics" component={AnalyticsScreen} />
             </Tab.Navigator>
+            <SyncBtn />
         </>
     );
 };
