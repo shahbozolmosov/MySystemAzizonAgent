@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {FlatList} from 'react-native';
 import DashboardCard, {DashboardCardProps} from './DashboardCard';
 
 type DashboardCardListProps = {
@@ -7,18 +7,17 @@ type DashboardCardListProps = {
 };
 
 const DashboardCardList = ({list}: DashboardCardListProps) => {
+    const renderItem = useCallback(({item}: {item: DashboardCardProps}) => {
+        return <DashboardCard {...item} />;
+    }, []);
+
     return (
-        <View style={styles.list}>
-            {list.map(item => (
-                <DashboardCard {...item} />
-            ))}
-        </View>
+        <FlatList
+            data={list}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+        />
     );
 };
 
-const styles = StyleSheet.create({
-    list: {
-        gap: 16,
-    },
-});
 export default React.memo(DashboardCardList);

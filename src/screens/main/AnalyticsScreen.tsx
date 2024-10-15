@@ -5,9 +5,7 @@ import {
     useGetDashboardQuery,
 } from '../../app/services/dashboard/dashboard';
 import Container from '../../components/common/Container/Container';
-import DashboardCard, {
-    DashboardCardProps,
-} from '../../components/common/DashboardCard/DashboardCard';
+import {DashboardCardProps} from '../../components/common/DashboardCard/DashboardCard';
 import DashboardCardList from '../../components/common/DashboardCard/DashboardCardList';
 import {handleApiResponse} from '../../utils/handleApiResponse';
 // Icons
@@ -15,6 +13,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {Text} from '@rneui/themed';
 import Toast from 'react-native-toast-message';
 import OrderIcon from '../../../assets/icons/order-icon.png';
+import PaymentIcon from '../../../assets/icons/payment-icon.png';
 import SalesIcon from '../../../assets/icons/sales-icon.png';
 import UsersIcon from '../../../assets/icons/users-icon.png';
 import NoResult from '../../components/errors/NoResult/NoResult';
@@ -46,7 +45,7 @@ const AnalyticsScreen = () => {
                     icon = OrderIcon;
                     break;
                 case 'default':
-                    icon = SalesIcon;
+                    icon = PaymentIcon;
                     break;
                 default:
                     icon = SalesIcon;
@@ -84,8 +83,7 @@ const AnalyticsScreen = () => {
             />
         </Container>
     ) : (
-        <Container paddingHorizontal={14}>
-            {totalData && <DashboardCard {...totalData[1]} icon={SalesIcon} />}
+        <Container>
             <DashboardCardList list={totalData} />
         </Container>
     );
