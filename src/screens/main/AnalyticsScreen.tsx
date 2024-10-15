@@ -10,17 +10,17 @@ import DashboardCardList from '../../components/common/DashboardCard/DashboardCa
 import {handleApiResponse} from '../../utils/handleApiResponse';
 // Icons
 import {useIsFocused} from '@react-navigation/native';
-import {Text} from '@rneui/themed';
 import Toast from 'react-native-toast-message';
 import OrderIcon from '../../../assets/icons/order-icon.png';
 import PaymentIcon from '../../../assets/icons/payment-icon.png';
 import SalesIcon from '../../../assets/icons/sales-icon.png';
 import UsersIcon from '../../../assets/icons/users-icon.png';
-import NoResult from '../../components/errors/NoResult/NoResult';
-import {TDate} from '../../types/types';
-import MainDateRangePicker from '../../components/ui/MainDateRangePicker/MainDateRangePicker';
-import {useNetIsConnected} from '../../hook/useNetIsConnected';
 import NoInternet from '../../components/errors/NoInternet/NoInternet';
+import NoResult from '../../components/errors/NoResult/NoResult';
+import MainDateRangePicker from '../../components/ui/MainDateRangePicker/MainDateRangePicker';
+import MainLoader from '../../components/ui/MainLoader/MainLoader';
+import {useNetIsConnected} from '../../hook/useNetIsConnected';
+import {TDate} from '../../types/types';
 
 const AnalyticsScreen = () => {
     // State
@@ -83,8 +83,9 @@ const AnalyticsScreen = () => {
     return (
         <Container>
             <MainDateRangePicker setValue={handleChangeDate} />
-            {dashboardRes.isLoading || dashboardRes.isFetching ? (
-                <Text>Yuklanmoqda...</Text>
+
+            {dashboardRes.isLoading || dashboardRes.isFetching || true? (
+                <MainLoader />
             ) : !isConnected ? (
                 <NoInternet
                     refetch={dashboardRes.refetch}
