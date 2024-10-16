@@ -79,7 +79,7 @@ const AnalyticsScreen = () => {
     }, []);
 
     return (
-        <Container>
+        <Container safeArea={false}>
             <MainDateRangePicker setValue={handleChangeDate} />
 
             {dashboardRes.isLoading || dashboardRes.isFetching ? (
