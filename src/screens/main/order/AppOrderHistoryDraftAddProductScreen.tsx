@@ -9,7 +9,7 @@ import NoResult from '../../../components/errors/NoResult/NoResult';
 import IconButton from '../../../components/ui/IconButton/IconButton';
 import {getAllProducts} from '../../../database/products';
 import {getDBConnection} from '../../../database/sqlite';
-import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootStack';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack';
 
 type AppOrderHistoryDraftAddProductScreenProps = NativeStackScreenProps<
     AppRootDrawerStackParamList,

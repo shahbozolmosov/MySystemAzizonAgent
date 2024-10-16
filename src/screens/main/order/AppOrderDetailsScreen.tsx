@@ -1,7 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootStack';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack';
 import {Order} from '../../../app/services/order/order';
 import {getDBConnection} from '../../../database/sqlite';
 import {getOrderById} from '../../../database/order';

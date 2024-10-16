@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import {logout} from '../../app/services/auth/authSlice';
 import AppPageHeader from '../../components/common/AppPageHeader/AppPageHeader';
 import Container from '../../components/common/Container/Container';
-import {AppRootDrawerStackParamList} from '../../routes/App/AppRootStack';
+import {AppRootDrawerStackParamList} from '../../routes/App/AppRootDrawerStack';
 import {useDispatch} from 'react-redux';
 import {apiSlice} from '../../app/services/apiSlice.ts';
 
