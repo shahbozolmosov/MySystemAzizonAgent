@@ -8,13 +8,15 @@ import AppNativeStack from './AppNativeStack.tsx';
 import AppOrderNativeStack from './Order/AppOrderNativeStack.tsx';
 
 export type AppRootDrawerStackParamList = {
+    // Stack
     AppNativeStack: undefined;
+    AppOrderHistoryStack: undefined;
+    AppOrderStack: undefined;
+
     Profile: undefined;
     CreateCustomer: undefined;
 
     // Order
-    AppOrderHistoryStack: undefined;
-    AppOrderStack: undefined;
     AppOrderDetails: {orderId: string};
     AppOrderDraftDetails: {customerId: string; orderId: string};
     AppOrderDraftAddProduct: {customerId: string; orderId: string};
