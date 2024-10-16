@@ -1,6 +1,5 @@
 import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 import React, {useEffect, useState} from 'react';
-import Container from '../../../components/common/Container/Container.tsx';
 import {ICustomerCard} from '../../../components/customer/CustomerCard/CustomerCard.tsx';
 import CustomerCardList from '../../../components/customer/CustomerCard/CustomerCardList';
 import {getAllCustomers} from '../../../database/customers.ts';
