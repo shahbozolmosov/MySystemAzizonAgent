@@ -59,32 +59,30 @@ const AppOrderHistoryDraftAddProductScreen = ({
 
     return (
         <Container>
-            <Container>
-                <CustomerHeaderOperation
-                    title="Umumiy"
-                    showSearch
-                    setSearchVal={handleChangeSearch}
-                    customElements={
-                        <>
-                            <IconButton icon="filter" />
-                        </>
-                    }
+            <CustomerHeaderOperation
+                title="Umumiy"
+                showSearch
+                setSearchVal={handleChangeSearch}
+                customElements={
+                    <>
+                        <IconButton icon="filter" />
+                    </>
+                }
+            />
+            {isLoading ? (
+                <Text>Loading...</Text>
+            ) : !filteredProducts.length ? (
+                <NoResult
+                    title="Mahlumotlar topilmadi"
+                    desc="Hozircha sizda buyurtmalar mavjud emas!"
                 />
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) : !filteredProducts.length ? (
-                    <NoResult
-                        title="Mahlumotlar topilmadi"
-                        desc="Hozircha sizda buyurtmalar mavjud emas!"
-                    />
-                ) : (
-                    <OrderDraftProductCardList
-                        orderDraftId={orderId}
-                        list={filteredProducts}
-                        deleteBtn={false}
-                    />
-                )}
-            </Container>
+            ) : (
+                <OrderDraftProductCardList
+                    orderDraftId={orderId}
+                    list={filteredProducts}
+                    deleteBtn={false}
+                />
+            )}
         </Container>
     );
 };
