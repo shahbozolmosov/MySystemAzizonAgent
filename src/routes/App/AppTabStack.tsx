@@ -1,22 +1,14 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useCallback} from 'react';
 import AppHeader from '../../components/common/AppHeader/AppHeader.tsx';
+import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel.tsx';
 import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
-import {TabBarLabelProps} from '../../types/types.ts'; 
-import SyncBtn from '../../components/common/SyncBtn/SyncBtn.tsx';
+import {TabBarLabelProps} from '../../types/types.ts';
+import {AppNativeStackParamList} from './AppNativeStack.tsx';
 import AppCustomerDayTabStack from './Customer/AppCustomerDayTabStack.tsx';
 
-export type AppTabStackParamList = {
-    // App customer
-    AppCustomerDayTabStack: undefined;
-    AppCustomerDay: {dayId: string};
-    AppCustomerDayAdd: {dayId: string};
-
-    Analytics: undefined;
-};
-
-const Tab = createMaterialTopTabNavigator<AppTabStackParamList>();
+const Tab = createMaterialTopTabNavigator<AppNativeStackParamList>();
 
 const AppTabStack = () => {
     const tabBarLabel = useCallback(

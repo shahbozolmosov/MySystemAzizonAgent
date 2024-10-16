@@ -5,10 +5,10 @@ import {ICustomerCard} from '../../../components/customer/CustomerCard/CustomerC
 import CustomerCardList from '../../../components/customer/CustomerCard/CustomerCardList';
 import {getAllCustomers} from '../../../database/customers.ts';
 import {getDBConnection} from '../../../database/sqlite.ts';
-import {AppTabStackParamList} from '../../../routes/App/AppTabStack.tsx';
+import {AppNativeStackParamList} from '../../../routes/App/AppNativeStack.tsx';
 
 type AppCustomerDayScreenProps = MaterialTopTabScreenProps<
-    AppTabStackParamList,
+    AppNativeStackParamList,
     'AppCustomerDay'
 >;
 

@@ -1,9 +1,9 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react'; 
+import React from 'react';
 import AppCustomerDayScreen from '../../../screens/main/customer/AppCustomerDayScreen';
-import { AppTabStackParamList } from '../AppTabStack';
+import {AppNativeStackParamList} from '../AppNativeStack';
 
-const Tab = createMaterialTopTabNavigator<AppTabStackParamList>();
+const Tab = createMaterialTopTabNavigator<AppNativeStackParamList>();
 
 interface TabItem {
     label: string;

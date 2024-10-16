@@ -3,14 +3,15 @@ import React, {useCallback} from 'react';
 import AppRootDrawerContent from '../../components/common/AppRootDrawerContent/AppRootDrawerContent.tsx';
 import CustomerAddScreen from '../../screens/customer/CustomerAddScreen.tsx';
 import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
-import ProfileScreen from '../../screens/main/ProfileScreen'; 
-import AppTabStack from './AppTabStack'; 
+import ProfileScreen from '../../screens/main/ProfileScreen';
+import AppNativeStack from './AppNativeStack.tsx';
 import AppOrderNativeStack from './Order/AppOrderNativeStack.tsx';
 
 export type AppRootDrawerStackParamList = {
-    AppTabStack: undefined;
+    AppNativeStack: undefined;
     Profile: undefined;
     CreateCustomer: undefined;
+
     // Order
     AppOrderHistoryStack: undefined;
     AppOrderStack: undefined;
@@ -18,6 +19,7 @@ export type AppRootDrawerStackParamList = {
     AppOrderDraftDetails: {customerId: string; orderId: string};
     AppOrderDraftAddProduct: {customerId: string; orderId: string};
 
+    // Customer
     CustomerReport: undefined;
     CustomerAdd: undefined;
 };
@@ -33,10 +35,10 @@ const AppRootDrawerStack = () => {
                 headerShown: false,
             }}
             drawerContent={drawerContent}
-            initialRouteName="AppTabStack">
+            initialRouteName="AppNativeStack">
             <Drawer.Screen
-                name="AppTabStack"
-                component={AppTabStack}
+                name="AppNativeStack"
+                component={AppNativeStack}
                 options={{
                     drawerItemStyle: {
                         display: 'none',
