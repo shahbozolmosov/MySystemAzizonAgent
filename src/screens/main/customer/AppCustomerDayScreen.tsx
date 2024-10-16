@@ -37,9 +37,9 @@ function AppCustomerDayScreen({route}: AppCustomerDayScreenProps) {
     }, []);
 
     return (
-        <Container>
+        <>
             <CustomerCardList list={customerData} />
-        </Container>
+        </>
     );
 }
 

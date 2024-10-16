@@ -7,6 +7,7 @@ import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
 import {TabBarLabelProps} from '../../types/types.ts';
 import {AppNativeStackParamList} from './AppNativeStack.tsx';
 import AppCustomerDayTabStack from './Customer/AppCustomerDayTabStack.tsx';
+import Container from '../../components/common/Container/Container.tsx';
 
 const Tab = createMaterialTopTabNavigator<AppNativeStackParamList>();
 
@@ -33,7 +34,7 @@ const AppTabStack = () => {
         [],
     );
     return (
-        <>
+        <Container>
             <AppHeader />
             <Tab.Navigator
                 initialRouteName="AppCustomerDayTabStack"
@@ -51,7 +52,7 @@ const AppTabStack = () => {
                 <Tab.Screen name="Analytics" component={AnalyticsScreen} />
             </Tab.Navigator>
             <SyncBtn />
-        </>
+        </Container>
     );
 };
 
