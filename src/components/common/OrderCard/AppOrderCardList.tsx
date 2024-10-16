@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
 import {FlatList} from 'react-native';
-import {AppDrawerStackParamList} from '../../../routes/App/AppRootStack.tsx';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack.tsx';
 import OrderCard, {IOrderCard} from './OrderCard';
 
 type OrderCardList = {
@@ -10,7 +10,7 @@ type OrderCardList = {
 };
 
 type CustomerCardListNavigationProp =
-    NativeStackNavigationProp<AppDrawerStackParamList>;
+    NativeStackNavigationProp<AppRootDrawerStackParamList>;
 
 const AppOrderCardList = ({list}: OrderCardList) => {
     const navigation = useNavigation<CustomerCardListNavigationProp>();

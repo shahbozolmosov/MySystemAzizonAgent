@@ -1,12 +1,12 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {AppDrawerStackParamList} from '../../../routes/App/AppRootStack.tsx';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack.tsx';
 import DrawerItemBtn from '../../ui/DrawerItemBtn/DrawerItemBtn.tsx';
 import DrawerProfile from '../DrawerProfile/DrawerProfile.tsx';
 
 type DrawerProfileNavigationProp =
-    DrawerNavigationProp<AppDrawerStackParamList>;
+    DrawerNavigationProp<AppRootDrawerStackParamList>;
 
 const CustomerDrawerContent = () => {
     const navigation = useNavigation<DrawerProfileNavigationProp>();

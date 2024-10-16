@@ -7,12 +7,12 @@ import ProfileImage from '../../../../assets/profile.png';
 import {IUser} from '../../../app/services/user/user.ts';
 import {getDBConnection} from '../../../database/sqlite.ts';
 import {getUser} from '../../../database/user.ts';
-import {AppDrawerStackParamList} from '../../../routes/App/AppRootStack.tsx';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack.tsx';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../../app/services/auth/authSlice.ts';
 
 type DrawerProfileNavigationProp = NativeStackNavigationProp<
-  AppDrawerStackParamList,
+  AppRootDrawerStackParamList,
   'Profile'
 >;
 

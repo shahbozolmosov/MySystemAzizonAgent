@@ -25,11 +25,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import {getLocation} from '../../utils/getLocation.ts';
 import Toast from 'react-native-toast-message';
 import {handleError} from '../../utils/errorHandler.ts';
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {AppDrawerStackParamList} from '../../routes/App/AppRootStack.tsx';
+import {DrawerScreenProps} from '@react-navigation/drawer'; 
+import { AppRootDrawerStackParamList } from '../../routes/App/AppRootDrawerStack.tsx';
 
 type CustomerAddScreenProps = DrawerScreenProps<
-  AppDrawerStackParamList,
+  AppRootDrawerStackParamList,
   'CustomerAdd'
 >;
 

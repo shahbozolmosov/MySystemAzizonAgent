@@ -5,11 +5,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import {logout} from '../../app/services/auth/authSlice';
 import AppPageHeader from '../../components/common/AppPageHeader/AppPageHeader';
 import Container from '../../components/common/Container/Container';
-import {AppDrawerStackParamList} from '../../routes/App/AppRootStack';
+import {AppRootDrawerStackParamList} from '../../routes/App/AppRootStack';
 import {useDispatch} from 'react-redux';
 import {apiSlice} from '../../app/services/apiSlice.ts';
 
-type ProfileScreenProps = DrawerScreenProps<AppDrawerStackParamList, 'Profile'>;
+type ProfileScreenProps = DrawerScreenProps<AppRootDrawerStackParamList, 'Profile'>;
 
 const ProfileScreen = ({navigation}: ProfileScreenProps) => {
   const dispatch = useDispatch();

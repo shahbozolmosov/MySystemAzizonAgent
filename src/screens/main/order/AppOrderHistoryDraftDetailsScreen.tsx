@@ -4,7 +4,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {useDispatch} from 'react-redux';
-import {AppDrawerStackParamList} from '../../../routes/App/AppRootStack.tsx';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack.tsx';
 import { AddOrderDraft, createOrdersDraftTable, OrderDraft } from '../../../database/tables/orderDraft.table.ts';
 import { useTypesSelector } from '../../../app/store.ts';
 import { clearOrderProduct, selectedOrderDraftProducts, setOrderDraftProductMultiple } from '../../../app/services/order/orderSlice.ts';
@@ -20,7 +20,7 @@ import OrderDraftProductCardList from '../../../components/common/OrderDraftProd
 import OrderDraftProductAddCard from '../../../components/common/OrderDraftProductCard/OrderDraftProductAddCard.tsx';
 
 type AppOrderHistoryDraftDetailsScreenProps = NativeStackScreenProps<
-    AppDrawerStackParamList,
+    AppRootDrawerStackParamList,
     'AppOrderDraftDetails'
 >;
 
