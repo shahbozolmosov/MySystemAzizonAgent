@@ -39,7 +39,7 @@ const AppOrderHistoryProcess = () => {
     }, []);
 
     return (
-        <Container safeArea={false}>
+        <Container>
             {isLoading ? (
                 <Text>Loading...</Text>
             ) : orderData.length === 0 ? (

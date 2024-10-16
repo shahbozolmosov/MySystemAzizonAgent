@@ -37,7 +37,7 @@ function AppCustomerDayScreen({route}: AppCustomerDayScreenProps) {
     }, []);
 
     return (
-        <Container safeArea={false}>
+        <Container>
             <CustomerCardList list={customerData} />
         </Container>
     );
