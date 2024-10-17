@@ -1,7 +1,7 @@
 import SQLite from 'react-native-sqlite-storage';
 
 export const createCustomersTable = async (db: SQLite.SQLiteDatabase) => {
-  const query = `
+    const query = `
     CREATE TABLE IF NOT EXISTS Customers (
       uid INTEGER PRIMARY KEY AUTOINCREMENT,
       id TEXT UNIQUE NOT NULL,
@@ -27,21 +27,21 @@ export const createCustomersTable = async (db: SQLite.SQLiteDatabase) => {
     );
   `;
 
-  try {
-    await db.executeSql(query);
-    console.log('Customers table created successfully');
-  } catch (error) {
-    console.error('Error creating Customers table: ', error);
-  }
+    try {
+        await db.executeSql(query);
+        console.log('✅ Customers table created successfully');
+    } catch (error) {
+        console.error('❌ Error creating Customers table: ', error);
+    }
 };
 
 export const removeCustomersTable = async (db: SQLite.SQLiteDatabase) => {
-  const query = `DROP TABLE IF EXISTS Customers;`;
+    const query = `DROP TABLE IF EXISTS Customers;`;
 
-  try {
-    await db.executeSql(query);
-    console.log('Customers table deleted successfully');
-  } catch (error) {
-    console.log('Error deleting customer: ', error);
-  }
+    try {
+        await db.executeSql(query);
+        console.log('✅ Customers table deleted successfully');
+    } catch (error) {
+        console.log('❌ Error deleting customer: ', error);
+    }
 };

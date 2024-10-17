@@ -32,6 +32,7 @@ import {addMultipleOrders, getAllOrders} from '../../database/order.ts';
 import {createOrdersTable} from '../../database/tables/orders.table.ts';
 import { createUserTable } from '../../database/tables/user.table.ts';
 import { createOrdersDraftTable } from '../../database/tables/orderDraft.table.ts';
+import { createDayTable } from '../../database/tables/day.table.ts';
 
 type StarterScreenProps = NativeStackScreenProps<RootStackParamList, 'Starter'>;
 
@@ -75,6 +76,7 @@ function StarterScreen({navigation}: StarterScreenProps) {
         try {
           const db = await getDBConnection();
           // Create tables
+          await createDayTable(db);
           await createUserTable(db);
           await createCustomersTable(db);
           await createProductsTable(db);
@@ -83,7 +85,7 @@ function StarterScreen({navigation}: StarterScreenProps) {
 
           const allCustomersDB = await getAllCustomers(db);
           const allProductsDB = await getAllProducts(db);
-          const allOrdersDB = await getAllOrders(db);
+          const allOrdersDB = await getAllOrders(db, []);
 
           const addedCustomers = customerData.filter(item => {
             if (allCustomersDB && allCustomersDB.length) {
