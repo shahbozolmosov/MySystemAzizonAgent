@@ -12,6 +12,7 @@ import {
 import {TDate} from '../../../types/types';
 import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 import MainLoader from '../../../components/ui/MainLoader/MainLoader';
+import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/MainDateRangePicker';
 
 const columns: TableColumn[] = [
     {
@@ -20,30 +21,30 @@ const columns: TableColumn[] = [
         align: 'left',
     },
     {
-        title: 'debit',
+        title: 'Debit',
         dataIndex: 'debit',
     },
     {
-        title: 'kredit',
+        title: 'Kredit',
         dataIndex: 'kredit',
     },
     {
-        title: 'izoh',
+        title: 'Izoh',
         dataIndex: 'izoh',
     },
     {
-        title: 'status',
+        title: 'Status',
         dataIndex: 'status',
     },
     {
-        title: 'sana',
+        title: 'Sana',
         dataIndex: 'sana',
     },
 ];
 
 const CustomerReportScreen = () => {
     // State
-    const [date] = useState<TDate>({
+    const [date, setDate] = useState<TDate>({
         start: '01.01.2023',
         end: '19.10.2024',
     });
@@ -82,7 +83,10 @@ const CustomerReportScreen = () => {
             {dataRes.isLoading ? (
                 <MainLoader />
             ) : (
-                <Table columns={columns} data={tableData} />
+                <>
+                    <MainDateRangePicker setValue={setDate} />
+                    <Table columns={columns} data={tableData} />
+                </>
             )}
         </Container>
     );
