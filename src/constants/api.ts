@@ -1,6 +1,7 @@
 import {OrderAllParams} from '../app/services/order/order';
 import {TDate} from '../types/types';
 import {ProductAllParam} from '../app/services/product/product.ts';
+import {ReportGetParams} from '../app/services/customerReport/customerReport.ts';
 
 export const baseUrl = 'https://azizon-system.uz/api-demo';
 
@@ -60,4 +61,8 @@ export const allUrls = {
 
     // Visit
     visitAdd: '/agent/add-tashrif.php',
+
+    // Reports
+    customerReportGet: ({customerId, date}: ReportGetParams) =>
+        `/sotuv/get-mijoz-report.php?client_id=${customerId}&sana1=${date.start}&sana2=${date.end}`,
 };
