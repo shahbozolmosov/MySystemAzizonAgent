@@ -89,7 +89,6 @@ const TabNavigation = () => {
                 options={{
                     tabBarLabel: 'Buyurtma',
                     tabBarItemStyle: {display: 'none'},
-                    tabBarShowLabel: false,
                 }}
                 initialParams={{customerId}}
             />
@@ -108,6 +107,7 @@ const TabNavigation = () => {
                 options={{
                     tabBarLabel: 'Hisobot',
                     tabBarIcon: props => icon({...props, name: 'file-text'}),
+                    tabBarStyle: {display: 'none'},
                 }}
                 initialParams={{customerId}}
             />
