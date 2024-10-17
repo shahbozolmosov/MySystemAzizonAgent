@@ -5,7 +5,7 @@ import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import CustomerHomeScreen from '../../screens/customer/CustomerHomeScreen';
 import CustomerOrderAddScreen from '../../screens/customer/CustomerOrderAddScreen';
-import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
+import CustomerReportScreen from '../../screens/customer/reports/CustomerReportScreen';
 import CustomerVisitScreen from '../../screens/customer/CustomerVisitScreen';
 import AnalyticsScreen from '../../screens/main/AnalyticsScreen';
 import {ITabBarIconProps} from '../../types/types';

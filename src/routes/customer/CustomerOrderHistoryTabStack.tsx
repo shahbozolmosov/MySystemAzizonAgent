@@ -6,11 +6,12 @@ import Icon from 'react-native-vector-icons/Feather';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import IconButton from '../../components/ui/IconButton/IconButton';
 import TabBarLabel from '../../components/ui/TabBar/TabBarLabel';
-import CustomerOrderDelivered from '../../screens/customer/CustomerOrderDeliveredScreen';
+import CustomerOrderDeliveredScreen from '../../screens/customer/CustomerOrderDeliveredScreen';
 import CustomerOrderDraftScreen from '../../screens/customer/CustomerOrderDraftScreen.tsx';
-import CustomerOrderProcess from '../../screens/customer/CustomerOrderProcessScreen';
+import CustomerOrderProcessScreen from '../../screens/customer/CustomerOrderProcessScreen';
 import {TabBarLabelProps} from '../../types/types.ts';
 import {CustomerTabStackParamList} from './CustomerStack';
+import Container from '../../components/common/Container/Container.tsx';
 
 export type CustomerOrderHistoryTabStackParamList = {
     Process: {customerId: string};
@@ -57,7 +58,7 @@ const CustomerOrderHistoryTabStack = ({
     );
 
     return (
-        <View style={styles.container}>
+        <Container>
             <Pressable onPress={handleNavigate} style={styles.addBtnContainer}>
                 <Icon name={'plus'} size={20} color={'#ffffff'} />
             </Pressable>
@@ -88,12 +89,12 @@ const CustomerOrderHistoryTabStack = ({
                 })}>
                 <Tab.Screen
                     name="Process"
-                    component={CustomerOrderProcess}
+                    component={CustomerOrderProcessScreen}
                     initialParams={{customerId}}
                 />
                 <Tab.Screen
                     name="Delivered"
-                    component={CustomerOrderDelivered}
+                    component={CustomerOrderDeliveredScreen}
                     initialParams={{customerId}}
                 />
                 <Tab.Screen
@@ -102,7 +103,7 @@ const CustomerOrderHistoryTabStack = ({
                     initialParams={{customerId}}
                 />
             </Tab.Navigator>
-        </View>
+        </Container>
     );
 };
 

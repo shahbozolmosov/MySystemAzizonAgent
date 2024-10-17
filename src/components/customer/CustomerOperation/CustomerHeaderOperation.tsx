@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 10,
     paddingVertical: 10,
-    paddingTop: 20,
     paddingHorizontal: 14,
     backgroundColor: '#fff',
   },

@@ -2,7 +2,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import React, {useCallback} from 'react';
 import AppRootDrawerContent from '../../components/common/AppRootDrawerContent/AppRootDrawerContent.tsx';
 import CustomerAddScreen from '../../screens/customer/CustomerAddScreen.tsx';
-import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
+// import CustomerReportScreen from '../../screens/customer/CustomerReportScreen';
 import ProfileScreen from '../../screens/main/ProfileScreen';
 import AppNativeStack from './AppNativeStack.tsx';
 import AppOrderNativeStack from './Order/AppOrderNativeStack.tsx';
@@ -60,10 +60,10 @@ const AppRootDrawerStack = () => {
                 name="AppOrderStack"
                 component={AppOrderNativeStack}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 name="CustomerReport"
                 component={CustomerReportScreen}
-            />
+            /> */}
         </Drawer.Navigator>
     );
 };
