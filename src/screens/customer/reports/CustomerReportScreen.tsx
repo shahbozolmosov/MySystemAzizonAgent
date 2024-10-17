@@ -69,6 +69,19 @@ const CustomerReportScreen = () => {
         return [];
     }, [allData]);
 
+    const totalData = useMemo(() => {
+        if (allData) {
+            return {
+                debit: allData.jamidebit,
+                kredit: allData.jamikredit,
+            };
+        }
+        return {
+            debit: 0,
+            kredit: 0,
+        };
+    }, [allData]);
+
     return (
         <Container>
             <CustomerHeaderOperation
@@ -85,7 +98,11 @@ const CustomerReportScreen = () => {
             ) : (
                 <>
                     <MainDateRangePicker setValue={setDate} />
-                    <Table columns={columns} data={tableData} />
+                    <Table
+                        columns={columns}
+                        data={tableData}
+                        total={totalData}
+                    />
                 </>
             )}
         </Container>
