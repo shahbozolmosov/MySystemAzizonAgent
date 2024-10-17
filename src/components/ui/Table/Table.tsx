@@ -6,11 +6,12 @@ import {ScrollView} from 'react-native-gesture-handler';
 type TableProps<T> = {
     columns: TableColumn[];
     data: T[];
+    total?: T;
 };
 
 type AlignType = 'center' | 'left' | 'right';
 
-const Table = <T,>({columns, data}: TableProps<T>) => {
+const Table = <T,>({columns, data, total}: TableProps<T>) => {
     const renderItem = useCallback((items: TableRowProps<T>) => {
         return <TableRow {...items} />;
     }, []);
@@ -48,17 +49,27 @@ const Table = <T,>({columns, data}: TableProps<T>) => {
         },
         [],
     );
-
     return (
         <ScrollView horizontal={true}>
             <View>
                 <View style={styles.header}>
                     {columns.map(({dataIndex, align = 'center', title}) => (
-                        <Text
-                            style={[styles.headerCell, getAlignStyle(align)]}
-                            key={dataIndex}>
-                            {title}
-                        </Text>
+                        <View style={styles.headerCell}>
+                            <Text
+                                style={[
+                                    styles.headerCellText,
+                                    getAlignStyle(align),
+                                ]}
+                                key={dataIndex}>
+                                {title}
+                            </Text>
+                            <Text style={[styles.total, getAlignStyle(align)]}>
+                                {total &&
+                                    total[
+                                        dataIndex as keyof T
+                                    ]?.toLocaleString()}
+                            </Text>
+                        </View>
                     ))}
                 </View>
 
@@ -83,10 +94,18 @@ const styles = StyleSheet.create({
     },
     headerCell: {
         flex: 1,
+    },
+    headerCellText: {
         fontFamily: 'Roboto-Medium',
         fontSize: 14,
         fontWeight: '400',
         color: '#1e232c',
+    },
+    total: {
+        fontFamily: 'Roboto-Medium',
+        fontSize: 11,
+        fontWeight: '400',
+        color: '#007bff',
     },
 });
 
