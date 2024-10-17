@@ -54,7 +54,7 @@ function AppCustomerDayScreen({route}: AppCustomerDayScreenProps) {
 
     return (
         <>
-            <Button title={'Reset'} onPress={handleReset} />
+            {/* <Button title={'Reset'} onPress={handleReset} /> */}
             <CustomerCardList list={customerData} />
         </>
     );
