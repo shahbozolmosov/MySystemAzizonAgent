@@ -8,7 +8,7 @@ const CustomerReportScreen = () => {
     return (
         <Container>
              <CustomerHeaderOperation
-                title="Buyurtmalar"
+                title="Hisobot"
                 customElements={
                     <>
                         <IconButton icon="filter" />
