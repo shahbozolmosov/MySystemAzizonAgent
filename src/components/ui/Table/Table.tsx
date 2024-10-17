@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList, TextStyle} from 'react-native';
 import TableRow, {TableColumn, TableRowProps} from './TableRow';
+import {ScrollView} from 'react-native-gesture-handler';
 
 type TableProps<T> = {
     columns: TableColumn[];
@@ -49,23 +50,26 @@ const Table = <T,>({columns, data}: TableProps<T>) => {
     );
 
     return (
-        <>
-            <View style={styles.header}>
-                {columns.map(({dataIndex, align = 'center', title}) => (
-                    <Text
-                        style={[styles.headerCell, getAlignStyle(align)]}
-                        key={dataIndex}>
-                        {title}
-                    </Text>
-                ))}
-            </View>
+        <ScrollView horizontal={true}>
+            <View>
+                <View style={styles.header}>
+                    {columns.map(({dataIndex, align = 'center', title}) => (
+                        <Text
+                            style={[styles.headerCell, getAlignStyle(align)]}
+                            key={dataIndex}>
+                            {title}
+                        </Text>
+                    ))}
+                </View>
 
-            <FlatList
-                data={data}
-                renderItem={({item}) => renderItem({item, columns})}
-                keyExtractor={keyExtractor}
-            />
-        </>
+                <FlatList
+                    style={{width: 600}}
+                    data={data}
+                    renderItem={({item}) => renderItem({item, columns})}
+                    keyExtractor={keyExtractor}
+                />
+            </View>
+        </ScrollView>
     );
 };
 
@@ -73,12 +77,16 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         backgroundColor: '#f0f0f0',
-        padding: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        width: 600,
     },
     headerCell: {
         flex: 1,
-        fontWeight: 'bold',
-        textAlign: 'center',
+        fontFamily: 'Roboto-Medium',
+        fontSize: 14,
+        fontWeight: '400',
+        color: '#1e232c',
     },
 });
 

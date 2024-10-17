@@ -40,7 +40,10 @@ const TableRow = <T,>({item, columns}: TableRowProps<T>) => {
 
     const getVal = useCallback(
         ({dataIndex}: {dataIndex: string}) => {
-            if (!item[dataIndex as keyof T]) {
+            if (
+                typeof item[dataIndex as keyof T] === 'undefined' &&
+                item[dataIndex as keyof T]
+            ) {
                 return '';
             }
             if (
@@ -77,7 +80,11 @@ const styles = StyleSheet.create({
     },
     cell: {
         flex: 1,
-        textAlign: 'center',
+
+        fontFamily: 'Roboto-Regular',
+        fontSize: 12,
+        fontWeight: '400',
+        color: '#1e232c',
     },
 });
 export default TableRow;

@@ -34,32 +34,27 @@ interface ReportGetCustomer {
 }
 export interface ReportGetAktItem {
     key: number;
-    id: string;
-    summa: number;
-    debit: 0;
-    vozvrat: 0;
+    tartib: number;
+    id: number;
+    debit: number;
     kredit: number;
+    izoh: string;
     status: string;
+    status_key: string;
     sana: string;
-    date: null;
-    vaqt: string;
-    izoh: null;
+}
+export interface ReportGetData {
+    eski_balans: number;
+    client: ReportGetCustomer;
+    akt: ReportGetAktItem[];
+    jamidebit: number;
+    jamikredit: number;
+    jamitolov: number;
+    saldo: number;
+    jamimassa: number;
 }
 interface ReportGetRes extends IApiRes {
-    data: {
-        eski_balans: number;
-        client: ReportGetCustomer;
-        akt: ReportGetAktItem[];
-        jamidebit: number;
-        jamikredit: number;
-        jamitolov: number;
-        jamivozvratsumma: number;
-        saldo: number;
-        jamimassa: number;
-        jamiqaytarilgan: number;
-        jamipaterya: number;
-        jamitozamassa: number;
-    };
+    data: ReportGetData;
 }
 export interface ReportGetParams {
     customerId: string;
