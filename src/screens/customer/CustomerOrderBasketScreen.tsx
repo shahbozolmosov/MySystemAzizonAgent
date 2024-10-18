@@ -18,7 +18,7 @@ import {useTypesSelector} from '../../app/store';
 import BasketProductCardList from '../../components/common/BasketProductCard/BasketProductCardList';
 import Container from '../../components/common/Container/Container';
 import CustomerOrderCard from '../../components/common/CustomerOrderCard/CustomerOrderCard';
-import TotalCard, {
+import TotalListCard, {
   TotalCardProps,
 } from '../../components/common/TotalCard/TotalCard';
 import CustomerHeaderOperation from '../../components/customer/CustomerOperation/CustomerHeaderOperation';
@@ -310,7 +310,7 @@ const CustomerOrderBasketScreen = ({
           <ScrollView style={styles.body}>
             {customerData && <CustomerOrderCard {...customerData} />}
 
-            <TotalCard {...totalData} />
+            <TotalListCard {...totalData} />
             <BasketProductCardList list={selectedProducts} />
 
             <View style={styles.descInputBox}>

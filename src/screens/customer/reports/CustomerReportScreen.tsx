@@ -16,6 +16,11 @@ import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/Main
 import {useNetIsConnected} from '../../../hook/useNetIsConnected';
 import NoInternet from '../../../components/errors/NoInternet/NoInternet';
 import NoResult from '../../../components/errors/NoResult/NoResult';
+import TotalListCard from '../../../components/common/TotalListCard/TotalListCard';
+import {TotalListCardItemProps} from '../../../components/common/TotalListCard/TotalListCardItem';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Dimensions, View} from 'react-native';
 
 const columns: TableColumn[] = [
     {
@@ -44,6 +49,8 @@ const columns: TableColumn[] = [
         dataIndex: 'sana',
     },
 ];
+
+const windowHeight = Dimensions.get('window').height;
 
 const CustomerReportScreen = () => {
     // State
@@ -92,6 +99,31 @@ const CustomerReportScreen = () => {
         };
     }, [allData]);
 
+    const totalCardData = useMemo<TotalListCardItemProps[]>(() => {
+        return [
+            {
+                label: 'Debit',
+                value: allData?.jamidebit || 0,
+            },
+            {
+                label: 'Kredit',
+                value: allData?.jamikredit || 0,
+            },
+            {
+                label: "To'lov",
+                value: allData?.jamitolov || 0,
+            },
+            {
+                label: 'Saldo',
+                value: allData?.saldo || 0,
+            },
+            {
+                label: 'Massa',
+                value: allData?.jamimassa || 0,
+            },
+        ];
+    }, [allData]);
+
     return (
         <Container>
             <CustomerHeaderOperation
@@ -104,20 +136,30 @@ const CustomerReportScreen = () => {
                 borderShown={false}
             />
 
-            <MainDateRangePicker setValue={setDate} />
+            <ScrollView>
+                <MainDateRangePicker setValue={setDate} />
 
-            {dataRes.isLoading ? (
-                <MainLoader />
-            ) : !isConnected ? (
-                <NoInternet refetch={dataRes.refetch} />
-            ) : !totalData ? (
-                <NoResult
-                    title="Ma'lumot topilmadi"
-                    desc="Hozircha sizda jami ma'lumotlar topilmadi"
-                />
-            ) : (
-                <Table columns={columns} data={tableData} total={totalData} />
-            )}
+                {/* <TotalListCard list={totalCardData} /> */}
+
+                {dataRes.isLoading ? (
+                    <MainLoader />
+                ) : !isConnected ? (
+                    <NoInternet refetch={dataRes.refetch} />
+                ) : !totalData ? (
+                    <NoResult
+                        title="Ma'lumot topilmadi"
+                        desc="Hozircha sizda jami ma'lumotlar topilmadi"
+                    />
+                ) : (
+                    <View style={{height: 600}}>
+                        <Table
+                            columns={columns}
+                            data={tableData}
+                            total={totalData}
+                        />
+                    </View>
+                )}
+            </ScrollView>
         </Container>
     );
 };
