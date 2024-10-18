@@ -13,6 +13,9 @@ import {TDate} from '../../../types/types';
 import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 import MainLoader from '../../../components/ui/MainLoader/MainLoader';
 import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/MainDateRangePicker';
+import {useNetIsConnected} from '../../../hook/useNetIsConnected';
+import NoInternet from '../../../components/errors/NoInternet/NoInternet';
+import NoResult from '../../../components/errors/NoResult/NoResult';
 
 const columns: TableColumn[] = [
     {
@@ -49,8 +52,15 @@ const CustomerReportScreen = () => {
         end: '19.10.2024',
     });
 
+    const isConnected = useNetIsConnected();
+
     // API
-    const dataRes = useGetReportsGetQuery({customerId: '98', date});
+    const dataRes = useGetReportsGetQuery(
+        {customerId: '98', date},
+        {
+            skip: !isConnected,
+        },
+    );
 
     // Data
     const allData = useMemo<ReportGetData | null>(() => {
@@ -93,17 +103,20 @@ const CustomerReportScreen = () => {
                 }
                 borderShown={false}
             />
+
+            <MainDateRangePicker setValue={setDate} />
+
             {dataRes.isLoading ? (
                 <MainLoader />
+            ) : !isConnected ? (
+                <NoInternet refetch={dataRes.refetch} />
+            ) : !totalData ? (
+                <NoResult
+                    title="Ma'lumot topilmadi"
+                    desc="Hozircha sizda jami ma'lumotlar topilmadi"
+                />
             ) : (
-                <>
-                    <MainDateRangePicker setValue={setDate} />
-                    <Table
-                        columns={columns}
-                        data={tableData}
-                        total={totalData}
-                    />
-                </>
+                <Table columns={columns} data={tableData} total={totalData} />
             )}
         </Container>
     );
