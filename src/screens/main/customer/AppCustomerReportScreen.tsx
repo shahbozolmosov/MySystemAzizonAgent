@@ -6,7 +6,7 @@ import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStac
 
 type AppCustomerReportScreenProps = DrawerScreenProps<
     AppRootDrawerStackParamList,
-    'CustomerAdd'
+    'CustomerReport'
 >;
 
 const AppCustomerReportScreen = ({
