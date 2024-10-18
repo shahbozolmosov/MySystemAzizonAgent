@@ -6,6 +6,7 @@ import CustomerAddScreen from '../../screens/customer/CustomerAddScreen.tsx';
 import ProfileScreen from '../../screens/main/ProfileScreen';
 import AppNativeStack from './AppNativeStack.tsx';
 import AppOrderNativeStack from './Order/AppOrderNativeStack.tsx';
+import AppCustomerReportScreen from '../../screens/main/customer/AppCustomerReportScreen.tsx';
 
 export type AppRootDrawerStackParamList = {
     // Stack
@@ -60,10 +61,10 @@ const AppRootDrawerStack = () => {
                 name="AppOrderStack"
                 component={AppOrderNativeStack}
             />
-            {/* <Drawer.Screen
+            <Drawer.Screen
                 name="CustomerReport"
-                component={CustomerReportScreen}
-            /> */}
+                component={AppCustomerReportScreen}
+            />
         </Drawer.Navigator>
     );
 };
