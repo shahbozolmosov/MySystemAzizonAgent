@@ -1,11 +1,25 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
+import AppPageHeader from '../../../components/common/AppPageHeader/AppPageHeader';
+import Container from '../../../components/common/Container/Container';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack';
 
-const AppCustomerReportScreen = () => {
+type AppCustomerReportScreenProps = DrawerScreenProps<
+    AppRootDrawerStackParamList,
+    'CustomerAdd'
+>;
+
+const AppCustomerReportScreen = ({
+    navigation,
+}: AppCustomerReportScreenProps) => {
+    const handleBack = useCallback(() => {
+        navigation.goBack();
+    }, [navigation]);
+
     return (
-        <View>
-            <Text>AppCustomerReportScreen</Text>
-        </View>
+        <Container>
+            <AppPageHeader title="Debet & Kredit" onBack={handleBack} />
+        </Container>
     );
 };
 

@@ -26,7 +26,7 @@ const columns: TableColumn[] = [
         align: 'left',
     },
     {
-        title: 'Debit',
+        title: 'Debet',
         dataIndex: 'debit',
     },
     {

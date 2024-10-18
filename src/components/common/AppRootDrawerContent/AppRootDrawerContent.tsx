@@ -25,8 +25,8 @@ const AppRootDrawerContent = () => {
                 onPress={() => navigation.navigate('AppOrderStack')}
             />
             <DrawerItemBtn
-                label="Mijozlar hisoboti"
-                icon="users"
+                label="Mijozlar debet & kredit"
+                icon="file-text"
                 onPress={() => navigation.navigate('CustomerReport')}
             />
             <DrawerItemBtn
