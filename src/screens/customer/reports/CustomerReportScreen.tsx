@@ -1,26 +1,23 @@
 import React, {useMemo, useState} from 'react';
-import Container from '../../../components/common/Container/Container';
-import CustomerHeaderOperation from '../../../components/customer/CustomerOperation/CustomerHeaderOperation';
-import IconButton from '../../../components/ui/IconButton/IconButton';
-import Table from '../../../components/ui/Table/Table';
-import {TableColumn, TableRow} from '../../../components/ui/Table/TableRow';
+import {View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {
     ReportGetAktItem,
     ReportGetData,
     useGetReportsGetQuery,
 } from '../../../app/services/customerReport/customerReport';
-import {TDate} from '../../../types/types';
-import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
-import MainLoader from '../../../components/ui/MainLoader/MainLoader';
-import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/MainDateRangePicker';
-import {useNetIsConnected} from '../../../hook/useNetIsConnected';
+import Container from '../../../components/common/Container/Container';
+import CustomerHeaderOperation from '../../../components/customer/CustomerOperation/CustomerHeaderOperation';
 import NoInternet from '../../../components/errors/NoInternet/NoInternet';
 import NoResult from '../../../components/errors/NoResult/NoResult';
-import TotalListCard from '../../../components/common/TotalListCard/TotalListCard';
-import {TotalListCardItemProps} from '../../../components/common/TotalListCard/TotalListCardItem';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Dimensions, View} from 'react-native';
+import IconButton from '../../../components/ui/IconButton/IconButton';
+import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/MainDateRangePicker';
+import MainLoader from '../../../components/ui/MainLoader/MainLoader';
+import Table from '../../../components/ui/Table/Table';
+import {TableColumn, TableRow} from '../../../components/ui/Table/TableRow';
+import {useNetIsConnected} from '../../../hook/useNetIsConnected';
+import {TDate} from '../../../types/types';
+import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 
 const columns: TableColumn[] = [
     {
@@ -49,8 +46,6 @@ const columns: TableColumn[] = [
         dataIndex: 'sana',
     },
 ];
-
-const windowHeight = Dimensions.get('window').height;
 
 const CustomerReportScreen = () => {
     // State
@@ -97,31 +92,6 @@ const CustomerReportScreen = () => {
             debit: 0,
             kredit: 0,
         };
-    }, [allData]);
-
-    const totalCardData = useMemo<TotalListCardItemProps[]>(() => {
-        return [
-            {
-                label: 'Debit',
-                value: allData?.jamidebit || 0,
-            },
-            {
-                label: 'Kredit',
-                value: allData?.jamikredit || 0,
-            },
-            {
-                label: "To'lov",
-                value: allData?.jamitolov || 0,
-            },
-            {
-                label: 'Saldo',
-                value: allData?.saldo || 0,
-            },
-            {
-                label: 'Massa',
-                value: allData?.jamimassa || 0,
-            },
-        ];
     }, [allData]);
 
     return (
