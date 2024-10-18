@@ -50,8 +50,8 @@ const columns: TableColumn[] = [
 const CustomerReportScreen = () => {
     // State
     const [date, setDate] = useState<TDate>({
-        start: '01.01.2023',
-        end: '19.10.2024',
+        start: '',
+        end: '',
     });
 
     const isConnected = useNetIsConnected();
