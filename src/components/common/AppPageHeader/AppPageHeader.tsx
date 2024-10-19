@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderTitle from '../../ui/HeaderTitle/HeaderTitle.tsx';
 
@@ -7,6 +7,8 @@ type AppPageHeaderProps = {
     onBack: () => void;
     title: string;
 };
+
+const windowWidth = Dimensions.get('window').width;
 
 const AppPageHeader = ({onBack, title}: AppPageHeaderProps) => {
     const handleBack = useCallback(() => {
@@ -19,7 +21,9 @@ const AppPageHeader = ({onBack, title}: AppPageHeaderProps) => {
                 <Icon name="chevron-left" size={24} color={'#1e232c'} />
             </TouchableOpacity>
             {/* Header Title */}
-            <HeaderTitle title={title} />
+            <View style={styles.title}>
+                <HeaderTitle title={title} />
+            </View>
             <View />
         </View>
     );
@@ -30,7 +34,7 @@ const styles = StyleSheet.create({
         marginHorizontal: -10,
         paddingVertical: 10,
         paddingHorizontal: 14,
-        paddingRight: 18,
+        paddingRight: 34,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 14,
@@ -39,6 +43,9 @@ const styles = StyleSheet.create({
     btn: {
         paddingVertical: 2,
         paddingHorizontal: 4,
+    },
+    title: {
+        maxWidth: windowWidth / 2,
     },
 });
 

@@ -1,7 +1,8 @@
 import {DrawerScreenProps} from '@react-navigation/drawer';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {ICustomer} from '../../../app/services/customer/customer';
 import {
     ReportDebitKreditGetAktItem,
     ReportDebitKreditGetData,
@@ -15,6 +16,8 @@ import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/Main
 import MainLoader from '../../../components/ui/MainLoader/MainLoader';
 import Table from '../../../components/ui/Table/Table';
 import {TableColumn, TableRow} from '../../../components/ui/Table/TableRow';
+import {getCustomerById} from '../../../database/customers';
+import {getDBConnection} from '../../../database/sqlite';
 import {useNetIsConnected} from '../../../hook/useNetIsConnected';
 import {AppCustomerReportNativeStackParamList} from '../../../routes/App/Customer/AppCustomerReportNativeStack';
 import {TDate} from '../../../types/types';
@@ -52,8 +55,13 @@ const columns: TableColumn[] = [
 
 const AppCustomerReportScreen = ({
     navigation,
+    route,
 }: AppCustomerReportScreenProps) => {
+    // Params
+    const {customerId} = route.params;
+
     // State
+    const [customer, setCustomer] = useState<ICustomer | null>(null);
     const [date, setDate] = useState<TDate>({
         start: '',
         end: '',
@@ -63,11 +71,25 @@ const AppCustomerReportScreen = ({
 
     // API
     const dataRes = useGetReportsDebitKreditQuery(
-        {supplierId: '98', date},
+        {supplierId: customerId, date},
         {
             skip: !isConnected,
         },
     );
+
+    useEffect(() => {
+        const initDB = async () => {
+            const db = await getDBConnection();
+            const res = await getCustomerById(db, customerId);
+            if (res) {
+                setCustomer(res);
+            }
+        };
+
+        if (customerId) {
+            initDB();
+        }
+    }, [customerId]);
 
     // Data
     const allData = useMemo<ReportDebitKreditGetData | null>(() => {
@@ -106,7 +128,10 @@ const AppCustomerReportScreen = ({
 
     return (
         <Container>
-            <AppPageHeader title="Debet & Kredit" onBack={handleBack} />
+            <AppPageHeader
+                title={`Debet & Kredit - ${customer?.fio}`}
+                onBack={handleBack}
+            />
 
             <ScrollView>
                 <MainDateRangePicker setValue={setDate} />
