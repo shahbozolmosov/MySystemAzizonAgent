@@ -27,7 +27,7 @@ const AppRootDrawerContent = () => {
             <DrawerItemBtn
                 label="Mijozlar debet & kredit"
                 icon="file-text"
-                onPress={() => navigation.navigate('CustomerReport')}
+                onPress={() => navigation.navigate('AppCustomerReportNativeStack')}
             />
             <DrawerItemBtn
                 label="Sozlamalar"

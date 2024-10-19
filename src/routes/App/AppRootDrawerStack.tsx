@@ -6,13 +6,14 @@ import CustomerAddScreen from '../../screens/customer/CustomerAddScreen.tsx';
 import ProfileScreen from '../../screens/main/ProfileScreen';
 import AppNativeStack from './AppNativeStack.tsx';
 import AppOrderNativeStack from './Order/AppOrderNativeStack.tsx';
-import AppCustomerReportScreen from '../../screens/main/customer/AppCustomerReportScreen.tsx';
+import AppCustomerReportNativeStack from './Customer/AppCustomerReportNativeStack.tsx';
 
 export type AppRootDrawerStackParamList = {
     // Stack
     AppNativeStack: undefined;
     AppOrderHistoryStack: undefined;
     AppOrderStack: undefined;
+    AppCustomerReportNativeStack: undefined;
 
     Profile: undefined;
     CreateCustomer: undefined;
@@ -23,7 +24,6 @@ export type AppRootDrawerStackParamList = {
     AppOrderDraftAddProduct: {customerId: string; orderId: string};
 
     // Customer
-    CustomerReport: undefined;
     CustomerAdd: undefined;
 };
 
@@ -62,8 +62,8 @@ const AppRootDrawerStack = () => {
                 component={AppOrderNativeStack}
             />
             <Drawer.Screen
-                name="CustomerReport"
-                component={AppCustomerReportScreen}
+                name="AppCustomerReportNativeStack"
+                component={AppCustomerReportNativeStack}
             />
         </Drawer.Navigator>
     );

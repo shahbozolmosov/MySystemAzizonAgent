@@ -16,13 +16,13 @@ import MainLoader from '../../../components/ui/MainLoader/MainLoader';
 import Table from '../../../components/ui/Table/Table';
 import {TableColumn, TableRow} from '../../../components/ui/Table/TableRow';
 import {useNetIsConnected} from '../../../hook/useNetIsConnected';
-import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack';
+import {AppCustomerReportNativeStackParamList} from '../../../routes/App/Customer/AppCustomerReportNativeStack';
 import {TDate} from '../../../types/types';
 import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 
 type AppCustomerReportScreenProps = DrawerScreenProps<
-    AppRootDrawerStackParamList,
-    'CustomerReport'
+    AppCustomerReportNativeStackParamList,
+    'AppCustomerReport'
 >;
 
 const columns: TableColumn[] = [
