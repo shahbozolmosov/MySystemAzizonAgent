@@ -1,20 +1,24 @@
+import {DrawerScreenProps} from '@react-navigation/drawer';
 import React, {useCallback, useMemo, useState} from 'react';
+import {View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {
+    ReportDebitKreditGetAktItem,
+    ReportDebitKreditGetData,
+    useGetReportsDebitKreditQuery,
+} from '../../../app/services/customerReport/customerReport';
 import AppPageHeader from '../../../components/common/AppPageHeader/AppPageHeader';
 import Container from '../../../components/common/Container/Container';
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack';
-import {TableColumn, TableRow} from '../../../components/ui/Table/TableRow';
-import {TDate} from '../../../types/types';
-import { handleApiResponseObj } from '../../../utils/handleApiResponseObj';
-import { ReportGetAktItem, ReportGetData, useGetReportsGetQuery } from '../../../app/services/customerReport/customerReport';
-import { ScrollView } from 'react-native-gesture-handler';
-import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/MainDateRangePicker';
-import MainLoader from '../../../components/ui/MainLoader/MainLoader';
 import NoInternet from '../../../components/errors/NoInternet/NoInternet';
 import NoResult from '../../../components/errors/NoResult/NoResult';
-import { View } from 'react-native';
+import MainDateRangePicker from '../../../components/ui/MainDateRangePicker/MainDateRangePicker';
+import MainLoader from '../../../components/ui/MainLoader/MainLoader';
 import Table from '../../../components/ui/Table/Table';
-import { useNetIsConnected } from '../../../hook/useNetIsConnected';
+import {TableColumn, TableRow} from '../../../components/ui/Table/TableRow';
+import {useNetIsConnected} from '../../../hook/useNetIsConnected';
+import {AppRootDrawerStackParamList} from '../../../routes/App/AppRootDrawerStack';
+import {TDate} from '../../../types/types';
+import {handleApiResponseObj} from '../../../utils/handleApiResponseObj';
 
 type AppCustomerReportScreenProps = DrawerScreenProps<
     AppRootDrawerStackParamList,
@@ -28,24 +32,21 @@ const columns: TableColumn[] = [
         align: 'left',
     },
     {
+        title: 'Mijoz',
+        dataIndex: 'fio',
+        align: 'left',
+    },
+    {
         title: 'Debet',
         dataIndex: 'debit',
     },
     {
         title: 'Kredit',
-        dataIndex: 'kredit',
+        dataIndex: 'jamikredit',
     },
     {
-        title: 'Izoh',
-        dataIndex: 'izoh',
-    },
-    {
-        title: 'Status',
-        dataIndex: 'status',
-    },
-    {
-        title: 'Sana',
-        dataIndex: 'sana',
+        title: 'Saldo',
+        dataIndex: 'saldo',
     },
 ];
 
@@ -61,25 +62,25 @@ const AppCustomerReportScreen = ({
     const isConnected = useNetIsConnected();
 
     // API
-    const dataRes = useGetReportsGetQuery(
-        {customerId: '98', date},
+    const dataRes = useGetReportsDebitKreditQuery(
+        {supplierId: '98', date},
         {
             skip: !isConnected,
         },
     );
 
     // Data
-    const allData = useMemo<ReportGetData | null>(() => {
+    const allData = useMemo<ReportDebitKreditGetData | null>(() => {
         return handleApiResponseObj(dataRes);
     }, [dataRes]);
 
-    const tableData = useMemo<TableRow<ReportGetAktItem>[]>(() => {
+    const tableData = useMemo<TableRow<ReportDebitKreditGetAktItem>[]>(() => {
         if (!allData) {
             return [];
         }
 
         if (allData.akt) {
-            return allData.akt;
+            return allData.akt.map((item, index) => ({...item, id: index}));
         }
 
         return [];
@@ -89,12 +90,12 @@ const AppCustomerReportScreen = ({
         if (allData) {
             return {
                 debit: allData.jamidebit,
-                kredit: allData.jamikredit,
+                jamikredit: allData.jamikredit,
             };
         }
         return {
             debit: 0,
-            kredit: 0,
+            jamikredit: 0,
         };
     }, [allData]);
 

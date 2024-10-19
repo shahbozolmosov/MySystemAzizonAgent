@@ -61,6 +61,26 @@ export interface ReportGetParams {
     date: TDate;
 }
 
+// Debit Kredit
+export interface ReportDebitKreditGetAktItem{
+    fio: string;
+    debit: number;
+    jamikredit: number;
+    saldo: number;
+}
+export interface ReportDebitKreditGetData {
+    jamikredit: number;
+    jamidebit: number;
+    akt: ReportDebitKreditGetAktItem[];
+}
+interface ReportDebitKreditGetRes extends IApiRes {
+    data: ReportDebitKreditGetData;
+}
+export interface ReportDebitKreditGetParams {
+    supplierId: string;
+    date: TDate;
+}
+
 const REPORT_TAG = 'REPORT';
 const customerReportApi = apiSlice
     .enhanceEndpoints({addTagTypes: [REPORT_TAG]})
@@ -70,7 +90,15 @@ const customerReportApi = apiSlice
             getReportsGet: builder.query<ReportGetRes, ReportGetParams>({
                 query: params => allUrls.customerReportGet(params),
             }),
+            // Report debit kredit
+            getReportsDebitKredit: builder.query<
+                ReportDebitKreditGetRes,
+                ReportDebitKreditGetParams
+            >({
+                query: params => allUrls.customerDebitKredit(params),
+            }),
         }),
     });
 
-export const {useGetReportsGetQuery} = customerReportApi;
+export const {useGetReportsGetQuery, useGetReportsDebitKreditQuery} =
+    customerReportApi;
