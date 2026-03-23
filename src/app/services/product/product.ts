@@ -1,0 +1,39 @@
+import {allUrls} from '../../../constants/api';
+import {IApiRes} from '../../../types/api';
+import {apiSlice} from '../apiSlice.ts';
+
+export interface Product {
+  id: string;
+  name: string;
+  article: string;
+  nagruzka: number;
+  pishirish: number;
+  price: number;
+  real_price: number;
+  category_id: string;
+  before_ordered: false;
+}
+
+// index
+export interface ProductAllParam {
+  customerId?: string;
+}
+
+interface ProductAllRes extends IApiRes {
+  data: Product[];
+}
+
+const PRODUCT_TAG = 'PRODUCT_TAG';
+
+export const productApi = apiSlice
+  .enhanceEndpoints({addTagTypes: [PRODUCT_TAG]})
+  .injectEndpoints({
+    endpoints: build => ({
+      // Index
+      getProductAll: build.query<ProductAllRes, ProductAllParam>({
+        query: params => allUrls.productsGetAll(params),
+      }),
+    }),
+  });
+
+export const {useGetProductAllQuery} = productApi;

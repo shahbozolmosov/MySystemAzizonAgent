@@ -1,0 +1,104 @@
+import {allUrls} from '../../../constants/api';
+import {IApiRes} from '../../../types/api';
+import {TDate} from '../../../types/types';
+import {apiSlice} from '../apiSlice';
+
+// Report
+interface ReportGetCustomer {
+    id: string;
+    fio: string;
+    telefon: string;
+    telefon2: string;
+    telefon3: string;
+    korxona: string;
+    balans: string;
+    rasm: null;
+    manzil: string;
+    lokatsiya: string;
+    latitude: string;
+    longitude: string;
+    vaqt: string;
+    viloyat_id: string;
+    tuman_id: string;
+    yaqin_muddat: string;
+    category_id: string;
+    dostavka_id: string;
+    client_type: string;
+    chek_tartib: string;
+    agent_id: string;
+    mijoz_turkum_id: string;
+    start_qoldiq: string;
+    status: string;
+    noravshanlik_koefsenti: string;
+    limit_summa: string;
+}
+export interface ReportGetAktItem {
+    key: number;
+    tartib: number;
+    id: number;
+    debit: number;
+    kredit: number;
+    izoh: string;
+    status: string;
+    status_key: string;
+    sana: string;
+}
+export interface ReportGetData {
+    eski_balans: number;
+    client: ReportGetCustomer;
+    akt: ReportGetAktItem[];
+    jamidebit: number;
+    jamikredit: number;
+    jamitolov: number;
+    saldo: number;
+    jamimassa: number;
+}
+interface ReportGetRes extends IApiRes {
+    data: ReportGetData;
+}
+export interface ReportGetParams {
+    customerId: string;
+    date: TDate;
+}
+
+// Debit Kredit
+export interface ReportDebitKreditGetAktItem{
+    fio: string;
+    debit: number;
+    jamikredit: number;
+    saldo: number;
+}
+export interface ReportDebitKreditGetData {
+    jamikredit: number;
+    jamidebit: number;
+    akt: ReportDebitKreditGetAktItem[];
+}
+interface ReportDebitKreditGetRes extends IApiRes {
+    data: ReportDebitKreditGetData;
+}
+export interface ReportDebitKreditGetParams {
+    supplierId: string;
+    date: TDate;
+}
+
+const REPORT_TAG = 'REPORT';
+const customerReportApi = apiSlice
+    .enhanceEndpoints({addTagTypes: [REPORT_TAG]})
+    .injectEndpoints({
+        endpoints: builder => ({
+            // Report
+            getReportsGet: builder.query<ReportGetRes, ReportGetParams>({
+                query: params => allUrls.customerReportGet(params),
+            }),
+            // Report debit kredit
+            getReportsDebitKredit: builder.query<
+                ReportDebitKreditGetRes,
+                ReportDebitKreditGetParams
+            >({
+                query: params => allUrls.customerDebitKredit(params),
+            }),
+        }),
+    });
+
+export const {useGetReportsGetQuery, useGetReportsDebitKreditQuery} =
+    customerReportApi;

@@ -1,0 +1,47 @@
+import {Button} from '@rneui/themed';
+import React, {useCallback} from 'react';
+import {StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+
+type DrawerItemBtnProps = {
+  label: string;
+  icon: string;
+  onPress?: () => void;
+};
+
+const DrawerItemBtn = ({label, icon, onPress}: DrawerItemBtnProps) => {
+  const handlePress = useCallback(() => {
+    onPress && onPress();
+  }, [onPress]);
+
+  return (
+    <Button
+      onPress={handlePress}
+      type="clear"
+      icon={<Icon style={styles.icon} name={icon} size={20} />}
+      title={label}
+      buttonStyle={styles.btnContainer}
+      titleStyle={styles.title}
+      size="lg"
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  btnContainer: {
+    justifyContent: 'flex-start',
+    paddingHorizontal: 18,
+  },
+  title: {
+    fontFamily: 'Roboto-Regular',
+    fontWeight: '400',
+    color: '#4b4b4b',
+    fontSize: 14,
+  },
+  icon: {
+    marginRight: 14,
+    color: '#4b4b4b',
+  },
+});
+
+export default React.memo(DrawerItemBtn);

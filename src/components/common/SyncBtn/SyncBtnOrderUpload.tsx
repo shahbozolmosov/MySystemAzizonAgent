@@ -1,0 +1,64 @@
+import {SpeedDial} from '@rneui/themed';
+import React, {useCallback, useMemo, useState} from 'react';
+import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/Feather';
+import {ICustomer} from '../../../app/services/customer/customer';
+import {useGetProductAllQuery} from '../../../app/services/product/product';
+import {getDBConnection} from '../../../database/sqlite';
+import {handleApiResponse} from '../../../utils/handleApiResponse';
+
+type SyncBtnOrderUploadProps = {
+  loading: boolean;
+  setLoading: (value: boolean) => void;
+};
+
+const SyncBtnOrderUpload = ({loading, setLoading}: SyncBtnOrderUploadProps) => {
+  // State
+  const [fetchData, setFetchData] = useState(false);
+
+  // API
+  const productRes = useGetProductAllQuery(
+    {},
+    {
+      skip: !fetchData,
+    },
+  );
+
+  const productData = useMemo<ICustomer[]>(() => {
+    return handleApiResponse<ICustomer[]>(productRes);
+  }, [productRes]);
+
+  const handleSync = useCallback(async () => {
+    setLoading(true);
+    // setFetchData(true);
+
+    try {
+      const db = await getDBConnection();
+      // Create tables
+      // await createCustomersTable(db);
+      // await deleteAllCustomers(db);
+      // addMultipleCustomers(db, productData);
+
+      Toast.show({
+        type: 'info',
+        text1: 'Qurish jarayonida',
+        // text2: 'Qoralamalar muvaffaqiyatli yuborildi',
+      });
+    } catch (err) {
+      console.error('Failed to initialize database', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [productData, setLoading]);
+
+  return (
+    <SpeedDial.Action
+      icon={<Icon name={'file-text'} size={20} color={'#ffffff'} />}
+      title={`Qoralamalar (${6})`}
+      onPress={handleSync}
+      loading={loading}
+    />
+  );
+};
+
+export default React.memo(SyncBtnOrderUpload);
